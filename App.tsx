@@ -5,11 +5,15 @@ import { Provider } from 'react-redux'
 import store from '@store/index'
 import { registerRootComponent } from 'expo'
 import ApplicationNavigator from '@navigators/Application'
+import { NativeBaseProvider } from 'native-base'
+import 'expo-dev-menu'
 
 export default function App() {
   return (
     <Provider store={store}>
-      <ApplicationNavigator />
+      <NativeBaseProvider>
+        <ApplicationNavigator />
+      </NativeBaseProvider>
     </Provider>
   )
 }

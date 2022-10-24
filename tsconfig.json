@@ -3,7 +3,7 @@
     "baseUrl":"./",
     "paths": {
       "@components/*": ["src/Components/*"],
-      "@constant/*": ["src/Constants/*"],
+      "@constants/*": ["src/Constants/*"],
       "@helpers/*": ["src/Helpers/*"],
       "@navigators/*": ["src/Navigators/*"],
       "@store/*": ["src/Store/*"],

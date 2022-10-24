@@ -1,12 +1,12 @@
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
 import { api } from '@services/api'
-import fetchOne from './fetchOne'
+import login from './login'
 
 export const userApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<any, any, any>) => ({
-    fetchOne: fetchOne(build),
+    login: login(build),
   }),
-  overrideExisting: false,
+  overrideExisting: true,
 })
 
-export const { useLazyFetchOneQuery } = userApi
+export const { useLoginMutation } = userApi
