@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Dimensions,
   ScrollView,
@@ -18,12 +18,15 @@ import {
 } from 'native-base'
 import { useLoginMutation } from '@services/modules/login'
 import { RUser } from '@services/modules/login/login'
+import { useReduxDispatch } from '@store/index'
+import { clear } from '@store/loginReducer'
 
 const Login = () => {
   const [user, setUser] = useState<RUser>({
     email: '',
     password: '',
   })
+  const dispatch = useReduxDispatch()
   const [login, { data, isSuccess, isLoading, error }] = useLoginMutation()
 
   const onChangeText = (

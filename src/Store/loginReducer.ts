@@ -34,11 +34,11 @@ const initState = {
 }
 
 const loginReducer = createSlice({
-  name: 'counter',
+  name: 'login',
   initialState: initState,
   reducers: {
-    save: (state: typeof initState) => {
-      return { ...state }
+    clear: () => {
+      return initState
     },
   },
   extraReducers: builder => {
@@ -51,5 +51,5 @@ const loginReducer = createSlice({
   },
 })
 
-export const { save } = loginReducer.actions
+export const { clear } = loginReducer.actions
 export default loginReducer.reducer
