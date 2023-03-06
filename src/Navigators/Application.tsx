@@ -14,7 +14,7 @@ const ApplicationNavigator = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
-        {!login ? (
+        {login ? (
           <Stack.Group>
             <Stack.Screen
               name="Login"

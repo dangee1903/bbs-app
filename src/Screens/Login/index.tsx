@@ -37,7 +37,10 @@ const Login = () => {
   }
 
   const submit = () => {
-    login(user)
+    // eslint-disable-next-line no-console
+    console.log(user)
+
+    if (error) console.log(error)
   }
 
   return (
