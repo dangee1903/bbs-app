@@ -1,34 +1,19 @@
-import { Box } from 'native-base'
+import EventComponent from '@components/EventComponent'
+import NotificatioComponent from '@components/NotificationComponent'
 import React from 'react'
-import {
-  Button,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
 const Home = () => {
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: 'white' }}
+      style={{ flex: 1, backgroundColor: 'white', marginTop: 50 }}
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.notificationContent}>
-        <Text style={styles.title}>Thông báo</Text>
-        <View style={styles.content}>
-          <Box>
-            <Text>Lịch trực nhật tháng 8/2022</Text>
-            <Text>
-              Nhà sạch thì mát - Bát sạch ngon cơm Văn phòng không rác t...
-            </Text>
-            <View style={styles.bottom}>
-              <Text>2022/07/06</Text>
-              <Text>Detail</Text>
-            </View>
-          </Box>
-        </View>
+        <Text style={styles.contentHead}>Thông báo</Text>
+        <NotificatioComponent />
+        <Text style={styles.contentHead}>Sự kiện</Text>
+        <EventComponent />
       </View>
     </ScrollView>
   )
@@ -39,21 +24,12 @@ const styles = StyleSheet.create({
   notificationContent: {
     padding: 16,
   },
-  content: {
-    paddingHorizontal: 16,
-  },
-  title: {
+  contentHead: {
     fontSize: 20,
     lineHeight: 24,
     fontWeight: '500',
     color: '#494949',
-  },
-  bottom: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-  },
-  btn: {
-    textTransform: 'uppercase',
+    marginBottom: 5,
+    marginLeft: 5,
   },
 })

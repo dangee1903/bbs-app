@@ -1,3 +1,4 @@
+import { setToken } from '@helpers/token'
 import { createSlice } from '@reduxjs/toolkit'
 import { userApi } from '@services/modules/login'
 import { TUser } from '@services/modules/login/login'
@@ -45,6 +46,7 @@ const loginReducer = createSlice({
     builder.addMatcher(
       userApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
+        setToken(payload.meta.token)
         return { login: true, user: { ...payload } }
       },
     )
