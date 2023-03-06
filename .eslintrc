@@ -16,6 +16,7 @@
   },
   "plugins": ["@typescript-eslint", "react", "prettier"],
   "rules": {
+    "import/no-extraneous-dependencies": "off",
     "func-names": 0,
     "import/extensions": ["error", "never"],
     "import/no-unresolved": 0,
