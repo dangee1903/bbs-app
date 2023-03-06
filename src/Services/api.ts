@@ -6,8 +6,22 @@ import {
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react'
 import { Config } from '@constants/config'
+import { getToken } from '@helpers/token'
 
-const baseQuery = fetchBaseQuery({ baseUrl: Config.API_URL })
+const baseQuery = fetchBaseQuery({
+  baseUrl: Config.API_URL,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  prepareHeaders: async (headers, { getState }) => {
+    const token = await getToken()
+
+    // If we have a token set in state, let's assume that we should be passing it.
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`)
+    }
+
+    return headers
+  },
+})
 
 const baseQueryWithInterceptor: BaseQueryFn<
   string | FetchArgs,
