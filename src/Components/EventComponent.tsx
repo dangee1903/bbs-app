@@ -1,18 +1,41 @@
+/* eslint-disable camelcase */
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
+import { EventType } from '@model/EventType'
+import commontStyle from '@styles/commont.style'
 
-const EventComponent = () => {
+const EventComponent = (props: EventType) => {
+  const { name, created_at, introduction } = props
   return (
     <View style={styles.containerContent}>
-      <View>
-        <Text style={styles.contentTitle}>Lịch trực nhật tháng 8/2022</Text>
-        <Text style={styles.contentText}>
-          Nhà sạch thì mát - Bát sạch ngon cơm Văn phòng không rác t...
-        </Text>
-        <View style={styles.bottom}>
-          <Text style={styles.bottomText}>2022/07/06</Text>
-          <Text style={styles.bottomBtn}>Detail</Text>
+      <View style={styles.contentTop}>
+        <Image
+          style={styles.logo}
+          source={{
+            uri: 'https://reactnative.dev/img/logo-og.png',
+          }}
+        />
+        <View style={styles.title}>
+          <Text style={styles.contentTopTitle} numberOfLines={2}>
+            {name}
+          </Text>
+          <Text style={styles.contentTopDate}>{created_at}</Text>
         </View>
+      </View>
+      <View style={styles.content}>
+        <Image
+          style={styles.contentImage}
+          source={{
+            uri: 'https://reactnative.dev/img/logo-og.png',
+          }}
+        />
+        <Text style={styles.contentText} numberOfLines={2}>
+          {introduction}
+        </Text>
+      </View>
+      <View style={styles.contentBottom}>
+        <Text style={styles.bottomBtn}>View</Text>
+        <Text style={styles.bottomBtn}>Join</Text>
       </View>
     </View>
   )
@@ -22,47 +45,65 @@ export default EventComponent
 
 const styles = StyleSheet.create({
   containerContent: {
-    padding: 16,
-    borderRadius: 4,
-    borderBottomWidth: 4,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-    borderTopWidth: 2,
-    borderColor: 'rgba(0, 0, 0, 0.08)',
-    marginBottom: 16,
+    ...commontStyle.boxShadowAll,
   },
-  contentTitle: {
-    fontWeight: '400',
-    fontSize: 16,
+  contentTop: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginHorizontal: 16,
+    marginBottom: 6,
+    marginTop: 14,
+    flexWrap: 'nowrap',
+  },
+  logo: {
+    width: 40,
+    height: 36,
+    borderRadius: 100,
+  },
+  title: {
+    marginLeft: 16,
+  },
+  contentTopTitle: {
+    fontWeight: '500',
+    fontSize: 18,
     lineHeight: 24,
     color: 'rgba(0, 0, 0, 0.87)',
-    marginBottom: 6,
     letterSpacing: 0.15,
     textTransform: 'uppercase',
   },
-  contentText: {
-    fontWeight: '400',
-    fontSize: 12,
-    lineHeight: 12,
-    color: 'rgba(0, 0, 0, 0.6)',
-    marginBottom: 15,
-  },
-  bottom: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-  },
-  bottomText: {
+  contentTopDate: {
     fontWeight: '400',
     fontSize: 14,
     lineHeight: 20,
-    color: '#6D6D6D',
+    letterSpacing: 0.25,
+    color: 'rgba(0, 0, 0, 0.87)',
+  },
+  content: {
+    marginBottom: 10,
+  },
+  contentImage: {
+    width: '100%',
+    height: 174,
+    marginBottom: 20,
+  },
+  contentText: {
+    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+    letterSpacing: 0.25,
+    color: 'rgba(0, 0, 0, 0.6)',
+    marginBottom: 15,
+    paddingHorizontal: 14,
+  },
+  contentBottom: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    marginRight: 24,
+    marginBottom: 18,
   },
   bottomBtn: {
-    textTransform: 'uppercase',
-    fontWeight: '500',
-    fontSize: 14,
-    lineHeight: 16,
-    color: '#6200EE',
+    ...commontStyle.btn,
+    marginLeft: 25,
   },
 })

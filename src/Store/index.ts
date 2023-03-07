@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { persistReducer, persistStore } from 'redux-persist'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { api } from '@services/api'
-import { composeWithDevTools } from 'redux-devtools-extension'
 import rootReducer from './rootReducer'
 
 export type RootState = ReturnType<typeof rootReducer>
