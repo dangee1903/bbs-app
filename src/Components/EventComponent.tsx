@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
-import { EventType } from '@model/EventType'
+import { EventType } from '@model/Event/EventType'
 import commontStyle from '@styles/commont.style'
 
 const EventComponent = (props: EventType) => {
-  const { name, created_at, introduction } = props
+  const { name, createdAt, introduction } = props
   return (
     <View style={styles.containerContent}>
       <View style={styles.contentTop}>
@@ -19,7 +19,7 @@ const EventComponent = (props: EventType) => {
           <Text style={styles.contentTopTitle} numberOfLines={2}>
             {name}
           </Text>
-          <Text style={styles.contentTopDate}>{created_at}</Text>
+          <Text style={styles.contentTopDate}>{createdAt}</Text>
         </View>
       </View>
       <View style={styles.content}>

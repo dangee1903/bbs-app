@@ -1,12 +1,11 @@
 /* eslint-disable camelcase */
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { NotificationType } from '@model/NotificationType'
+import { NotificationType } from '@model/Post/NotificationType'
 import commontStyle from '@styles/commont.style'
 
 const NotificatioComponent = (props: NotificationType) => {
-  // eslint-disable-next-line camelcase
-  const { name, introduction, created_at } = props
+  const { name, introduction, createdAt } = props
   return (
     <View style={styles.containerContent}>
       <View>
@@ -17,7 +16,7 @@ const NotificatioComponent = (props: NotificationType) => {
           {introduction}
         </Text>
         <View style={styles.bottom}>
-          <Text style={styles.bottomText}>{created_at}</Text>
+          <Text style={styles.bottomText}>{createdAt}</Text>
           <Text style={styles.bottomBtn} onPress={() => 'go to detail'}>
             Detail
           </Text>
