@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl":"./",
+    "baseUrl": "./",
     "paths": {
       "@components/*": ["src/Components/*"],
       "@constants/*": ["src/Constants/*"],
@@ -9,13 +9,12 @@
       "@store/*": ["src/Store/*"],
       "@screens/*": ["src/Screens/*"],
       "@services/*": ["src/Services/*"],
+      "@model/*": ["src/Models/*"],
+      "@styles/*": ["src/Styles/*"]
     },
     "allowSyntheticDefaultImports": true,
     "jsx": "react-native",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["dom", "esnext"],
     "moduleResolution": "node",
     "noEmit": true,
     "skipLibCheck": true,

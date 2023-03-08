@@ -11,6 +11,7 @@ import Project from '@screens/Project'
 import Github from '@screens/Github'
 import Noti from '@screens/Noti'
 import { Ionicons, AntDesign, MaterialIcons } from '@expo/vector-icons'
+import DetailPost from '@screens/Details/DetailPost'
 import { navigationRef } from './utils'
 
 const Stack = createNativeStackNavigator()
@@ -93,6 +94,11 @@ const ApplicationNavigator = () => {
             <Stack.Screen
               name="HomeTabs"
               component={HomeTabs}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="DetailPost"
+              component={DetailPost}
               options={{ headerShown: false }}
             />
           </Stack.Group>
