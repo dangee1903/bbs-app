@@ -1,11 +1,18 @@
 /* eslint-disable camelcase */
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { NotificationType } from '@model/Post/NotificationType'
+import { TPostType } from '@model/Post/PostType'
 import commontStyle from '@styles/commont.style'
 
-const NotificatioComponent = (props: NotificationType) => {
-  const { name, introduction, createdAt } = props
+type TProps = {
+  data: TPostType
+  onPress: (route: string, id: number, type: string, name: string) => void
+}
+
+const NotificatioComponent = ({ data, onPress }: TProps) => {
+  const { name, introduction, created_at: createdAt, id } = data
+
+  const TYPE = 'Post'
   return (
     <View style={styles.containerContent}>
       <View>
@@ -17,7 +24,10 @@ const NotificatioComponent = (props: NotificationType) => {
         </Text>
         <View style={styles.bottom}>
           <Text style={styles.bottomText}>{createdAt}</Text>
-          <Text style={styles.bottomBtn} onPress={() => 'go to detail'}>
+          <Text
+            style={styles.bottomBtn}
+            onPress={() => onPress('Details', id, TYPE, name)}
+          >
             Detail
           </Text>
         </View>

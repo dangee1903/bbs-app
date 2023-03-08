@@ -1,17 +1,17 @@
 /* eslint-disable react/no-unstable-nested-components */
-import * as React from 'react'
+import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { useReduxSelector } from '@store/index'
-import Login from '@screens/Login'
-import Home from '@screens/Home'
-import Setting from '@screens/Setting'
-import Project from '@screens/Project'
 import Github from '@screens/Github'
+import Home from '@screens/Home'
+import Login from '@screens/Login'
 import Noti from '@screens/Noti'
-import { Ionicons, AntDesign, MaterialIcons } from '@expo/vector-icons'
-import DetailPost from '@screens/Details/DetailPost'
+import Project from '@screens/Project'
+import Setting from '@screens/Setting'
+import { useReduxSelector } from '@store/index'
+import * as React from 'react'
+import DetailPostScreen from '@screens/Details/DetailPostScreen'
 import { navigationRef } from './utils'
 
 const Stack = createNativeStackNavigator()
@@ -96,10 +96,11 @@ const ApplicationNavigator = () => {
               component={HomeTabs}
               options={{ headerShown: false }}
             />
+            <Stack.Screen name="Home" component={Home} />
             <Stack.Screen
-              name="DetailPost"
-              component={DetailPost}
-              options={{ headerShown: false }}
+              name="Details"
+              component={DetailPostScreen}
+              options={({ route }: any) => ({ title: route?.params?.name })}
             />
           </Stack.Group>
         )}

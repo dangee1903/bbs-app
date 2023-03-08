@@ -1,16 +1,33 @@
 import EventComponent from '@components/EventComponent'
 import NotificatioComponent from '@components/NotificationComponent'
 import { TEventType } from '@model/Event/EventType'
-import { TNotificationType } from '@model/Post/NotificationType'
+import { TPostType } from '@model/Post/PostType'
 import { useGetEventQuery } from '@services/modules/event'
 import { useGetPostQuery } from '@services/modules/post'
-import commontStyle from '@styles/commont.style'
 import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { commontStyle } from '@styles/commont.style'
 
-const Home = () => {
+type TProps = {
+  navigation: any
+}
+
+const Home = ({ navigation }: TProps) => {
   const { data: dataPost } = useGetPostQuery()
   const { data: dataEvent } = useGetEventQuery()
+
+  const onPress = (
+    routeName: string,
+    itemId: number,
+    type: string,
+    name: string,
+  ) => {
+    navigation.navigate(routeName, {
+      id: itemId,
+      type,
+      name,
+    })
+  }
 
   return (
     <ScrollView
@@ -23,25 +40,23 @@ const Home = () => {
     >
       <View style={styles.homeContent}>
         <Text style={styles.contentHead}>Thông báo</Text>
-        {dataPost.data.posts.slice(0, 3).map((item: TNotificationType) => (
-          <NotificatioComponent
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            introduction={item.introduction}
-            createdAt={item.created_at}
-          />
-        ))}
+        {dataPost?.data?.posts &&
+          dataPost?.data?.posts
+            .slice(0, 3)
+            .map((item: TPostType) => (
+              <NotificatioComponent
+                key={item.id}
+                data={item}
+                onPress={onPress}
+              />
+            ))}
         <Text style={styles.contentHead}>Sự kiện</Text>
-        {dataEvent.data.events.slice(0, 3).map((item: TEventType) => (
-          <EventComponent
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            introduction={item.introduction}
-            createdAt={item.created_at}
-          />
-        ))}
+        {dataEvent?.data?.events &&
+          dataEvent?.data?.events
+            .slice(0, 3)
+            .map((item: TEventType) => (
+              <EventComponent key={item.id} data={item} />
+            ))}
       </View>
       {/* BTN CREATE. Wait api */}
       {/* <View style={styles.createButton}>

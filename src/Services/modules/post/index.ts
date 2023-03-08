@@ -1,11 +1,13 @@
 import { api } from '@services/api'
-import post from './post'
+import getpost from './getPost'
+import getDetailPost from './getDetailPost'
 
 export const postApi = api.injectEndpoints({
   endpoints: build => ({
-    getPost: post(build),
+    getPost: getpost(build),
+    getDetailPost: getDetailPost(build),
   }),
   overrideExisting: true,
 })
 
-export const { useGetPostQuery } = postApi
+export const { useGetPostQuery, useGetDetailPostMutation } = postApi

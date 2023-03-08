@@ -1,11 +1,16 @@
 /* eslint-disable camelcase */
+import { TEventType } from '@model/Event/EventType'
+import commontStyle from '@styles/commont.style'
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
-import { EventType } from '@model/Event/EventType'
-import commontStyle from '@styles/commont.style'
 
-const EventComponent = (props: EventType) => {
-  const { name, createdAt, introduction } = props
+type TProps = {
+  data: TEventType
+  onPress?: () => void
+}
+
+const EventComponent = ({ data, onPress }: TProps) => {
+  const { name, created_at: createdAt, introduction } = data
   return (
     <View style={styles.containerContent}>
       <View style={styles.contentTop}>
@@ -34,7 +39,9 @@ const EventComponent = (props: EventType) => {
         </Text>
       </View>
       <View style={styles.contentBottom}>
-        <Text style={styles.bottomBtn}>View</Text>
+        <Text style={styles.bottomBtn} onPress={onPress}>
+          View
+        </Text>
         <Text style={styles.bottomBtn}>Join</Text>
       </View>
     </View>
