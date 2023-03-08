@@ -23,25 +23,31 @@ const Home = () => {
     >
       <View style={styles.homeContent}>
         <Text style={styles.contentHead}>Thông báo</Text>
-        {dataPost.data.posts.slice(0, 3).map((item: TNotificationType) => (
-          <NotificatioComponent
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            introduction={item.introduction}
-            createdAt={item.created_at}
-          />
-        ))}
+        {dataPost?.data?.posts &&
+          dataPost?.data?.posts
+            .slice(0, 3)
+            .map((item: TNotificationType) => (
+              <NotificatioComponent
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                introduction={item.introduction}
+                createdAt={item.created_at}
+              />
+            ))}
         <Text style={styles.contentHead}>Sự kiện</Text>
-        {dataEvent.data.events.slice(0, 3).map((item: TEventType) => (
-          <EventComponent
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            introduction={item.introduction}
-            createdAt={item.created_at}
-          />
-        ))}
+        {dataEvent?.data?.events &&
+          dataEvent?.data?.events
+            .slice(0, 3)
+            .map((item: TEventType) => (
+              <EventComponent
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                introduction={item.introduction}
+                createdAt={item.created_at}
+              />
+            ))}
       </View>
       {/* BTN CREATE. Wait api */}
       {/* <View style={styles.createButton}>
