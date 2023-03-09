@@ -17,7 +17,6 @@ const Home = () => {
       style={{
         flex: 1,
         backgroundColor: 'white',
-        marginTop: 50,
       }}
       showsVerticalScrollIndicator={false}
     >

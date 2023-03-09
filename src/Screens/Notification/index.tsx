@@ -1,16 +1,16 @@
 import React from 'react'
 import { ScrollView, StyleSheet, Text } from 'react-native'
 
-const Setting = () => {
+const Notification = () => {
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: 'white' }}
       showsVerticalScrollIndicator={false}
     >
-      <Text>Setting</Text>
+      <Text>Helllo Notification</Text>
     </ScrollView>
   )
 }
-export default Setting
+export default Notification
 
 const styles = StyleSheet.create({})

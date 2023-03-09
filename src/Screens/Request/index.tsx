@@ -1,16 +1,16 @@
 import React from 'react'
 import { ScrollView, StyleSheet, Text } from 'react-native'
 
-const Setting = () => {
+const Request = () => {
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: 'white' }}
       showsVerticalScrollIndicator={false}
     >
-      <Text>Setting</Text>
+      <Text>Request</Text>
     </ScrollView>
   )
 }
-export default Setting
+export default Request
 
 const styles = StyleSheet.create({})

@@ -1,16 +1,14 @@
 import React from 'react'
-import { ScrollView, StyleSheet, Text } from 'react-native'
+import { ScrollView, Text } from 'react-native'
 
-const Setting = () => {
+const ListStaff = () => {
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: 'white' }}
       showsVerticalScrollIndicator={false}
     >
-      <Text>Setting</Text>
+      <Text>ListStaff</Text>
     </ScrollView>
   )
 }
-export default Setting
-
-const styles = StyleSheet.create({})
+export default ListStaff
