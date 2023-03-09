@@ -35,9 +35,6 @@ const Routers = () => {
               drawerIcon: () => _.icon,
               headerLeftLabelVisible: true,
               headerTitle: '',
-              headerBackgroundContainerStyle: {
-                paddingTop: 25,
-              },
               headerStyle: {
                 backgroundColor: '#6200EE',
               },

@@ -52,7 +52,6 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
               width: 80,
               borderRadius: 40,
               marginBottom: 10,
-              backgroundColor: '#fff',
             }}
           />
           <Text
