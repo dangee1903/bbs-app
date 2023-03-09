@@ -1,13 +1,29 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import {
+  configureStore,
+  getDefaultMiddleware,
+  isRejectedWithValue,
+  Middleware,
+} from '@reduxjs/toolkit'
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { persistReducer, persistStore } from 'redux-persist'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { api } from '@services/api'
-import { composeWithDevTools } from 'redux-devtools-extension'
 import rootReducer from './rootReducer'
+import { clear } from './loginReducer'
 
 export type RootState = ReturnType<typeof rootReducer>
+
+export const unauthenticatedMiddleware: Middleware =
+  ({ dispatch }) =>
+  next =>
+  action => {
+    if (isRejectedWithValue(action) && action.payload.status === 401) {
+      dispatch(clear())
+    }
+
+    return next(action)
+  }
 
 const persistConfig = {
   key: 'root',
@@ -20,7 +36,7 @@ const store = configureStore({
   devTools: __DEV__,
   middleware: getDefaultMiddleware({
     serializableCheck: false,
-  }).concat(api.middleware), // NOTE this addition
+  }).concat(unauthenticatedMiddleware, api.middleware), // NOTE this addition
   reducer: persistedReducer,
 })
 

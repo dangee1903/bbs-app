@@ -14,7 +14,7 @@ import { clear } from '@store/loginReducer'
 import { removeToken } from '@helpers/token'
 
 const CustomDrawer = (props: DrawerContentComponentProps) => {
-  const [image, setImage] = useState({ uri: '' })
+  const [image, setImage] = useState({ uri: '/dist/img/no-avatar.png' })
   const { data } = useReduxSelector(state => state.login.user)
   const dispatch = useReduxDispatch()
 
@@ -23,7 +23,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
       ...pre,
       uri: process.env.BASE_URL + data.avatar,
     }))
-  }, [data])
+  }, [data.avatar])
 
   const handleSignOut = async () => {
     await removeToken()

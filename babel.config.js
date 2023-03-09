@@ -18,6 +18,8 @@ module.exports = function (api) {
             '@store': ['./src/Store/'],
             '@screens': ['./src/Screens/'],
             '@services': ['./src/Services/'],
+            '@models': ['./src/Models/'],
+            '@styles': ['./src/Styles/'],
           },
           extensions: [
             '.js',

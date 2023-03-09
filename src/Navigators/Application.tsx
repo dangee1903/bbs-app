@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useReduxSelector } from '@store/index'
 import Login from '@screens/Login'
-import ListStaff from '@screens/ListStaff'
+import DetailPost from '@screens/Details/DetailPost'
 import { navigationRef } from './utils'
 import Routers from './Routes'
 
@@ -13,7 +13,6 @@ const Stack = createNativeStackNavigator()
 
 const ApplicationNavigator = () => {
   const { login } = useReduxSelector(state => state.login)
-  console.log(login, 'login')
 
   return (
     <NavigationContainer ref={navigationRef}>
@@ -32,6 +31,11 @@ const ApplicationNavigator = () => {
               options={{ headerShown: false }}
               name="Routes"
               component={Routers}
+            />
+            <Stack.Screen
+              name="DetailPost"
+              component={DetailPost}
+              options={{ headerShown: false }}
             />
           </Stack.Group>
         )}

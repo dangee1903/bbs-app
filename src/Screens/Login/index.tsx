@@ -1,33 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Dimensions,
   ScrollView,
   StyleSheet,
-  Text,
   View,
+  Image,
+  Text,
   NativeSyntheticEvent,
   TextInputChangeEventData,
 } from 'react-native'
-import {
-  Box,
-  Button,
-  FormControl,
-  Input,
-  Stack,
-  WarningOutlineIcon,
-} from 'native-base'
+import { Box, Button, FormControl, Input, Stack } from 'native-base'
 import { useLoginMutation } from '@services/modules/login'
 import { RUser } from '@services/modules/login/login'
-import { useReduxDispatch } from '@store/index'
-import { clear } from '@store/loginReducer'
 
 const Login = () => {
   const [user, setUser] = useState<RUser>({
     email: '',
     password: '',
   })
-  const dispatch = useReduxDispatch()
-  const [login, { data, isSuccess, isLoading, error }] = useLoginMutation()
+  const [login] = useLoginMutation()
 
   const onChangeText = (
     e: NativeSyntheticEvent<TextInputChangeEventData>,
@@ -46,7 +37,12 @@ const Login = () => {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.branchView}>
-        <Text style={styles.branchViewText}>Jvb</Text>
+        <Image
+          // eslint-disable-next-line global-require, import/extensions
+          source={require('../../../assets/BBS-logo.png')}
+          style={styles.logo}
+        />
+        <Text style={styles.title}>Bulletin Board System</Text>
       </View>
       <View style={styles.bottomView}>
         <View style={{ padding: 50 }}>
@@ -54,20 +50,12 @@ const Login = () => {
             <Box w="100%" maxWidth="300px">
               <FormControl isRequired>
                 <Stack mx="4">
-                  <FormControl.Label>User Name</FormControl.Label>
+                  <FormControl.Label>Username</FormControl.Label>
                   <Input
                     onChange={e => onChangeText(e, 'email')}
                     type="text"
-                    placeholder="password"
+                    placeholder="Username"
                   />
-                  <FormControl.HelperText>
-                    Must be atleast 6 characters.
-                  </FormControl.HelperText>
-                  <FormControl.ErrorMessage
-                    leftIcon={<WarningOutlineIcon size="xs" />}
-                  >
-                    Atleast 6 characters are required.
-                  </FormControl.ErrorMessage>
                 </Stack>
                 <Stack mx="4">
                   <FormControl.Label>Password</FormControl.Label>
@@ -77,18 +65,10 @@ const Login = () => {
                     defaultValue="12345"
                     placeholder="password"
                   />
-                  <FormControl.HelperText>
-                    Must be atleast 6 characters.
-                  </FormControl.HelperText>
-                  <FormControl.ErrorMessage
-                    leftIcon={<WarningOutlineIcon size="xs" />}
-                  >
-                    Atleast 6 characters are required.
-                  </FormControl.ErrorMessage>
                 </Stack>
                 <Stack mx="4">
                   <Button style={styles.button} size="sm" onPress={submit}>
-                    Submit
+                    Login
                   </Button>
                 </Stack>
               </FormControl>
@@ -102,16 +82,20 @@ const Login = () => {
 export default Login
 
 const styles = StyleSheet.create({
+  logo: {
+    width: 120,
+    height: 119,
+    marginTop: 60,
+  },
+  title: {
+    fontSize: 24,
+    marginTop: 60,
+  },
   branchView: {
-    height: Dimensions.get('window').height / 2.5,
-    backgroundColor: 'blue',
+    height: Dimensions.get('window').height / 2,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  branchViewText: {
-    color: 'white',
-    fontSize: 20,
   },
   bottomView: {
     backgroundColor: 'white',
@@ -121,7 +105,6 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 50,
   },
   button: {
-    marginTop: 10,
-    width: Dimensions.get('window').width / 3,
+    marginTop: 40,
   },
 })

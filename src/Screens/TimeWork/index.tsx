@@ -7,7 +7,7 @@ const TimeWork = () => {
       style={{ flex: 1, backgroundColor: 'white' }}
       showsVerticalScrollIndicator={false}
     >
-      <Text>Helllo</Text>
+      <Text>TimeWork</Text>
     </ScrollView>
   )
 }
