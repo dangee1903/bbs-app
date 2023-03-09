@@ -1,13 +1,14 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/no-unstable-nested-components */
-import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { useReduxSelector } from '@store/index'
+import DetailsScreen from '@screens/Details/DetailsScreen'
+import Home from '@screens/Home'
 import Login from '@screens/Login'
-import DetailPost from '@screens/Details/DetailPost'
-import { navigationRef } from './utils'
+import { useReduxSelector } from '@store/index'
+import * as React from 'react'
 import Routers from './Routes'
+import { navigationRef } from './utils'
 
 const Stack = createNativeStackNavigator()
 
@@ -32,10 +33,11 @@ const ApplicationNavigator = () => {
               name="Routes"
               component={Routers}
             />
+            <Stack.Screen name="Home" component={Home} />
             <Stack.Screen
-              name="DetailPost"
-              component={DetailPost}
-              options={{ headerShown: false }}
+              name="Details"
+              component={DetailsScreen}
+              options={({ route }: any) => ({ title: route?.params?.name })}
             />
           </Stack.Group>
         )}

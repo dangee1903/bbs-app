@@ -1,9 +1,11 @@
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
 
 export default (build: EndpointBuilder<any, any, any>) =>
-  build.query<any, void>({
-    query: () => ({
-      url: 'posts',
-      method: 'GET',
-    }),
+  build.mutation<any, { id: number }>({
+    query: id => {
+      return {
+        url: `posts/${id}`,
+        method: 'GET',
+      }
+    },
   })
