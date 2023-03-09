@@ -34,7 +34,6 @@ const Home = ({ navigation }: TProps) => {
       style={{
         flex: 1,
         backgroundColor: 'white',
-        marginTop: 50,
       }}
       showsVerticalScrollIndicator={false}
     >

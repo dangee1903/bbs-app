@@ -9,3 +9,7 @@ export const getToken = async (): Promise<string | undefined> => {
   const token = await SecureStore.getItemAsync('secure_token')
   return token || undefined
 }
+
+export const removeToken = async (): Promise<void> => {
+  await SecureStore.deleteItemAsync('secure_token')
+}

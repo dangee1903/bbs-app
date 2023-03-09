@@ -7,6 +7,7 @@ import { registerRootComponent } from 'expo'
 import ApplicationNavigator from '@navigators/Application'
 import { NativeBaseProvider } from 'native-base'
 import 'expo-dev-menu'
+import 'react-native-gesture-handler'
 
 export default function App() {
   return (
