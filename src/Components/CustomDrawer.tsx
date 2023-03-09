@@ -1,22 +1,48 @@
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import {
   DrawerContentScrollView,
-  DrawerItemList,
   DrawerContentComponentProps,
+  DrawerItemList,
 } from '@react-navigation/drawer'
+import { AntDesign } from '@expo/vector-icons'
+import { useReduxDispatch, useReduxSelector } from '@store/index'
+import { clear } from '@store/loginReducer'
+import { removeToken } from '@helpers/token'
 
 const CustomDrawer = (props: DrawerContentComponentProps) => {
-  const image = {
-    uri: 'https://reactnative.dev/img/tiny_logo.png',
+  const [image, setImage] = useState({ uri: '' })
+  const { data } = useReduxSelector(state => state.login.user)
+  const dispatch = useReduxDispatch()
+
+  useEffect(() => {
+    setImage(pre => ({
+      ...pre,
+      uri: process.env.BASE_URL + data.avatar,
+    }))
+  }, [data])
+
+  const handleSignOut = async () => {
+    await removeToken()
+    dispatch(clear)
   }
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{ backgroundColor: '#8200d6' }}
+        contentContainerStyle={{ backgroundColor: '#6200EE' }}
       >
+        <View style={{ flex: 1, flexDirection: 'row-reverse', marginLeft: 5 }}>
+          <AntDesign
+            onPress={() => props.navigation.closeDrawer()}
+            name="close"
+            size={24}
+            color="white"
+          />
+        </View>
         <View style={{ padding: 20 }}>
           <Image
             // eslint-disable-next-line global-require, import/extensions
@@ -26,16 +52,17 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
               width: 80,
               borderRadius: 40,
               marginBottom: 10,
+              backgroundColor: '#fff',
             }}
           />
           <Text
             style={{
               color: '#fff',
-              fontSize: 18,
+              fontSize: 22,
               marginBottom: 5,
             }}
           >
-            John Doe
+            {data.name}
           </Text>
           <View style={{ flexDirection: 'row' }}>
             <Text
@@ -44,9 +71,16 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
                 marginRight: 5,
               }}
             >
-              280 Coins
+              {data.job_name}
             </Text>
-            {/* <FontAwesome5 name="coins" size={14} color="#fff" /> */}
+            <Text
+              style={{
+                color: '#fff',
+                marginRight: 5,
+              }}
+            >
+              {data.team.name}
+            </Text>
           </View>
         </View>
         <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 10 }}>
@@ -62,6 +96,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
                 fontSize: 15,
                 marginLeft: 5,
               }}
+              onPress={handleSignOut}
             >
               Sign Out
             </Text>

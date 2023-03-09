@@ -7,7 +7,7 @@ const Request = () => {
       style={{ flex: 1, backgroundColor: 'white' }}
       showsVerticalScrollIndicator={false}
     >
-      <Text>Request</Text>
+      <Text>ListStaff</Text>
     </ScrollView>
   )
 }

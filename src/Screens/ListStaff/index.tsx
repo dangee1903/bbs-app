@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, StyleSheet, Text } from 'react-native'
+import { ScrollView, Text } from 'react-native'
 
 const ListStaff = () => {
   return (
@@ -12,5 +12,3 @@ const ListStaff = () => {
   )
 }
 export default ListStaff
-
-const styles = StyleSheet.create({})

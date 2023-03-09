@@ -1,16 +1,36 @@
+import AppHeader from '@components/MyHeader'
 import React from 'react'
+import { DrawerActions } from '@react-navigation/core'
 import { ScrollView, StyleSheet, View, Text } from 'react-native'
 
-const Home = () => {
+type TProps = {
+  navigation: any
+}
+
+const Home = ({ navigation }: TProps) => {
   return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: 'white' }}
-      showsVerticalScrollIndicator={false}
-    >
-      <View>
-        <Text>Test</Text>
-      </View>
-    </ScrollView>
+    <>
+      {/* <AppHeader
+        menu
+        onPressMenu={() => navigation.dispatch(DrawerActions.openDrawer())}
+      /> */}
+      <ScrollView
+        style={{ flex: 1, backgroundColor: 'white' }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View>
+          <Text>Test</Text>
+          <Text>Test</Text>
+          <Text>Test</Text>
+          <Text>Test</Text>
+          <Text>Test</Text>
+          <Text>Test</Text>
+          <Text>Test</Text>
+          <Text>Test</Text>
+          <Text>Test</Text>
+        </View>
+      </ScrollView>
+    </>
   )
 }
 export default Home
