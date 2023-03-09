@@ -88,14 +88,16 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
         </View>
       </DrawerContentScrollView>
       <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: '#ccc' }}>
-        <TouchableOpacity style={{ paddingVertical: 15 }}>
+        <TouchableOpacity
+          onPress={handleSignOut}
+          style={{ paddingVertical: 15 }}
+        >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text
               style={{
                 fontSize: 15,
                 marginLeft: 5,
               }}
-              onPress={handleSignOut}
             >
               Sign Out
             </Text>
