@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import DetailsScreen from '@screens/Details/DetailsScreen'
+import Details from '@screens/Details'
 import Home from '@screens/Home'
 import Login from '@screens/Login'
 import { useReduxSelector } from '@store/index'
@@ -36,7 +36,7 @@ const ApplicationNavigator = () => {
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen
               name="Details"
-              component={DetailsScreen}
+              component={Details}
               options={({ route }: any) => ({ title: route?.params?.name })}
             />
           </Stack.Group>

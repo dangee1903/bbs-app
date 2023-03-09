@@ -5,11 +5,15 @@ import { ScrollView, StyleSheet, Text, useWindowDimensions } from 'react-native'
 import RenderHTML from 'react-native-render-html'
 import { TDetailEventType } from '@model/Event/DetailEventType'
 import { converDate } from '@helpers/datatime'
-import { TPYE } from './DetailsScreen'
 
 type TProps = {
   data: TDetailPostType | TDetailEventType
   type: string
+}
+
+const TYPE_POST = {
+  post: 'Post',
+  event: 'Event',
 }
 
 const DetailItem = ({ data, type }: TProps) => {
@@ -31,7 +35,7 @@ const DetailItem = ({ data, type }: TProps) => {
               html: data?.content,
             }}
           />
-          {type === TPYE.post && (
+          {type === TYPE_POST.post && (
             <Text style={styles.footer}>
               <Text
                 style={{
@@ -41,7 +45,7 @@ const DetailItem = ({ data, type }: TProps) => {
               >
                 {data?.author_name}
               </Text>
-              <Text>, {converDate(data?.created_at)}</Text>
+              <Text>{`, ${converDate(data?.created_at)}`}</Text>
             </Text>
           )}
         </>

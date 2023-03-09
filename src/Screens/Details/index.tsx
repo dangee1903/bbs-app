@@ -3,28 +3,28 @@ import { useGetDetailEventMutation } from '@services/modules/event'
 import { useGetDetailPostMutation } from '@services/modules/post'
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
-import DetailItem from './DetailItem'
+import DetailItem from '@components/DetailItem'
+
+const TYPE_POST = {
+  post: 'Post',
+  event: 'Event',
+}
 
 type TProps = {
   route: any
   navigation: any
 }
-export const TPYE = {
-  post: 'Post',
-  event: 'Event',
-}
-
-const DetailsScreen = ({ route, navigation }: TProps) => {
+const Details = ({ route, navigation }: TProps) => {
   const [getDetailPost, { data: dataPost, isLoading: loadingPost }] =
     useGetDetailPostMutation()
   const [getDetailEvent, { data: dataEvent, isLoading: loadingEvent }] =
     useGetDetailEventMutation()
 
   useEffect(() => {
-    if (route.params.type === TPYE.post && route.params.id) {
+    if (route.params.type === TYPE_POST.post && route.params.id) {
       getDetailPost(route.params.id)
     }
-    if (route.params.type === TPYE.event && route.params.id) {
+    if (route.params.type === TYPE_POST.event && route.params.id) {
       getDetailEvent(route.params.id)
     }
   }, [getDetailEvent, getDetailPost, route.params.id, route.params.type])
@@ -49,7 +49,7 @@ const DetailsScreen = ({ route, navigation }: TProps) => {
   )
 }
 
-export default DetailsScreen
+export default Details
 
 const styles = StyleSheet.create({
   loading: {
