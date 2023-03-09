@@ -7,7 +7,6 @@ import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
 import { SideBar } from '@components/SideBar'
-import { TabHome } from './TabRoutes'
 
 const Drawer = createDrawerNavigator()
 

@@ -27,7 +27,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
 
   const handleSignOut = async () => {
     await removeToken()
-    dispatch(clear)
+    dispatch(clear())
   }
   return (
     <View style={{ flex: 1 }}>
@@ -90,7 +90,6 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
       <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: '#ccc' }}>
         <TouchableOpacity style={{ paddingVertical: 15 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {/* <Ionicons name="exit-outline" size={22} /> */}
             <Text
               style={{
                 fontSize: 15,
