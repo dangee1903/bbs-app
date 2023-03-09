@@ -1,6 +1,13 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
+  fontSizeTitle: {
+    fontWeight: '500',
+    fontSize: 20,
+    lineHeight: 24,
+    letterSpacing: 0.15,
+    color: 'rgba(0, 0, 0, 0.87)',
+  },
   boxShadowAll: {
     borderRadius: 4,
     borderBottomWidth: 4,

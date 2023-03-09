@@ -8,7 +8,7 @@ export interface TDetailPostType {
   name: string
   slug_name: string
   tags: string
-  author_name: string
+  author_name?: string
   image_url: string
   introduction: string
   content: string

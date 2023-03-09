@@ -4,9 +4,9 @@ import { TEventType } from '@model/Event/EventType'
 import { TPostType } from '@model/Post/PostType'
 import { useGetEventQuery } from '@services/modules/event'
 import { useGetPostQuery } from '@services/modules/post'
+import commontStyle from '@styles/commont.style'
 import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { commontStyle } from '@styles/commont.style'
 
 type TProps = {
   navigation: any
@@ -55,7 +55,7 @@ const Home = ({ navigation }: TProps) => {
           dataEvent?.data?.events
             .slice(0, 3)
             .map((item: TEventType) => (
-              <EventComponent key={item.id} data={item} />
+              <EventComponent key={item.id} data={item} onPress={onPress} />
             ))}
       </View>
       {/* BTN CREATE. Wait api */}

@@ -11,7 +11,7 @@ import Project from '@screens/Project'
 import Setting from '@screens/Setting'
 import { useReduxSelector } from '@store/index'
 import * as React from 'react'
-import DetailPostScreen from '@screens/Details/DetailPostScreen'
+import DetailsScreen from '@screens/Details/DetailsScreen'
 import { navigationRef } from './utils'
 
 const Stack = createNativeStackNavigator()
@@ -99,7 +99,7 @@ const ApplicationNavigator = () => {
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen
               name="Details"
-              component={DetailPostScreen}
+              component={DetailsScreen}
               options={({ route }: any) => ({ title: route?.params?.name })}
             />
           </Stack.Group>

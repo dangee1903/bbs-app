@@ -3,6 +3,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { TPostType } from '@model/Post/PostType'
 import commontStyle from '@styles/commont.style'
+import { converDate } from '@helpers/datatime'
 
 type TProps = {
   data: TPostType
@@ -23,7 +24,7 @@ const NotificatioComponent = ({ data, onPress }: TProps) => {
           {introduction}
         </Text>
         <View style={styles.bottom}>
-          <Text style={styles.bottomText}>{createdAt}</Text>
+          <Text style={styles.bottomText}>{converDate(createdAt)}</Text>
           <Text
             style={styles.bottomBtn}
             onPress={() => onPress('Details', id, TYPE, name)}

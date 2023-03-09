@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { converDate } from '@helpers/datatime'
 import { TEventType } from '@model/Event/EventType'
 import commontStyle from '@styles/commont.style'
 import React from 'react'
@@ -6,11 +7,12 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 
 type TProps = {
   data: TEventType
-  onPress?: () => void
+  onPress: (route: string, id: number, type: string, name: string) => void
 }
 
 const EventComponent = ({ data, onPress }: TProps) => {
-  const { name, created_at: createdAt, introduction } = data
+  const TYPE = 'Event'
+  const { name, created_at: createdAt, introduction, id } = data
   return (
     <View style={styles.containerContent}>
       <View style={styles.contentTop}>
@@ -24,7 +26,7 @@ const EventComponent = ({ data, onPress }: TProps) => {
           <Text style={styles.contentTopTitle} numberOfLines={2}>
             {name}
           </Text>
-          <Text style={styles.contentTopDate}>{createdAt}</Text>
+          <Text style={styles.contentTopDate}>{converDate(createdAt)}</Text>
         </View>
       </View>
       <View style={styles.content}>
@@ -39,7 +41,10 @@ const EventComponent = ({ data, onPress }: TProps) => {
         </Text>
       </View>
       <View style={styles.contentBottom}>
-        <Text style={styles.bottomBtn} onPress={onPress}>
+        <Text
+          style={styles.bottomBtn}
+          onPress={() => onPress('Details', id, TYPE, name)}
+        >
           View
         </Text>
         <Text style={styles.bottomBtn}>Join</Text>
