@@ -218,6 +218,7 @@ const Github = () => {
                   }
                   is24Hour
                   onChange={onChangeDate}
+                  style={{ width: 320, backgroundColor: 'white' }}
                 />
               )}
             </Stack>

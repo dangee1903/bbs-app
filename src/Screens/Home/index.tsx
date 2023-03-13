@@ -5,7 +5,7 @@ import { TPostType } from '@model/Post/PostType'
 import { useGetEventQuery } from '@services/modules/event'
 import { useGetPostQuery } from '@services/modules/post'
 import commontStyle from '@styles/commont.style'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
 type TProps = {
@@ -13,8 +13,14 @@ type TProps = {
 }
 
 const Home = ({ navigation }: TProps) => {
-  const { data: dataPost } = useGetPostQuery()
-  const { data: dataEvent } = useGetEventQuery()
+  const { data: dataPost, refetch: refetchPost } = useGetPostQuery()
+  const { data: dataEvent, refetch: refetchEvent } = useGetEventQuery()
+
+  useEffect(() => {
+    refetchPost()
+    refetchEvent()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const onPress = (
     routeName: string,
