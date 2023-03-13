@@ -4,6 +4,7 @@ module.exports = function (api) {
     presets: ['babel-preset-expo'],
     plugins: [
       'inline-dotenv',
+      'react-native-paper/babel',
       '@babel/plugin-transform-react-jsx-source',
       [
         'module-resolver',
