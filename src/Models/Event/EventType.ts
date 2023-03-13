@@ -1,15 +1,3 @@
-export interface EventType {
-  id: number
-  name: string
-  slugName?: string
-  eventDate?: string
-  eventEndDate?: string
-  introduction: string
-  place?: string
-  createdAt: string
-  date?: string
-}
-
 export interface TEventType {
   id: number
   name: string

@@ -6,6 +6,7 @@ module.exports = function (api) {
       'inline-dotenv',
       'react-native-paper/babel',
       '@babel/plugin-transform-react-jsx-source',
+      'react-native-reanimated/plugin',
       [
         'module-resolver',
         {

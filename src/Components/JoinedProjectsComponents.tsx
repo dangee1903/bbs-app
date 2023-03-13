@@ -37,7 +37,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
         pjId: joinedPj?.id,
         task_id: taskId,
       })
-      getListTask(joinedPj?.id)
+      setIdPj(joinedPj?.id)
       setTaskId('')
     }
   }

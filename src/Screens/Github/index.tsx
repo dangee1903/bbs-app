@@ -1,5 +1,4 @@
 import JoinedProjectsComponent from '@components/JoinedProjectsComponents'
-import ModalTask from '@components/Modal/ModalTask'
 import { TProject, TTask } from '@model/Project/ProjectType'
 import {
   useCreateMutation,
@@ -71,10 +70,10 @@ const Github = () => {
   }
 
   const onChangeText = (
-    e: NativeSyntheticEvent<TextInputChangeEventData>,
+    { nativeEvent: { text } }: NativeSyntheticEvent<TextInputChangeEventData>,
     name: string,
   ) => {
-    setTaskState(pre => ({ ...pre, [name]: e.nativeEvent.text }))
+    setTaskState(pre => ({ ...pre, [name]: text }))
   }
 
   const hideModal = () => {
