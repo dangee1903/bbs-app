@@ -14,6 +14,7 @@ type TProps = {
   route: any
   navigation: any
 }
+
 const Details = ({ route, navigation }: TProps) => {
   const [getDetailPost, { data: dataPost, isLoading: loadingPost }] =
     useGetDetailPostMutation()
