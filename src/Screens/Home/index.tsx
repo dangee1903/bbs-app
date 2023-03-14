@@ -1,11 +1,13 @@
 import EventComponent from '@components/EventComponent'
 import NotificatioComponent from '@components/NotificationComponent'
+import EventSekeleton from '@components/Sekeleton/EventSekeleton'
+import NotificationSekeleton from '@components/Sekeleton/NotificationSekeleton'
 import { TEventType } from '@model/Event/EventType'
 import { TPostType } from '@model/Post/PostType'
 import { useGetEventQuery } from '@services/modules/event'
 import { useGetPostQuery } from '@services/modules/post'
 import commontStyle from '@styles/commont.style'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
 type TProps = {
@@ -13,14 +15,8 @@ type TProps = {
 }
 
 const Home = ({ navigation }: TProps) => {
-  const { data: dataPost, refetch: refetchPost } = useGetPostQuery()
-  const { data: dataEvent, refetch: refetchEvent } = useGetEventQuery()
-
-  useEffect(() => {
-    refetchPost()
-    refetchEvent()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { data: dataPost, isLoading: loadingPost } = useGetPostQuery()
+  const { data: dataEvent, isLoading: loadingEvent } = useGetEventQuery()
 
   const onPress = (
     routeName: string,
@@ -45,6 +41,9 @@ const Home = ({ navigation }: TProps) => {
     >
       <View style={styles.homeContent}>
         <Text style={styles.contentHead}>Thông báo</Text>
+        {loadingPost &&
+          // eslint-disable-next-line react/no-array-index-key
+          [...Array(3)].map((x, i) => <NotificationSekeleton key={i} />)}
         {dataPost?.data?.posts &&
           dataPost?.data?.posts
             .slice(0, 3)
@@ -56,6 +55,9 @@ const Home = ({ navigation }: TProps) => {
               />
             ))}
         <Text style={styles.contentHead}>Sự kiện</Text>
+        {loadingEvent &&
+          // eslint-disable-next-line react/no-array-index-key
+          [...Array(3)].map((x, i) => <EventSekeleton key={i} />)}
         {dataEvent?.data?.events &&
           dataEvent?.data?.events
             .slice(0, 3)
@@ -63,13 +65,6 @@ const Home = ({ navigation }: TProps) => {
               <EventComponent key={item.id} data={item} onPress={onPress} />
             ))}
       </View>
-      {/* BTN CREATE. Wait api */}
-      {/* <View style={styles.createButton}>
-        <View style={styles.createBtn}>
-          <AntDesign name="plus" size={24} color="white" />
-          <Text style={styles.btn}>Create</Text>
-        </View>
-      </View> */}
     </ScrollView>
   )
 }

@@ -28,6 +28,8 @@ export const unauthenticatedMiddleware: Middleware =
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  whitelist: ['login', 'users'],
+  blacklist: ['api'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

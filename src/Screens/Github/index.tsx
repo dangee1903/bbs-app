@@ -25,6 +25,10 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker'
 import { AntDesign } from '@expo/vector-icons'
 import { TSelect, TSelects } from '@model/index'
+import { converYearMonthDay } from '@helpers/datatime'
+import JoinedProjectsSekeleton from '@components/Sekeleton/JoinedProjectsSekeleton'
+import { useReduxSelector } from '@store/index'
+import { TUser } from '@model/Users/UsersType'
 
 type TTaskState = {
   task_id: string
@@ -38,16 +42,17 @@ const initialState: TTaskState = {
   task_id: '',
   issue: '',
   progress: 0,
-  deadline: '',
+  deadline: converYearMonthDay(new Date()),
 }
 
 const Github = () => {
-  const { data: joinedPjs } = useJoinedQuery()
+  const { data: joinedPjs, isLoading: loadingJoined } = useJoinedQuery()
   const [isShowModal, setShowModal] = useState<boolean>(false)
   const [taskState, setTaskState] = useState<TTaskState>(initialState)
   const [selectedTask, setSelectedTask] = useState<TTask>()
   const [selectedPj, setSelectedPj] = useState<TProject>()
   const [show, setShow] = useState(false)
+  const { users } = useReduxSelector(state => state.users)
 
   const [create] = useCreateMutation()
   const [edit] = useEditMutation()
@@ -62,6 +67,7 @@ const Github = () => {
         issue: task.issue,
         progress: task.progress,
         deadline: task.deadline ?? '',
+        user_id: task.user_id,
       })
     } else {
       setTaskState(initialState)
@@ -122,7 +128,8 @@ const Github = () => {
   const selectAssigneeLists = (): TSelects | [] => {
     if (selectedPj) {
       return selectedPj?.current_members?.map(member => ({
-        label: String(member.user_id),
+        label:
+          users.find((user: TUser) => user.id === member.user_id)?.name ?? '',
         value: member.user_id,
       }))
     }
@@ -134,11 +141,8 @@ const Github = () => {
     date?: Date | undefined,
   ) => {
     if (date) {
-      const newDate = `${date.getFullYear()}/${
-        date.getMonth() + 1
-      }/${date.getDate()}`
       setShow(false)
-      setTaskState({ ...taskState, deadline: newDate })
+      setTaskState({ ...taskState, deadline: converYearMonthDay(date) })
     }
   }
 
@@ -157,13 +161,16 @@ const Github = () => {
           <FormControl isRequired>
             <Stack>
               <Text style={styles.formTitle}>Assignee</Text>
-              <DropDownPicker
-                items={selectAssigneeLists()}
-                containerStyle={{ height: 40 }}
-                onChangeItem={(item: TSelect) =>
-                  setTaskState({ ...taskState, user_id: item.value })
-                }
-              />
+              <View style={{ zIndex: 1000 }}>
+                <DropDownPicker
+                  defaultValue={taskState.user_id ?? null}
+                  items={selectAssigneeLists()}
+                  containerStyle={{ height: 40 }}
+                  onChangeItem={(item: TSelect) => {
+                    setTaskState({ ...taskState, user_id: item.value })
+                  }}
+                />
+              </View>
             </Stack>
             <Stack>
               <Text style={styles.formTitle}>Task id</Text>
@@ -240,6 +247,9 @@ const Github = () => {
         style={styles.projectWrap}
         showsVerticalScrollIndicator={false}
       >
+        {loadingJoined &&
+          // eslint-disable-next-line react/no-array-index-key
+          [...Array(5)].map((x, i) => <JoinedProjectsSekeleton key={i} />)}
         {joinedPjs?.data?.projects &&
           joinedPjs?.data?.projects.map((joinedPj: TProject) => (
             <JoinedProjectsComponent

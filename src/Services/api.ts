@@ -36,6 +36,7 @@ const baseQueryWithInterceptor: BaseQueryFn<
 }
 
 export const api = createApi({
+  keepUnusedDataFor: 0.00001,
   tagTypes: ['Test'],
   baseQuery: baseQueryWithInterceptor,
   endpoints: () => ({}),

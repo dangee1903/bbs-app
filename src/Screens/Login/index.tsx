@@ -12,6 +12,9 @@ import {
 import { Box, Button, FormControl, Input, Stack } from 'native-base'
 import { useLoginMutation } from '@services/modules/login'
 import { RUser } from '@services/modules/login/login'
+import { useUsersMutation } from '@services/modules/users'
+import Toast, { ToastProps } from 'react-native-toast-message'
+import { IndexedObject, IndexOfObject } from '@model/index'
 
 const Login = () => {
   const [user, setUser] = useState<RUser>({
@@ -19,6 +22,7 @@ const Login = () => {
     password: '',
   })
   const [login] = useLoginMutation()
+  const [users] = useUsersMutation()
 
   const onChangeText = (
     e: NativeSyntheticEvent<TextInputChangeEventData>,
@@ -27,8 +31,18 @@ const Login = () => {
     setUser(pre => ({ ...pre, [name]: e.nativeEvent.text }))
   }
 
-  const submit = () => {
-    login(user)
+  const submit = async () => {
+    try {
+      await login(user).unwrap()
+      await users()
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        props: { uuid: 'bba1a7d0-6ab2-4a0a-a76e-ebbe05ae6d70' },
+        text1: 'Error',
+        text2: error?.data?.message ?? '',
+      })
+    }
   }
 
   return (
@@ -36,6 +50,7 @@ const Login = () => {
       style={{ flex: 1, backgroundColor: 'white' }}
       showsVerticalScrollIndicator={false}
     >
+      <Toast position="top" />
       <View style={styles.branchView}>
         <Image
           // eslint-disable-next-line global-require, import/extensions

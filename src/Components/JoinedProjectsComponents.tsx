@@ -4,6 +4,7 @@ import { useCreateMutation, useOvewiewQuery } from '@services/modules/project'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native'
 import { Checkbox, MD3Colors, ProgressBar, TextInput } from 'react-native-paper'
+import TaskSekeleton from './Sekeleton/TaskSekeleton'
 
 type TProps = {
   joinedPj: TProject
@@ -14,7 +15,13 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
   const [pjState, setPjState] = useState<any>()
   const [idPj, setIdPj] = useState<number | undefined>()
   const [taskId, setTaskId] = useState<string>('')
-  const { data: listTask, refetch } = useOvewiewQuery(idPj, { skip: !idPj })
+
+  const {
+    data: listTask,
+    refetch,
+    isLoading: loadingTask,
+  } = useOvewiewQuery(idPj, { skip: !idPj })
+
   const [create] = useCreateMutation()
 
   const getListTask = async (id: number) => {
@@ -57,7 +64,13 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
             </TouchableOpacity>
           </View>
         </View>
-        <Text style={styles.bottomText} onPress={() => openModal(joinedPj)}>
+        <Text
+          style={styles.bottomText}
+          onPress={() => {
+            openModal(joinedPj)
+            setIdPj(joinedPj.id)
+          }}
+        >
           +
         </Text>
       </View>
@@ -66,6 +79,9 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
         <Text style={styles.bottomText}>List users</Text>
       </View>
       <View style={styles.listTasks}>
+        {loadingTask &&
+          // eslint-disable-next-line react/no-array-index-key
+          [...Array(2)].map((x, i) => <TaskSekeleton key={i} />)}
         {pjState &&
           pjState?.data?.project?.tasks.length > 0 &&
           pjState?.data?.project?.tasks.map((task: TTask) => {
@@ -73,7 +89,10 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
               <View key={task.id}>
                 <TouchableOpacity
                   style={styles.task}
-                  onPress={() => openModal(joinedPj, task)}
+                  onPress={() => {
+                    openModal(joinedPj, task)
+                    setIdPj(joinedPj.id)
+                  }}
                 >
                   <View style={styles.taskWrap}>
                     <View style={styles.taskLeft}>
