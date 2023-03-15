@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
+import commonStyle from '@styles/commonStyle'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import commontStyle from '@styles/commont.style'
 import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder'
 
 const NotificationSekeleton = () => {
@@ -22,6 +22,6 @@ export default NotificationSekeleton
 const styles = StyleSheet.create({
   containerContent: {
     padding: 16,
-    ...commontStyle.boxShadow,
+    ...commonStyle.boxShadow,
   },
 })

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { converDate } from '@helpers/datatime'
 import { TEventType } from '@model/Event/EventType'
-import commontStyle from '@styles/commont.style'
+import commonStyle from '@styles/commonStyle'
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
@@ -57,7 +57,7 @@ export default EventComponent
 
 const styles = StyleSheet.create({
   containerContent: {
-    ...commontStyle.boxShadowAll,
+    ...commonStyle.boxShadowAll,
   },
   contentTop: {
     flexDirection: 'row',
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     marginBottom: 18,
   },
   bottomBtn: {
-    ...commontStyle.btn,
+    ...commonStyle.btn,
     marginLeft: 25,
   },
 })

@@ -1,10 +1,10 @@
 import { TDetailPostType } from '@model/Post/DetailPostType'
-import commontStyle from '@styles/commont.style'
 import React from 'react'
 import { ScrollView, StyleSheet, Text, useWindowDimensions } from 'react-native'
 import RenderHTML from 'react-native-render-html'
 import { TDetailEventType } from '@model/Event/DetailEventType'
 import { converDate } from '@helpers/datatime'
+import commonStyle from '@styles/commonStyle'
 
 type TProps = {
   data: TDetailPostType | TDetailEventType
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   headerTitle: {
-    ...commontStyle.fontSizeTitle,
+    ...commonStyle.fontSizeTitle,
     marginTop: 10,
     textAlign: 'center',
     fontSize: 18,
