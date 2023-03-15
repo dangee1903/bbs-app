@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
+import commonStyle from '@styles/commonStyle'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import commontStyle from '@styles/commont.style'
 import { Placeholder, Fade, PlaceholderMedia } from 'rn-placeholder'
 
 const JoinedProjectsSekeleton = () => {
@@ -18,7 +18,7 @@ export default JoinedProjectsSekeleton
 
 const styles = StyleSheet.create({
   containerContent: {
-    ...commontStyle.boxShadowAll,
+    ...commonStyle.boxShadowAll,
   },
   media: {
     width: '100%',

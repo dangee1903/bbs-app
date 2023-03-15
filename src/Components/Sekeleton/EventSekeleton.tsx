@@ -1,4 +1,4 @@
-import commontStyle from '@styles/commont.style'
+import commonStyle from '@styles/commonStyle'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Fade, Placeholder, PlaceholderMedia } from 'rn-placeholder'
@@ -17,7 +17,7 @@ export default EventSekeleton
 
 const styles = StyleSheet.create({
   containerContent: {
-    ...commontStyle.boxShadowAll,
+    ...commonStyle.boxShadowAll,
   },
   media: {
     width: '100%',

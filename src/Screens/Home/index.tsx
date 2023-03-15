@@ -6,7 +6,7 @@ import { TEventType } from '@model/Event/EventType'
 import { TPostType } from '@model/Post/PostType'
 import { useGetEventQuery } from '@services/modules/event'
 import { useGetPostQuery } from '@services/modules/post'
-import commontStyle from '@styles/commont.style'
+import commonStyle from '@styles/commonStyle'
 import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   btn: {
-    ...commontStyle.btn,
+    ...commonStyle.btn,
     color: '#FFFFFF',
     marginLeft: 17,
   },

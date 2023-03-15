@@ -2,8 +2,8 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { TPostType } from '@model/Post/PostType'
-import commontStyle from '@styles/commont.style'
 import { converDate } from '@helpers/datatime'
+import commonStyle from '@styles/commonStyle'
 
 type TProps = {
   data: TPostType
@@ -42,7 +42,7 @@ export default NotificatioComponent
 const styles = StyleSheet.create({
   containerContent: {
     padding: 16,
-    ...commontStyle.boxShadow,
+    ...commonStyle.boxShadow,
   },
   contentTitle: {
     fontWeight: '400',
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     color: '#6D6D6D',
   },
   bottomBtn: {
-    ...commontStyle.btn,
+    ...commonStyle.btn,
     color: '#6200EE',
   },
 })
