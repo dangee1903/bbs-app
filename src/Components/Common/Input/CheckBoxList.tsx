@@ -8,12 +8,14 @@ type TProps = {
   data: TSelectString[]
   optionTime?: string[]
   setOptionTime?: (value: string[]) => void
+  errors?: string | string[]
 }
 
 const CheckBoxList = ({
   data = [],
   optionTime = [],
   setOptionTime = () => {},
+  errors,
 }: TProps) => {
   const [selected, setSelected] = useState<string[]>(optionTime)
 
@@ -30,21 +32,24 @@ const CheckBoxList = ({
     }
   }
   return (
-    <View style={styles.checkboxTime}>
-      {data.map(item => {
-        return (
-          <View key={item.value} style={styles.checkboxItem}>
-            <Checkbox
-              status={selected.includes(item.value) ? 'checked' : 'unchecked'}
-              onPress={() => {
-                onSelect(item.value, !selected.includes(item.value))
-              }}
-            />
-            <Text>{item.label}</Text>
-          </View>
-        )
-      })}
-    </View>
+    <>
+      <View style={styles.checkboxTime}>
+        {data.map(item => {
+          return (
+            <View key={item.value} style={styles.checkboxItem}>
+              <Checkbox
+                status={selected.includes(item.value) ? 'checked' : 'unchecked'}
+                onPress={() => {
+                  onSelect(item.value, !selected.includes(item.value))
+                }}
+              />
+              <Text>{item.label}</Text>
+            </View>
+          )
+        })}
+      </View>
+      {errors && <Text style={{ fontSize: 10, color: 'red' }}>{errors}</Text>}
+    </>
   )
 }
 

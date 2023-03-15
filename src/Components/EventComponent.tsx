@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginLeft: 16,
+    flex: 1,
   },
   contentTopTitle: {
     fontWeight: '500',

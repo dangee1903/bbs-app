@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import * as React from 'react'
-import { Modal, Portal } from 'react-native-paper'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { Button, Modal, Portal } from 'react-native-paper'
+import { StyleSheet, View, Text } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
 type TProps = {
@@ -9,15 +10,18 @@ type TProps = {
   children: React.ReactNode
   title?: string
   handleConfirm: () => void
+  disable?: boolean
+  handleReset?: (e?: React.SyntheticEvent<any, Event> | undefined) => void
 }
 
 const ModalTask = ({
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setShowModal = () => {},
   isShowModal = false,
   title = '',
   children,
   handleConfirm,
+  disable = false,
+  handleReset = () => {},
 }: TProps) => {
   return (
     <Portal>
@@ -37,15 +41,22 @@ const ModalTask = ({
         </View>
         {children}
         <View style={styles.footer}>
-          <TouchableOpacity
-            onPress={() => setShowModal(false)}
+          <Button
+            onPress={() => {
+              setShowModal(false)
+              handleReset()
+            }}
             style={styles.buttonFooter}
           >
             <Text style={styles.textCancleFooter}>HỦY</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleConfirm} style={styles.buttonFooter}>
+          </Button>
+          <Button
+            disabled={disable}
+            onPress={handleConfirm}
+            style={styles.buttonFooter}
+          >
             <Text style={styles.textConfirmFooter}>XÁC NHẬN</Text>
-          </TouchableOpacity>
+          </Button>
         </View>
       </Modal>
     </Portal>
