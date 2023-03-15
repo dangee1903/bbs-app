@@ -22,7 +22,7 @@ const Routers = () => {
         drawerActiveTintColor: '#fff',
         drawerInactiveTintColor: '#333',
       }}
-      useLegacyImplementation
+      useLegacyImplementation={false}
     >
       {SideBar.map(_ => {
         return (
