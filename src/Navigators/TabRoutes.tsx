@@ -17,6 +17,7 @@ export const TabHome = () => {
         tabBarStyle: {
           backgroundColor: '#6200EE',
         },
+        unmountOnBlur: true,
       }}
     >
       {tabArr.map(_ => {

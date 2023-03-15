@@ -1,5 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/no-unstable-nested-components */
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Details from '@screens/Details'

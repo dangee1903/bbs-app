@@ -1,12 +1,14 @@
 import EventComponent from '@components/EventComponent'
 import NotificatioComponent from '@components/NotificationComponent'
 import MenuRequest from '@components/MenuRequest'
+import EventSekeleton from '@components/Sekeleton/EventSekeleton'
+import NotificationSekeleton from '@components/Sekeleton/NotificationSekeleton'
 import { TEventType } from '@model/Event/EventType'
 import { TPostType } from '@model/Post/PostType'
 import { useGetEventQuery } from '@services/modules/event'
 import { useGetPostQuery } from '@services/modules/post'
-import commontStyle from '@styles/commont.style'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import commonStyle from '@styles/commonStyle'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import ModalRequest from '@components/Modal/ModalRequest'
 import { TDataShow } from '@model/Request'
@@ -16,8 +18,8 @@ type TProps = {
 }
 
 const Home = ({ navigation }: TProps) => {
-  const { data: dataPost, refetch: refetchPost } = useGetPostQuery()
-  const { data: dataEvent, refetch: refetchEvent } = useGetEventQuery()
+  const { data: dataPost, isLoading: loadingPost } = useGetPostQuery()
+  const { data: dataEvent, isLoading: loadingEvent } = useGetEventQuery()
   const [showMenu, setShowMenu] = useState(false)
   const [showModalRequest, setShowModalRequest] = useState(false)
   const [dataShow, setDataShow] = useState<TDataShow>({
@@ -28,12 +30,6 @@ const Home = ({ navigation }: TProps) => {
     checkBoxSession: false,
     permission_type: '0',
   })
-
-  useEffect(() => {
-    refetchPost()
-    refetchEvent()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const onPress = (
     routeName: string,
@@ -72,6 +68,9 @@ const Home = ({ navigation }: TProps) => {
       >
         <View style={styles.homeContent}>
           <Text style={styles.contentHead}>Thông báo</Text>
+          {loadingPost &&
+            // eslint-disable-next-line react/no-array-index-key
+            [...Array(3)].map((x, i) => <NotificationSekeleton key={i} />)}
           {dataPost?.data?.posts &&
             dataPost?.data?.posts
               .slice(0, 3)
@@ -83,6 +82,9 @@ const Home = ({ navigation }: TProps) => {
                 />
               ))}
           <Text style={styles.contentHead}>Sự kiện</Text>
+          {loadingEvent &&
+            // eslint-disable-next-line react/no-array-index-key
+            [...Array(3)].map((x, i) => <EventSekeleton key={i} />)}
           {dataEvent?.data?.events &&
             dataEvent?.data?.events
               .slice(0, 3)
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   btn: {
-    ...commontStyle.btn,
+    ...commonStyle.btn,
     color: '#FFFFFF',
     marginLeft: 17,
   },

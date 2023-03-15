@@ -7,6 +7,7 @@ import {
 } from '@reduxjs/toolkit/query/react'
 import { Config } from '@constants/config'
 import { getToken } from '@helpers/token'
+import Toast from 'react-native-toast-message'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: Config.API_URL,
@@ -29,13 +30,19 @@ const baseQueryWithInterceptor: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions)
-  // eslint-disable-next-line no-empty
-  if (result.error && result.error.status === 401) {
+  if (result.error) {
+    const error = result.error as any
+    Toast.show({
+      type: 'error',
+      text1: `Lỗi ${error?.data?.status}`,
+      text2: error?.data?.message ?? '',
+    })
   }
   return result
 }
 
 export const api = createApi({
+  keepUnusedDataFor: 0.00001,
   tagTypes: ['Test'],
   baseQuery: baseQueryWithInterceptor,
   endpoints: () => ({}),

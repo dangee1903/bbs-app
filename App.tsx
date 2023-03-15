@@ -7,13 +7,16 @@ import ApplicationNavigator from '@navigators/Application'
 import { NativeBaseProvider } from 'native-base'
 import { Provider as PaperProvider } from 'react-native-paper'
 import 'expo-dev-menu'
+import ToaskError from '@components/ToaskError'
 
 export default function App() {
   return (
     <Provider store={store}>
       <NativeBaseProvider>
         <PaperProvider>
-          <ApplicationNavigator />
+          <ToaskError>
+            <ApplicationNavigator />
+          </ToaskError>
         </PaperProvider>
       </NativeBaseProvider>
     </Provider>
