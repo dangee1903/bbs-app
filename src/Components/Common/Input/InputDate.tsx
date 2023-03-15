@@ -18,14 +18,14 @@ import InputText from './InputText'
 type TProps = {
   valueDate?: string
   setValueDate?: (newDate: string) => void
-  handleBlur: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
+  handleBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
   errors?: string
 }
 
 const InputDate = ({
   valueDate = '',
   setValueDate = () => {},
-  handleBlur,
+  handleBlur = () => {},
   errors,
 }: TProps) => {
   const [value, setValue] = React.useState<string>(valueDate)
