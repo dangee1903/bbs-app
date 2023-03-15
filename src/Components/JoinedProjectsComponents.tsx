@@ -2,7 +2,7 @@
 import { TProject, TTask } from '@model/Project/ProjectType'
 import { useCreateMutation, useOvewiewQuery } from '@services/modules/project'
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Image, Text, TouchableOpacity, StyleProp, ViewStyle } from 'react-native'
 import { Checkbox, MD3Colors, ProgressBar, TextInput } from 'react-native-paper'
 import TaskSekeleton from './Sekeleton/TaskSekeleton'
 
@@ -49,6 +49,29 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
     }
   }
 
+  const getColorTask = (task: TTask): StyleProp<ViewStyle> => {
+    if (task.deadline) {
+      const today = new Date()
+      const deadline = new Date(task.deadline)
+
+      if (
+        today.getMonth() + 1 === deadline.getMonth() + 1 &&
+        today.getDay() === deadline.getDay() &&
+        today.getFullYear() === deadline.getFullYear()
+      ) {
+        return {
+          backgroundColor: 'rgba(234, 126, 0, 0.37)',
+        }
+      }
+      if (deadline < today) {
+        return {
+          backgroundColor: 'rgba(255, 0, 0, 0.2)',
+        }
+      }
+    }
+    return {}
+  }
+
   return (
     <View style={styles.containerContent}>
       <View style={styles.projectTitleTop}>
@@ -86,7 +109,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
           pjState?.data?.project?.tasks.length > 0 &&
           pjState?.data?.project?.tasks.map((task: TTask) => {
             return (
-              <View key={task.id}>
+              <View key={task.id} style={getColorTask(task)}>
                 <TouchableOpacity
                   style={styles.task}
                   onPress={() => {

@@ -7,33 +7,27 @@ import {
   useRemoveMutation,
 } from '@services/modules/project'
 import React, { useState } from 'react'
-import {
-  NativeSyntheticEvent,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInputChangeEventData,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import Slider from '@react-native-community/slider'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Modal, Portal } from 'react-native-paper'
-import { Button, FormControl, Input, Stack } from 'native-base'
+import { Button, Input, Stack } from 'native-base'
+import { Formik } from 'formik'
 import DropDownPicker from 'react-native-dropdown-picker'
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker'
+import { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import { AntDesign } from '@expo/vector-icons'
-import { TSelect, TSelects } from '@model/index'
+import { TSelects } from '@model/index'
 import { converYearMonthDay } from '@helpers/datatime'
 import JoinedProjectsSekeleton from '@components/Sekeleton/JoinedProjectsSekeleton'
 import { useReduxSelector } from '@store/index'
 import { TUser } from '@model/Users/UsersType'
+import InputCommon from '@components/Common/InputCommon'
+import DropdownCommon from '@components/Common/DropdownCommon'
+import SliderCommon from '@components/Common/SliderCommon'
+import { githubValidationSchema } from './githubState'
 
 type TTaskState = {
   task_id: string
   issue?: string
-  progress?: number
+  progress: number
   deadline?: string
   user_id?: number
 }
@@ -75,13 +69,6 @@ const Github = () => {
     setSelectedPj(project)
   }
 
-  const onChangeText = (
-    { nativeEvent: { text } }: NativeSyntheticEvent<TextInputChangeEventData>,
-    name: string,
-  ) => {
-    setTaskState(pre => ({ ...pre, [name]: text }))
-  }
-
   const hideModal = () => {
     setShowModal(false)
     setSelectedTask(undefined)
@@ -91,38 +78,6 @@ const Github = () => {
       issue: '',
       progress: 0,
     })
-  }
-
-  const submit = () => {
-    if (selectedPj) {
-      if (selectedTask) {
-        edit({
-          pjId: selectedPj.id,
-          id: selectedTask.id,
-          ...taskState,
-        })
-      } else {
-        create({
-          pjId: selectedPj.id,
-          ...taskState,
-        })
-      }
-    }
-    hideModal()
-  }
-
-  const removeTask = () => {
-    if (selectedPj?.id && selectedTask?.id) {
-      remove({
-        id: selectedTask?.id,
-        pjId: selectedPj?.id,
-      })
-      hideModal()
-    }
-  }
-
-  const changeProgress = (value: number) => {
-    setTaskState({ ...taskState, progress: Number(value.toFixed()) })
   }
 
   const selectAssigneeLists = (): TSelects | [] => {
@@ -146,6 +101,8 @@ const Github = () => {
     }
   }
 
+  let submitAction: string | undefined
+
   return (
     <>
       <Portal>
@@ -158,88 +115,132 @@ const Github = () => {
             <Text>{selectedTask ? selectedTask.task_id : 'Tạo mới task'}</Text>
             <Text onPress={hideModal}>X</Text>
           </View>
-          <FormControl isRequired>
-            <Stack>
-              <Text style={styles.formTitle}>Assignee</Text>
-              <View style={{ zIndex: 1000 }}>
-                <DropDownPicker
-                  defaultValue={taskState.user_id ?? null}
-                  items={selectAssigneeLists()}
-                  containerStyle={{ height: 40 }}
-                  onChangeItem={(item: TSelect) => {
-                    setTaskState({ ...taskState, user_id: item.value })
-                  }}
-                />
-              </View>
-            </Stack>
-            <Stack>
-              <Text style={styles.formTitle}>Task id</Text>
-              <Input
-                onChange={e => onChangeText(e, 'task_id')}
-                type="text"
-                placeholder="Task id"
-                defaultValue={taskState.task_id}
-              />
-            </Stack>
-            <Stack>
-              <Text style={styles.formTitle}>Issue</Text>
-              <Input
-                onChange={e => onChangeText(e, 'issue')}
-                type="text"
-                placeholder="Issue"
-                defaultValue={taskState.issue}
-              />
-            </Stack>
-            <Stack>
-              <Text style={styles.formTitle}>
-                Progress
-                {`(${taskState.progress?.toFixed()}%)`}
-              </Text>
-              <Slider
-                style={{ height: 40 }}
-                minimumValue={0}
-                maximumValue={100}
-                minimumTrackTintColor="#751FF0"
-                maximumTrackTintColor="#CBAAFA"
-                thumbTintColor="#751FF0"
-                onSlidingComplete={changeProgress}
-                value={taskState.progress}
-              />
-            </Stack>
-            <Stack>
-              <Text style={styles.formTitle}>Deadline</Text>
-              <TouchableOpacity
-                style={styles.datePicker}
-                onPress={() => setShow(!show)}
-              >
-                <Text>{taskState.deadline}</Text>
-                <AntDesign name="calendar" size={24} color="black" />
-              </TouchableOpacity>
-              {show && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={
-                    !taskState.deadline
-                      ? new Date()
-                      : new Date(taskState.deadline)
+          <Formik
+            validationSchema={githubValidationSchema}
+            initialValues={taskState}
+            onSubmit={async (values: TTaskState) => {
+              if (submitAction === 'editTask') {
+                if (selectedPj) {
+                  if (selectedTask) {
+                    edit({
+                      pjId: selectedPj.id,
+                      id: selectedTask.id,
+                      ...values,
+                    })
+                  } else {
+                    create({
+                      pjId: selectedPj.id,
+                      ...values,
+                    })
                   }
-                  is24Hour
-                  onChange={onChangeDate}
-                  style={{ width: 320, backgroundColor: 'white' }}
-                />
-              )}
-            </Stack>
-            <Stack style={styles.buttonWrap}>
-              <Button style={styles.button} size="sm" onPress={submit}>
-                {selectedTask ? 'Sửa task' : 'Tạo task'}
-              </Button>
-              {selectedTask && (
-                <Button style={styles.button} size="sm" onPress={removeTask}>
-                  Xóa task
-                </Button>
-              )}
-            </Stack>
-          </FormControl>
+                }
+              } else if (selectedPj?.id && selectedTask?.id) {
+                remove({
+                  id: selectedTask?.id,
+                  pjId: selectedPj?.id,
+                })
+              }
+              hideModal()
+            }}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              isValid,
+              setFieldValue,
+            }) => (
+              <>
+                <Stack>
+                  <DropdownCommon
+                    items={selectAssigneeLists()}
+                    label="Assignee"
+                    value={values.user_id ?? null}
+                    errors={errors.user_id}
+                    setFieldValue={setFieldValue}
+                    name="assignee"
+                  />
+                </Stack>
+                <Stack>
+                  <InputCommon
+                    placeholder="Task id"
+                    handleChange={handleChange('task_id')}
+                    handleBlur={handleBlur('task_id')}
+                    value={values.task_id}
+                    errors={errors.task_id}
+                    label="Task id"
+                  />
+                </Stack>
+                <Stack>
+                  <InputCommon
+                    placeholder="Issue"
+                    handleChange={handleChange('issue')}
+                    handleBlur={handleBlur('issue')}
+                    value={values.issue ?? ''}
+                    errors={errors.issue}
+                    label="Issue"
+                  />
+                </Stack>
+                <Stack>
+                  <SliderCommon
+                    setFieldValue={setFieldValue}
+                    value={values.progress}
+                    name="progress"
+                    errors={errors.progress}
+                  />
+                </Stack>
+                <Stack>
+                  <Text style={styles.formTitle}>Deadline</Text>
+                  <TouchableOpacity
+                    style={styles.datePicker}
+                    onPress={() => setShow(!show)}
+                  >
+                    <Text>{taskState.deadline}</Text>
+                    <AntDesign name="calendar" size={24} color="black" />
+                  </TouchableOpacity>
+                  {show && (
+                    <DateTimePicker
+                      testID="dateTimePicker"
+                      value={
+                        !taskState.deadline
+                          ? new Date()
+                          : new Date(taskState.deadline)
+                      }
+                      is24Hour
+                      onChange={onChangeDate}
+                    />
+                  )}
+                </Stack>
+
+                <Stack style={styles.buttonWrap}>
+                  <Button
+                    style={styles.button}
+                    size="sm"
+                    onPress={() => {
+                      submitAction = 'editTask'
+                      handleSubmit()
+                    }}
+                  >
+                    {selectedTask ? 'Sửa task' : 'Tạo task'}
+                  </Button>
+                  {selectedTask && (
+                    <Button
+                      style={styles.button}
+                      size="sm"
+                      onPress={() => {
+                        submitAction = 'removeTask'
+                        handleSubmit()
+                      }}
+                    >
+                      Xóa task
+                    </Button>
+                  )}
+                </Stack>
+              </>
+            )}
+          </Formik>
         </Modal>
       </Portal>
       {/* <ModalTask isShowModal={isShowModal} setShowModal={setShowModal} /> */}
