@@ -42,8 +42,6 @@ const Login = () => {
                 initialValues={{ email: '', password: '' }}
                 onSubmit={async (values: RUser) => {
                   try {
-                    console.log('123')
-
                     await login(values).unwrap()
                     await users()
                     // eslint-disable-next-line no-empty
