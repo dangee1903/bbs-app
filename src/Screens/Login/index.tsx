@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Dimensions,
   ScrollView,
@@ -6,36 +6,18 @@ import {
   View,
   Image,
   Text,
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
 } from 'react-native'
-import { Box, Button, FormControl, Input, Stack } from 'native-base'
+import { Box, Button } from 'native-base'
 import { useLoginMutation } from '@services/modules/login'
 import { RUser } from '@services/modules/login/login'
 import { useUsersMutation } from '@services/modules/users'
+import { Formik } from 'formik'
+import InputCommon from '@components/Common/InputCommon'
+import { loginValidationSchema } from './loginState'
 
 const Login = () => {
-  const [user, setUser] = useState<RUser>({
-    email: '',
-    password: '',
-  })
   const [login] = useLoginMutation()
   const [users] = useUsersMutation()
-
-  const onChangeText = (
-    e: NativeSyntheticEvent<TextInputChangeEventData>,
-    name: string,
-  ) => {
-    setUser(pre => ({ ...pre, [name]: e.nativeEvent.text }))
-  }
-
-  const submit = async () => {
-    try {
-      await login(user).unwrap()
-      await users()
-      // eslint-disable-next-line no-empty
-    } catch (error) {}
-  }
 
   return (
     <ScrollView
@@ -55,30 +37,56 @@ const Login = () => {
         <View style={{ padding: 50 }}>
           <Box alignItems="center">
             <Box w="100%" maxWidth="300px">
-              <FormControl isRequired>
-                <Stack mx="4">
-                  <FormControl.Label>Username</FormControl.Label>
-                  <Input
-                    onChange={e => onChangeText(e, 'email')}
-                    type="text"
-                    placeholder="Username"
-                  />
-                </Stack>
-                <Stack mx="4">
-                  <FormControl.Label>Password</FormControl.Label>
-                  <Input
-                    onChange={e => onChangeText(e, 'password')}
-                    type="password"
-                    defaultValue="12345"
-                    placeholder="password"
-                  />
-                </Stack>
-                <Stack mx="4">
-                  <Button style={styles.button} size="sm" onPress={submit}>
-                    Login
-                  </Button>
-                </Stack>
-              </FormControl>
+              <Formik
+                validationSchema={loginValidationSchema}
+                initialValues={{ email: '', password: '' }}
+                onSubmit={async (values: RUser) => {
+                  try {
+                    console.log('123')
+
+                    await login(values).unwrap()
+                    await users()
+                    // eslint-disable-next-line no-empty
+                  } catch (error) {}
+                }}
+              >
+                {({
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  values,
+                  errors,
+                  isValid,
+                }) => (
+                  <>
+                    <InputCommon
+                      placeholder="Email Address"
+                      handleChange={handleChange('email')}
+                      handleBlur={handleBlur('email')}
+                      value={values.email}
+                      errors={errors.email}
+                      keyboardType="email-address"
+                      label="Email"
+                    />
+                    <InputCommon
+                      placeholder="Password"
+                      handleChange={handleChange('password')}
+                      handleBlur={handleBlur('password')}
+                      value={values.password}
+                      errors={errors.password}
+                      label="Password"
+                      secureTextEntry
+                    />
+                    <Button
+                      onPress={() => handleSubmit()}
+                      disabled={!isValid}
+                      style={styles.button}
+                    >
+                      LOGIN
+                    </Button>
+                  </>
+                )}
+              </Formik>
             </Box>
           </Box>
         </View>
