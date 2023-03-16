@@ -4,6 +4,7 @@ export type TDataShow = {
   time?: boolean
   checkboxTime?: boolean
   checkBoxSession?: boolean
+  project?: boolean
   permission_type: string
 }
 

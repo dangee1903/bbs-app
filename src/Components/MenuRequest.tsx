@@ -1,3 +1,4 @@
+import { PERMISSION_TYPE } from '@constants/request'
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons'
 import { TDataShow } from '@model/Request'
 import React, { useState } from 'react'
@@ -54,7 +55,7 @@ const MenuRequest = ({
               reason: true,
               date: true,
               checkboxTime: true,
-              permission_type: '1',
+              permission_type: PERMISSION_TYPE.LATE,
             })
           }}
           style={styles.menuItem}
@@ -74,7 +75,7 @@ const MenuRequest = ({
               reason: true,
               date: true,
               checkboxTime: true,
-              permission_type: '2',
+              permission_type: PERMISSION_TYPE.EARLY,
             })
           }}
           style={styles.menuItem}
@@ -94,7 +95,7 @@ const MenuRequest = ({
               reason: true,
               date: true,
               checkBoxSession: true,
-              permission_type: '0',
+              permission_type: PERMISSION_TYPE.NORMAL,
             })
           }}
           style={styles.menuItem}
@@ -114,7 +115,8 @@ const MenuRequest = ({
               reason: true,
               date: true,
               time: true,
-              permission_type: '4',
+              project: true,
+              permission_type: PERMISSION_TYPE.OVERTIME,
             })
           }}
           style={styles.menuItem}

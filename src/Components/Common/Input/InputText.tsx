@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ChangeEvent } from 'react'
 import {
@@ -9,6 +8,7 @@ import {
   Text,
   TextInputFocusEventData,
   TextStyle,
+  View,
 } from 'react-native'
 import { TextInput } from 'react-native-paper'
 
@@ -16,7 +16,7 @@ type TProps = {
   placeholder: string
   handleChange?: (e: string | ChangeEvent<any>) => void
   setChangeValue?: (e: string) => void
-  handleBlur: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
+  handleBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
   value: string
   secureTextEntry?: boolean
   errors?: string
@@ -32,7 +32,7 @@ type TProps = {
 const InputText = ({
   placeholder,
   handleChange = () => {},
-  handleBlur,
+  handleBlur = () => {},
   value,
   secureTextEntry = false,
   errors,
@@ -45,11 +45,11 @@ const InputText = ({
   style,
   setChangeValue,
 }: TProps) => {
-  const handleChangeText = (value: any) => {
-    return setChangeValue ? setChangeValue(value) : handleChange(value)
+  const handleChangeText = (v: string) => {
+    return setChangeValue ? setChangeValue(v) : handleChange(v)
   }
   return (
-    <>
+    <View style={{ flexDirection: 'column', width: '100%' }}>
       <TextInput
         multiline={multiline}
         numberOfLines={numberOfLines}
@@ -65,7 +65,7 @@ const InputText = ({
         style={style}
       />
       {errors && <Text style={{ fontSize: 10, color: 'red' }}>{errors}</Text>}
-    </>
+    </View>
   )
 }
 

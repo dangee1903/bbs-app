@@ -23,6 +23,10 @@ const ModalTask = ({
   disable = false,
   handleReset = () => {},
 }: TProps) => {
+  React.useEffect(() => {
+    handleReset()
+  }, [handleReset, isShowModal])
+
   return (
     <Portal>
       <Modal

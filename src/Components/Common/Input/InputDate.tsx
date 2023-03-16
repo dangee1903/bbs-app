@@ -20,6 +20,7 @@ type TProps = {
   setValueDate?: (newDate: string) => void
   handleBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
   errors?: string
+  minDate?: Date
 }
 
 const InputDate = ({
@@ -27,6 +28,7 @@ const InputDate = ({
   setValueDate = () => {},
   handleBlur = () => {},
   errors,
+  minDate = new Date(),
 }: TProps) => {
   const [value, setValue] = React.useState<string>(valueDate)
   const [show, setShow] = React.useState(false)
@@ -56,7 +58,6 @@ const InputDate = ({
           }
           handleBlur={handleBlur}
           style={styles.dateInput}
-          errors={errors}
         />
       </TouchableOpacity>
       {errors && <Text style={{ fontSize: 10, color: 'red' }}>{errors}</Text>}
@@ -65,6 +66,7 @@ const InputDate = ({
           value={new Date()}
           testID="dateTimePicker"
           is24Hour
+          minimumDate={minDate}
           onChange={onChangeDate}
           style={{ width: 320, backgroundColor: 'white' }}
         />

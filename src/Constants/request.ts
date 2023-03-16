@@ -19,3 +19,42 @@ export const listTitle = {
   '2': 'Xin về sớm',
   '4': 'Xin OT',
 }
+
+export const listDayOff = {
+  '0': {
+    start: '0',
+    end: '0',
+  },
+  '1': {
+    start: '1',
+    end: '1',
+  },
+  '2': {
+    start: '0',
+    end: '1',
+  },
+}
+
+export enum PERMISSION_TYPE {
+  NORMAL = '0',
+  LATE = '1',
+  EARLY = '2',
+  OVERTIME = '4',
+}
+
+export enum PERMISSION_STATUS {
+  NOT_APPROVED_YET = '0',
+  APPROVED = '1',
+  REFUSE = '2',
+}
+
+export enum SESSION {
+  MORNING = '0',
+  AFTERNOON = '1',
+  ALL = '2',
+}
+
+export enum OT_TYPE {
+  PROJECT = '1',
+  INDIVIDUAL = '2',
+}
