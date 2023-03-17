@@ -81,7 +81,7 @@ const ModalRequest = ({
                 listDayOff[values.session as keyof typeof listDayOff].start,
               end: listDayOff[values.session as keyof typeof listDayOff].end,
               approver_id: String(data.team.leader_id),
-            })
+            }).unwrap()
           } else if (dataShow.permission_type === PERMISSION_TYPE.OVERTIME) {
             await postRequest({
               permission_ot: null,
@@ -94,17 +94,23 @@ const ModalRequest = ({
               project_id: Number(values.project),
               start_at: values.start_at,
               end_at: values.end_at,
-            })
+            }).unwrap()
           } else {
             await postRequest({
-              permission_early: PERMISSION_TYPE.LATE ? undefined : null,
-              permission_late: PERMISSION_TYPE.LATE ? null : undefined,
+              permission_early:
+                dataShow.permission_type === PERMISSION_TYPE.LATE
+                  ? undefined
+                  : null,
+              permission_late:
+                dataShow.permission_type === PERMISSION_TYPE.LATE
+                  ? null
+                  : undefined,
               permission_type: dataShow.permission_type,
               work_day: values.work_day,
               permission_status: PERMISSION_STATUS.NOT_APPROVED_YET,
               option_time: values.option_time,
               note: values.note,
-            })
+            }).unwrap()
           }
           setShowModal(false)
           Toast.show({
