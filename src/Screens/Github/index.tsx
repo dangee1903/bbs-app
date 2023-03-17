@@ -4,12 +4,10 @@ import InputCommon from '@components/Common/InputCommon'
 import SliderCommon from '@components/Common/SliderCommon'
 import JoinedProjectsComponent from '@components/JoinedProjectsComponents'
 import JoinedProjectsSekeleton from '@components/Sekeleton/JoinedProjectsSekeleton'
-import { AntDesign } from '@expo/vector-icons'
 import { converYearMonthDay } from '@helpers/datatime'
 import { TSelects } from '@model/index'
 import { TProject, TTask } from '@model/Project/ProjectType'
 import { TUser } from '@model/Users/UsersType'
-import { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import {
   useCreateMutation,
   useEditMutation,
@@ -20,13 +18,7 @@ import { useReduxSelector } from '@store/index'
 import { Formik } from 'formik'
 import { Button, Stack } from 'native-base'
 import React, { useState } from 'react'
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Modal, Portal } from 'react-native-paper'
 import { githubValidationSchema } from './githubState'
 
@@ -51,7 +43,6 @@ const Github = () => {
   const [taskState, setTaskState] = useState<TTaskState>(initialState)
   const [selectedTask, setSelectedTask] = useState<TTask>()
   const [selectedPj, setSelectedPj] = useState<TProject>()
-  const [show, setShow] = useState(false)
   const { users } = useReduxSelector(state => state.users)
 
   const [create] = useCreateMutation()
@@ -95,16 +86,6 @@ const Github = () => {
       }))
     }
     return []
-  }
-
-  const onChangeDate = (
-    event: DateTimePickerEvent,
-    date?: Date | undefined,
-  ) => {
-    if (date) {
-      setShow(false)
-      setTaskState({ ...taskState, deadline: converYearMonthDay(date) })
-    }
   }
 
   let submitAction: string | undefined

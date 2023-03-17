@@ -24,6 +24,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
   const [pjState, setPjState] = useState<any>()
   const [idPj, setIdPj] = useState<number | undefined>()
   const [taskId, setTaskId] = useState<string>('')
+  const [taskSelected, setTaskSelected] = useState<TTask>()
 
   const {
     data: listTask,
@@ -56,6 +57,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
       })
       setIdPj(joinedPj?.id)
       setTaskId('')
+      setTaskSelected(undefined)
     }
   }
 
@@ -102,6 +104,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
           onPress={() => {
             openModal(joinedPj)
             setIdPj(joinedPj.id)
+            setTaskSelected(undefined)
           }}
         >
           +
@@ -112,19 +115,20 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
         <Text style={styles.bottomText}>List users</Text>
       </View>
       <View style={styles.listTasks}>
-        {loadingTask &&
-          // eslint-disable-next-line react/no-array-index-key
-          [...Array(2)].map((x, i) => <TaskSekeleton key={i} />)}
+        {loadingTask && <TaskSekeleton />}
         {pjState &&
           pjState?.data?.project?.tasks.length > 0 &&
           pjState?.data?.project?.tasks.map((task: TTask) => {
-            return (
+            return taskSelected?.id === task.id && fetchingTask ? (
+              <TaskSekeleton key={task.id} />
+            ) : (
               <View key={task.id} style={getColorTask(task)}>
                 <TouchableOpacity
                   style={styles.task}
                   onPress={() => {
                     openModal(joinedPj, task)
                     setIdPj(joinedPj.id)
+                    setTaskSelected(task)
                   }}
                 >
                   <View style={styles.taskWrap}>
@@ -149,7 +153,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
               </View>
             )
           })}
-        {fetchingTask && <TaskSekeleton />}
+        {fetchingTask && !taskSelected && <TaskSekeleton />}
         {listTask && listTask?.data?.project?.tasks.length === 0 && (
           <View>
             <Text>Bạn chưa có task nào cả</Text>

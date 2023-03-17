@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder'
 
 const TaskSekeleton = () => {
