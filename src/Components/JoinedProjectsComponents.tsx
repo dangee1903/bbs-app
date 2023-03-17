@@ -2,7 +2,16 @@
 import { TProject, TTask } from '@model/Project/ProjectType'
 import { useCreateMutation, useOvewiewQuery } from '@services/modules/project'
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, Image, Text, TouchableOpacity, StyleProp, ViewStyle } from 'react-native'
+import {
+  ActivityIndicator,
+  Image,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native'
 import { Checkbox, MD3Colors, ProgressBar, TextInput } from 'react-native-paper'
 import TaskSekeleton from './Sekeleton/TaskSekeleton'
 
@@ -20,9 +29,10 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
     data: listTask,
     refetch,
     isLoading: loadingTask,
+    isFetching: fetchingTask,
   } = useOvewiewQuery(idPj, { skip: !idPj })
 
-  const [create] = useCreateMutation()
+  const [create, { isLoading: createTaskLoading }] = useCreateMutation()
 
   const getListTask = async (id: number) => {
     if (!idPj) {
@@ -139,19 +149,27 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
               </View>
             )
           })}
+        {fetchingTask && <TaskSekeleton />}
         {listTask && listTask?.data?.project?.tasks.length === 0 && (
           <View>
             <Text>Bạn chưa có task nào cả</Text>
           </View>
         )}
-        <TextInput
-          onChangeText={text => setTaskId(text)}
-          value={taskId}
-          allowFontScaling={false}
-          placeholder="Input text"
-          style={styles.createTask}
-          onSubmitEditing={createTask}
-        />
+        <View style={styles.createTaskContainer}>
+          <TextInput
+            onChangeText={text => setTaskId(text)}
+            value={taskId}
+            allowFontScaling={false}
+            placeholder="Input text"
+            style={styles.createTask}
+            onSubmitEditing={createTask}
+          />
+          {createTaskLoading && (
+            <View style={styles.loading}>
+              <ActivityIndicator size="small" color="#0000ff" />
+            </View>
+          )}
+        </View>
       </View>
     </View>
   )
@@ -217,6 +235,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fffff',
     fontSize: 14,
     height: 30,
+    flex: 1,
   },
   taskRight: {},
+  createTaskContainer: {
+    flexDirection: 'row',
+    borderColor: '#000',
+  },
+  loading: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'black',
+  },
 })
