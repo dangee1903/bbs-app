@@ -1,30 +1,103 @@
-import * as React from 'react';
-import { Modal, Portal, Text, Button, Provider } from 'react-native-paper';
+/* eslint-disable @typescript-eslint/no-empty-function */
+import * as React from 'react'
+import { Button, Modal, Portal } from 'react-native-paper'
+import { StyleSheet, View, Text } from 'react-native'
+import { AntDesign } from '@expo/vector-icons'
 
 type TProps = {
-  isShowModal: boolean
-  setShowModal: (active: boolean) => void
+  isShowModal?: boolean
+  setShowModal?: (active: boolean) => void
+  children: React.ReactNode
+  title?: string
+  handleConfirm: () => void
+  disable?: boolean
+  handleCancle?: () => void
 }
 
-const ModalTask = ({ setShowModal, isShowModal }: TProps) => {
-  const containerStyle = { backgroundColor: 'white', padding: 20 }
-
+const ModalTask = ({
+  setShowModal = () => {},
+  isShowModal = false,
+  title = '',
+  children,
+  handleConfirm,
+  disable = false,
+  handleCancle = () => {},
+}: TProps) => {
+  React.useEffect(() => {
+    if (handleCancle) {
+      handleCancle()
+    }
+  }, [handleCancle, isShowModal])
   return (
-    <Provider>
-      <Portal>
-        <Modal
-          visible={isShowModal}
-          onDismiss={() => setShowModal(false)}
-          contentContainerStyle={containerStyle}
-        >
-          <Text>Example Modal. Click outside this area to dismiss.</Text>
-        </Modal>
-      </Portal>
-      <Button style={{ marginTop: 30 }} onPress={() => setShowModal(true)}>
-        Show
-      </Button>
-    </Provider>
-  );
-};
+    <Portal>
+      <Modal
+        visible={isShowModal}
+        onDismiss={() => setShowModal(false)}
+        contentContainerStyle={styles.containerStyle}
+      >
+        <View style={styles.headerModal}>
+          <Text style={styles.headerText}>{title}</Text>
+          <AntDesign
+            onPress={() => setShowModal(false)}
+            name="close"
+            size={14}
+            color="#6200EE"
+          />
+        </View>
+        {children}
+        <View style={styles.footer}>
+          <Button
+            onPress={() => {
+              setShowModal(false)
+            }}
+            style={styles.buttonFooter}
+          >
+            <Text style={styles.textCancleFooter}>HỦY</Text>
+          </Button>
+          <Button
+            disabled={disable}
+            onPress={handleConfirm}
+            style={styles.buttonFooter}
+          >
+            <Text style={styles.textConfirmFooter}>XÁC NHẬN</Text>
+          </Button>
+        </View>
+      </Modal>
+    </Portal>
+  )
+}
 
-export default ModalTask;
+export default ModalTask
+
+const styles = StyleSheet.create({
+  containerStyle: {
+    backgroundColor: 'white',
+    marginLeft: 20,
+    marginRight: 20,
+    padding: 20,
+  },
+  headerModal: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  headerText: {
+    fontSize: 16,
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 30,
+  },
+  buttonFooter: {
+    paddingHorizontal: 10,
+    color: '#6200EE',
+  },
+  textCancleFooter: {
+    fontSize: 14,
+  },
+  textConfirmFooter: {
+    fontSize: 14,
+    color: '#6200EE',
+  },
+})
