@@ -29,7 +29,6 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
   const {
     data: listTask,
     refetch,
-    isLoading: loadingTask,
     isFetching: fetchingTask,
   } = useOvewiewQuery(idPj, { skip: !idPj })
 
@@ -115,7 +114,6 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
         <Text style={styles.bottomText}>List users</Text>
       </View>
       <View style={styles.listTasks}>
-        {loadingTask && <TaskSekeleton />}
         {pjState &&
           pjState?.data?.project?.tasks.length > 0 &&
           pjState?.data?.project?.tasks.map((task: TTask) => {

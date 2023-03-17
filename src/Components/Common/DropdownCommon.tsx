@@ -1,6 +1,6 @@
 import { TSelect, TSelects } from '@model/index'
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 
 type TProps = {
@@ -29,10 +29,10 @@ const DropdownCommon = ({
   }
 
   return (
-    <View style={{ zIndex: 1000 }}>
+    <View>
       <Text>{label}</Text>
       <DropDownPicker
-        defaultValue={value}
+        defaultValue={value || null}
         items={items}
         containerStyle={{ height: 40 }}
         onChangeItem={(item: TSelect) => {
@@ -45,9 +45,3 @@ const DropdownCommon = ({
 }
 
 export default DropdownCommon
-
-const styles = StyleSheet.create({
-  label: {
-    marginTop: 10,
-  },
-})

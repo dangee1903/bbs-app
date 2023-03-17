@@ -21,14 +21,15 @@ import {
 } from '@services/modules/request'
 import InputText from '@components/Common/Input/InputText'
 import { Formik } from 'formik'
-import { requestValidationSchema } from '@screens/Request/requestState'
 import DropdownCommon from '@components/Common/DropdownCommon'
 import { useJoinedQuery } from '@services/modules/project'
 import { TSelects } from '@model/index'
 import SelectRadio from '@components/Common/Input/SelectRadio'
 import { useReduxSelector } from '@store/index'
 import Toast from 'react-native-toast-message'
-import ModalTask from './ModalTask'
+import moment from 'moment'
+import ModalCommon from '../../../Components/Modal/Modal'
+import { requestValidationSchema } from './ModalState'
 
 type TProps = {
   title?: string
@@ -67,8 +68,8 @@ const ModalRequest = ({
         option_time: [],
         project: '',
         session: '0',
-        start_at: '',
-        end_at: '',
+        start_at: undefined,
+        end_at: undefined,
       }}
       onSubmit={async values => {
         try {
@@ -92,8 +93,8 @@ const ModalRequest = ({
               note: values.note,
               ot_type: OT_TYPE.PROJECT,
               project_id: Number(values.project),
-              start_at: values.start_at,
-              end_at: values.end_at,
+              start_at: moment(values.start_at).format('hh:mm A'),
+              end_at: moment(values.end_at).format('hh:mm A'),
             }).unwrap()
           } else {
             await postRequest({
@@ -121,12 +122,15 @@ const ModalRequest = ({
       }}
       validate={values => {
         const errors = { end_at: '' }
-        if (
-          values.start_at > values.end_at &&
-          dataShow.permission_type === PERMISSION_TYPE.OVERTIME
-        ) {
-          errors.end_at = 'Giờ kết thúc phải lớn hơn giờ bắt đầu'
-          return errors
+        if (values.start_at && values.end_at) {
+          if (
+            new Date(values.start_at).getTime() >
+              new Date(values.end_at).getTime() &&
+            dataShow.permission_type === PERMISSION_TYPE.OVERTIME
+          ) {
+            errors.end_at = 'Giờ kết thúc phải lớn hơn giờ bắt đầu'
+            return errors
+          }
         }
         return {}
       }}
@@ -141,7 +145,7 @@ const ModalRequest = ({
         setFieldValue,
         handleReset,
       }) => (
-        <ModalTask
+        <ModalCommon
           isShowModal={isShowModal}
           setShowModal={setShowModal}
           title={
@@ -227,7 +231,7 @@ const ModalRequest = ({
               />
             )}
           </View>
-        </ModalTask>
+        </ModalCommon>
       )}
     </Formik>
   )

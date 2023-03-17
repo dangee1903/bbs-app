@@ -217,7 +217,6 @@ const Github = () => {
           </Formik>
         </Modal>
       </Portal>
-      {/* <ModalTask isShowModal={isShowModal} setShowModal={setShowModal} /> */}
       <ScrollView
         style={styles.projectWrap}
         showsVerticalScrollIndicator={false}

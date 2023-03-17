@@ -10,7 +10,7 @@ import { useGetPostQuery } from '@services/modules/post'
 import React, { useState } from 'react'
 import commonStyle from '@styles/commonStyle'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import ModalRequest from '@components/Modal/ModalRequest'
+import ModalRequest from '@screens/Home/Modal/ModalRequest'
 import { TDataShow } from '@model/Request'
 
 type TProps = {

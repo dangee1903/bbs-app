@@ -15,8 +15,8 @@ import moment from 'moment'
 import InputText from './InputText'
 
 type TProps = {
-  valueDate?: string
-  setValueDate?: (newDate: string) => void
+  valueDate?: Date
+  setValueDate?: (newDate: Date) => void
   handleBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
   label?: string
   placeholder?: string
@@ -25,7 +25,7 @@ type TProps = {
 }
 
 const InputTime = ({
-  valueDate = '',
+  valueDate,
   setValueDate = () => {},
   handleBlur = () => {},
   label = '',
@@ -33,7 +33,7 @@ const InputTime = ({
   width = '100%',
   errors,
 }: TProps) => {
-  const [value, setValue] = React.useState<string>(valueDate)
+  const [value, setValue] = React.useState<Date | undefined>(valueDate)
   const [show, setShow] = React.useState(false)
 
   const onChangeDate = (
@@ -41,10 +41,9 @@ const InputTime = ({
     date?: Date | undefined,
   ) => {
     if (date) {
-      const newDate = moment(date).format('hh:mm A')
       setShow(false)
-      setValue(newDate)
-      setValueDate(newDate)
+      setValue(date)
+      setValueDate(date)
     }
   }
   return (
@@ -54,8 +53,7 @@ const InputTime = ({
           mode="outlined"
           label={label}
           placeholder={placeholder}
-          value={value}
-          setChangeValue={v => setValue(v)}
+          value={moment(value).format('hh:mm A')}
           right={
             <TextInput.Icon
               color="#fff"
@@ -72,10 +70,10 @@ const InputTime = ({
       {show && (
         <DateTimePicker
           mode="time"
-          value={new Date()}
+          value={value ?? new Date()}
           testID="dateTimePicker"
           onChange={onChangeDate}
-          style={{ width: 320, backgroundColor: 'white' }}
+          display="compact"
         />
       )}
     </View>

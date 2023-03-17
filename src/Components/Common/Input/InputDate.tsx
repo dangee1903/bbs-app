@@ -52,7 +52,6 @@ const InputDate = ({
           label="Chọn ngày"
           placeholder="Nhập ngày"
           value={value}
-          setChangeValue={v => setValue(v)}
           right={
             <TextInput.Icon icon="calendar" onPress={() => setShow(true)} />
           }

@@ -3,6 +3,7 @@ import * as React from 'react'
 import { Button, Modal, Portal } from 'react-native-paper'
 import { StyleSheet, View, Text } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
+import Toast from 'react-native-toast-message'
 
 type TProps = {
   isShowModal?: boolean
@@ -14,7 +15,7 @@ type TProps = {
   handleCancle?: () => void
 }
 
-const ModalTask = ({
+const ModalCommon = ({
   setShowModal = () => {},
   isShowModal = false,
   title = '',
@@ -35,6 +36,7 @@ const ModalTask = ({
         onDismiss={() => setShowModal(false)}
         contentContainerStyle={styles.containerStyle}
       >
+        <Toast position="top" />
         <View style={styles.headerModal}>
           <Text style={styles.headerText}>{title}</Text>
           <AntDesign
@@ -67,7 +69,7 @@ const ModalTask = ({
   )
 }
 
-export default ModalTask
+export default ModalCommon
 
 const styles = StyleSheet.create({
   containerStyle: {
