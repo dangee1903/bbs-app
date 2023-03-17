@@ -1,27 +1,33 @@
+import DropdownCommon from '@components/Common/DropdownCommon'
+import InputDate from '@components/Common/Input/InputDate'
+import InputCommon from '@components/Common/InputCommon'
+import SliderCommon from '@components/Common/SliderCommon'
 import JoinedProjectsComponent from '@components/JoinedProjectsComponents'
+import JoinedProjectsSekeleton from '@components/Sekeleton/JoinedProjectsSekeleton'
+import { AntDesign } from '@expo/vector-icons'
+import { converYearMonthDay } from '@helpers/datatime'
+import { TSelects } from '@model/index'
 import { TProject, TTask } from '@model/Project/ProjectType'
+import { TUser } from '@model/Users/UsersType'
+import { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import {
   useCreateMutation,
   useEditMutation,
   useJoinedQuery,
   useRemoveMutation,
 } from '@services/modules/project'
-import React, { useState } from 'react'
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Modal, Portal } from 'react-native-paper'
-import { Button, Input, Stack } from 'native-base'
-import { Formik } from 'formik'
-import DropDownPicker from 'react-native-dropdown-picker'
-import { DateTimePickerEvent } from '@react-native-community/datetimepicker'
-import { AntDesign } from '@expo/vector-icons'
-import { TSelects } from '@model/index'
-import { converYearMonthDay } from '@helpers/datatime'
-import JoinedProjectsSekeleton from '@components/Sekeleton/JoinedProjectsSekeleton'
 import { useReduxSelector } from '@store/index'
-import { TUser } from '@model/Users/UsersType'
-import InputCommon from '@components/Common/InputCommon'
-import DropdownCommon from '@components/Common/DropdownCommon'
-import SliderCommon from '@components/Common/SliderCommon'
+import { Formik } from 'formik'
+import { Button, Stack } from 'native-base'
+import React, { useState } from 'react'
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import { Modal, Portal } from 'react-native-paper'
 import { githubValidationSchema } from './githubState'
 
 type TTaskState = {
@@ -193,25 +199,12 @@ const Github = () => {
                 </Stack>
                 <Stack>
                   <Text style={styles.formTitle}>Deadline</Text>
-                  <TouchableOpacity
-                    style={styles.datePicker}
-                    onPress={() => setShow(!show)}
-                  >
-                    <Text>{taskState.deadline}</Text>
-                    <AntDesign name="calendar" size={24} color="black" />
-                  </TouchableOpacity>
-                  {show && (
-                    <DateTimePicker
-                      testID="dateTimePicker"
-                      value={
-                        !taskState.deadline
-                          ? new Date()
-                          : new Date(taskState.deadline)
-                      }
-                      is24Hour
-                      onChange={onChangeDate}
-                    />
-                  )}
+                  <InputDate
+                    valueDate={values.deadline}
+                    setValueDate={newValue =>
+                      setFieldValue('deadline', newValue)
+                    }
+                  />
                 </Stack>
 
                 <Stack style={styles.buttonWrap}>
