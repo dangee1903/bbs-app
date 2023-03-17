@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
@@ -26,6 +27,7 @@ import { useJoinedQuery } from '@services/modules/project'
 import { TSelects } from '@model/index'
 import SelectRadio from '@components/Common/Input/SelectRadio'
 import { useReduxSelector } from '@store/index'
+import Toast from 'react-native-toast-message'
 import ModalTask from './ModalTask'
 
 type TProps = {
@@ -38,7 +40,7 @@ type TProps = {
 const ModalRequest = ({
   title = '',
   isShowModal,
-  setShowModal,
+  setShowModal = () => {},
   dataShow,
 }: TProps) => {
   const [postRequest] = useRequestMutation()
@@ -104,6 +106,10 @@ const ModalRequest = ({
               note: values.note,
             })
           }
+          setShowModal(false)
+          Toast.show({
+            text2: 'Success',
+          })
           // eslint-disable-next-line no-empty
         } catch (error) {}
       }}
@@ -137,7 +143,7 @@ const ModalRequest = ({
             listTitle[dataShow.permission_type as keyof typeof listTitle]
           }
           handleConfirm={() => handleSubmit()}
-          handleReset={handleReset}
+          handleCancle={handleReset}
           disable={!isValid}
         >
           <View

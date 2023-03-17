@@ -11,7 +11,7 @@ type TProps = {
   title?: string
   handleConfirm: () => void
   disable?: boolean
-  handleReset?: (e?: React.SyntheticEvent<any, Event> | undefined) => void
+  handleCancle?: () => void
 }
 
 const ModalTask = ({
@@ -21,12 +21,13 @@ const ModalTask = ({
   children,
   handleConfirm,
   disable = false,
-  handleReset = () => {},
+  handleCancle = () => {},
 }: TProps) => {
   React.useEffect(() => {
-    handleReset()
-  }, [handleReset, isShowModal])
-
+    if (handleCancle) {
+      handleCancle()
+    }
+  }, [handleCancle, isShowModal])
   return (
     <Portal>
       <Modal
@@ -48,7 +49,6 @@ const ModalTask = ({
           <Button
             onPress={() => {
               setShowModal(false)
-              handleReset()
             }}
             style={styles.buttonFooter}
           >
