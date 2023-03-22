@@ -10,35 +10,43 @@ export const tabArr = [
   {
     route: 'Project',
     label: 'Project',
-    icon: <Ionicons name="flag" size={20} color="white" />,
+    icon: (color: string) => <Ionicons name="flag" size={20} color={color} />,
     component: Project,
     showHeader: true,
   },
   {
     route: 'Github',
     label: 'Github',
-    icon: <AntDesign name="github" size={20} color="white" />,
+    icon: (color: string) => (
+      <AntDesign name="github" size={20} color={color} />
+    ),
     component: Github,
     showHeader: true,
   },
   {
     route: 'Home',
     label: 'Home',
-    icon: <MaterialIcons name="home" size={26} color="white" />,
+    icon: (color: string) => (
+      <MaterialIcons name="home" size={26} color={color} />
+    ),
     component: Home,
     showHeader: true,
   },
   {
     route: 'Noti',
     label: 'Noti',
-    icon: <Ionicons name="notifications" size={20} color="white" />,
+    icon: (color: string) => (
+      <Ionicons name="notifications" size={20} color={color} />
+    ),
     component: Noti,
     showHeader: true,
   },
   {
     route: 'Setting',
     label: 'Setting',
-    icon: <AntDesign name="setting" size={20} color="white" />,
+    icon: (color: string) => (
+      <AntDesign name="setting" size={20} color={color} />
+    ),
     component: Setting,
     showHeader: true,
   },

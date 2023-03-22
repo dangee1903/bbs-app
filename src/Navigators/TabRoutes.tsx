@@ -5,6 +5,7 @@ import { DrawerActions, useNavigation } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity, Text } from 'react-native'
+import { ENUM_COLOR_TAB_BAR } from '@constants/enum'
 
 const Tab = createBottomTabNavigator()
 export const TabHome = () => {
@@ -18,6 +19,8 @@ export const TabHome = () => {
           backgroundColor: '#6200EE',
         },
         unmountOnBlur: true,
+        tabBarActiveTintColor: ENUM_COLOR_TAB_BAR.active,
+        tabBarInactiveTintColor: ENUM_COLOR_TAB_BAR.inActive,
       }}
     >
       {tabArr.map(_ => {
@@ -28,7 +31,13 @@ export const TabHome = () => {
             component={_.component}
             options={{
               headerShown: _.showHeader,
-              tabBarIcon: () => _.icon,
+              tabBarIcon: (props: {
+                focused: boolean
+                color: string
+                size: number
+              }) => {
+                return _.icon(props.color)
+              },
               headerLeftLabelVisible: true,
               headerTitle: '',
               headerStyle: {
