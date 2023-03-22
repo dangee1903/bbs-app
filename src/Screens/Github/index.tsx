@@ -147,7 +147,7 @@ const Github = () => {
                     value={values.user_id ?? null}
                     errors={errors.user_id}
                     setFieldValue={setFieldValue}
-                    name="assignee"
+                    name="user_id"
                   />
                 </Stack>
                 <Stack>
