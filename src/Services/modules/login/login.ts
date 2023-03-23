@@ -38,5 +38,5 @@ export type TUser = {
 export type RUser = {
   email: string
   password: string
-  remember_mew: boolean
+  remember_me: boolean
 }

@@ -93,7 +93,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
           />
           <View style={styles.projectName}>
             <TouchableOpacity onPress={() => getListTask(joinedPj?.id)}>
-              <Text style={styles.bottomText}>{joinedPj?.name}</Text>
+              <Text style={styles.bottomTextTitle}>{joinedPj?.name}</Text>
               <Text style={styles.bottomText}>{joinedPj?.customer}</Text>
             </TouchableOpacity>
           </View>
@@ -214,6 +214,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     color: '#6D6D6D',
+  },
+  bottomTextTitle:{
+    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+    color: 'black',
   },
   listTasks: {
     marginTop: 10,

@@ -152,7 +152,6 @@ const Github = () => {
                 </Stack>
                 <Stack>
                   <InputCommon
-                    placeholder="Task id"
                     handleChange={handleChange('task_id')}
                     handleBlur={handleBlur('task_id')}
                     value={values.task_id}
@@ -162,7 +161,6 @@ const Github = () => {
                 </Stack>
                 <Stack>
                   <InputCommon
-                    placeholder="Issue"
                     handleChange={handleChange('issue')}
                     handleBlur={handleBlur('issue')}
                     value={values.issue ?? ''}
