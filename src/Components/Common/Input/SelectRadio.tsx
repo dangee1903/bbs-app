@@ -23,7 +23,7 @@ const CheckBoxList = ({
         {data.map(item => {
           return (
             <View key={item.value} style={styles.checkboxItem}>
-              <RadioButton
+              <RadioButton.Android
                 value={item.value}
                 status={value === item.value ? 'checked' : 'unchecked'}
                 onPress={() => changeValue(item.value)}

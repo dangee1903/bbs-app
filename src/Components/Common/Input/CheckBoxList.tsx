@@ -37,7 +37,7 @@ const CheckBoxList = ({
         {data.map(item => {
           return (
             <View key={item.value} style={styles.checkboxItem}>
-              <Checkbox
+              <Checkbox.Android
                 status={selected.includes(item.value) ? 'checked' : 'unchecked'}
                 onPress={() => {
                   onSelect(item.value, !selected.includes(item.value))

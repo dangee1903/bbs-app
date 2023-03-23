@@ -71,7 +71,7 @@ const Login = () => {
                       />
                     </View>
                     <View style={styles.checkbox}>
-                      <Checkbox
+                      <Checkbox.Android
                         status={values.remember_me ? 'checked' : 'unchecked'}
                         onPress={() => {
                           setFieldValue('remember_me', !values.remember_me)
