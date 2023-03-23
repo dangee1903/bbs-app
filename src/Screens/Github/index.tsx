@@ -1,6 +1,6 @@
 import DropdownCommon from '@components/Common/DropdownCommon'
 import InputDate from '@components/Common/Input/InputDate'
-import InputCommon from '@components/Common/InputCommon'
+import InputCommon from '@components/Common/Input/InputPasswordCommon'
 import SliderCommon from '@components/Common/SliderCommon'
 import JoinedProjectsComponent from '@components/JoinedProjectsComponents'
 import JoinedProjectsSekeleton from '@components/Sekeleton/JoinedProjectsSekeleton'
