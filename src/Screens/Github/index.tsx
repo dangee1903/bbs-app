@@ -1,6 +1,7 @@
 import DropdownCommon from '@components/Common/DropdownCommon'
 import InputDate from '@components/Common/Input/InputDate'
 import InputCommon from '@components/Common/Input/InputPasswordCommon'
+import InputText from '@components/Common/Input/InputText'
 import SliderCommon from '@components/Common/SliderCommon'
 import JoinedProjectsComponent from '@components/JoinedProjectsComponents'
 import JoinedProjectsSekeleton from '@components/Sekeleton/JoinedProjectsSekeleton'
@@ -20,12 +21,12 @@ import { Formik } from 'formik'
 import { Button, Stack } from 'native-base'
 import React, { useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { Modal, Portal } from 'react-native-paper'
+import { IconButton, Modal, Portal } from 'react-native-paper'
 import { githubValidationSchema } from './githubState'
 
 type TTaskState = {
   task_id: string
-  issue?: string
+  issue: string
   progress: number
   deadline?: string
   user_id?: number
@@ -58,7 +59,7 @@ const Github = () => {
         task_id: task.task_id,
         issue: task.issue,
         progress: task.progress,
-        deadline: task.deadline ?? '',
+        deadline: task.deadline ?? converYearMonthDay(new Date()),
         user_id: task.user_id,
       })
     } else {
@@ -89,8 +90,6 @@ const Github = () => {
     return []
   }
 
-  let submitAction: string | undefined
-
   return (
     <>
       <Portal>
@@ -100,33 +99,33 @@ const Github = () => {
           contentContainerStyle={styles.containerStyle}
         >
           <View style={styles.modalTitle}>
-            <Text>{selectedTask ? selectedTask.task_id : 'Tạo mới task'}</Text>
-            <Text onPress={hideModal}>X</Text>
+            <Text>{selectedTask?.task_id}</Text>
+            <IconButton
+              icon="close"
+              size={20}
+              onPress={() => {
+                hideModal()
+              }}
+              style={styles.closeModal}
+            />
           </View>
           <Formik
             validationSchema={githubValidationSchema}
             initialValues={taskState}
             onSubmit={async (values: TTaskState) => {
-              if (submitAction === 'editTask') {
-                if (selectedPj) {
-                  if (selectedTask) {
-                    edit({
-                      pjId: selectedPj.id,
-                      id: selectedTask.id,
-                      ...values,
-                    })
-                  } else {
-                    create({
-                      pjId: selectedPj.id,
-                      ...values,
-                    })
-                  }
+              if (selectedPj) {
+                if (selectedTask) {
+                  edit({
+                    pjId: selectedPj.id,
+                    id: selectedTask.id,
+                    ...values,
+                  })
+                } else {
+                  create({
+                    pjId: selectedPj.id,
+                    ...values,
+                  })
                 }
-              } else if (selectedPj?.id && selectedTask?.id) {
-                remove({
-                  id: selectedTask?.id,
-                  pjId: selectedPj?.id,
-                })
               }
               hideModal()
             }}
@@ -151,21 +150,38 @@ const Github = () => {
                   />
                 </Stack>
                 <Stack>
-                  <InputCommon
-                    handleChange={handleChange('task_id')}
+                  <InputText
+                    placeholder="Task id"
                     handleBlur={handleBlur('task_id')}
                     value={values.task_id}
                     errors={errors.task_id}
+                    mode="outlined"
                     label="Task id"
+                    multiline
+                    numberOfLines={3}
+                    setChangeValue={handleChange('task_id')}
                   />
                 </Stack>
                 <Stack>
-                  <InputCommon
-                    handleChange={handleChange('issue')}
+                  <InputText
+                    placeholder="Issue"
                     handleBlur={handleBlur('issue')}
-                    value={values.issue ?? ''}
+                    value={values.issue}
                     errors={errors.issue}
+                    mode="outlined"
                     label="Issue"
+                    multiline
+                    numberOfLines={3}
+                    setChangeValue={handleChange('issue')}
+                  />
+                </Stack>
+                <Stack>
+                  <InputDate
+                    valueDate={values.deadline}
+                    setValueDate={newValue =>
+                      setFieldValue('deadline', newValue)
+                    }
+                    handleBlur={handleBlur('deadline')}
                   />
                 </Stack>
                 <Stack>
@@ -176,24 +192,15 @@ const Github = () => {
                     errors={errors.progress}
                   />
                 </Stack>
-                <Stack>
-                  <Text style={styles.formTitle}>Deadline</Text>
-                  <InputDate
-                    valueDate={values.deadline}
-                    setValueDate={newValue =>
-                      setFieldValue('deadline', newValue)
-                    }
-                  />
-                </Stack>
 
                 <Stack style={styles.buttonWrap}>
                   <Button
                     style={styles.button}
                     size="sm"
                     onPress={() => {
-                      submitAction = 'editTask'
                       handleSubmit()
                     }}
+                    disabled={!isValid}
                   >
                     {selectedTask ? 'Sửa task' : 'Tạo task'}
                   </Button>
@@ -202,8 +209,13 @@ const Github = () => {
                       style={styles.button}
                       size="sm"
                       onPress={() => {
-                        submitAction = 'removeTask'
-                        handleSubmit()
+                        if (selectedPj && selectedTask) {
+                          remove({
+                            id: selectedTask?.id,
+                            pjId: selectedPj?.id,
+                          })
+                          hideModal()
+                        }
                       }}
                     >
                       Xóa task
@@ -249,10 +261,10 @@ const styles = StyleSheet.create({
   modalTitle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
+    alignItems: 'center',
   },
   button: {
-    marginTop: 20,
+    marginTop: 0,
     width: 80,
   },
   formTitle: {
@@ -265,5 +277,8 @@ const styles = StyleSheet.create({
   datePicker: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  closeModal: {
+    marginRight: -10,
   },
 })

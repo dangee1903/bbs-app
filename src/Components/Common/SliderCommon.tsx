@@ -38,7 +38,7 @@ const SliderCommon = ({
         {`(${Number.isInteger(value) ? value.toFixed() : value}%)`}
       </Text>
       <Slider
-        style={{ height: 40 }}
+        style={{ height: 40, width: '100%'}}
         minimumValue={min}
         maximumValue={max}
         minimumTrackTintColor="#751FF0"

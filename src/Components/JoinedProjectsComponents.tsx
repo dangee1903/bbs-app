@@ -13,7 +13,14 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
-import { Checkbox, MD3Colors, ProgressBar, TextInput } from 'react-native-paper'
+import {
+  Button,
+  Checkbox,
+  IconButton,
+  MD3Colors,
+  ProgressBar,
+  TextInput,
+} from 'react-native-paper'
 import TaskSekeleton from './Sekeleton/TaskSekeleton'
 
 type TProps = {
@@ -22,6 +29,8 @@ type TProps = {
 }
 
 const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
+  const [showCreateTask, setShowCreateTask] = useState<boolean>(false)
+  const [getedTask, setGetedTask] = useState<boolean>(false)
   const [pjState, setPjState] = useState<any>()
   const [idPj, setIdPj] = useState<number | undefined>()
   const [taskId, setTaskId] = useState<string>('')
@@ -58,6 +67,9 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
       setIdPj(joinedPj?.id)
       setTaskId('')
       setTaskSelected(undefined)
+      setShowCreateTask(false)
+    } else {
+      setShowCreateTask(false)
     }
   }
 
@@ -93,22 +105,32 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
             source={require('../../assets/project.png')}
           />
           <View style={styles.projectName}>
-            <TouchableOpacity onPress={() => getListTask(joinedPj?.id)}>
+            <TouchableOpacity>
               <Text style={styles.bottomTextTitle}>{joinedPj?.name}</Text>
               <Text style={styles.bottomText}>{joinedPj?.customer}</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <Text
-          style={styles.bottomText}
-          onPress={() => {
-            openModal(joinedPj)
-            setIdPj(joinedPj.id)
-            setTaskSelected(undefined)
-          }}
-        >
-          +
-        </Text>
+        {getedTask ? (
+          <IconButton
+            icon="plus"
+            size={20}
+            iconColor="black"
+            onPress={() => {
+              setShowCreateTask(true)
+            }}
+          />
+        ) : (
+          <IconButton
+            icon="equal"
+            size={20}
+            iconColor="black"
+            onPress={() => {
+              getListTask(joinedPj?.id)
+              setGetedTask(true)
+            }}
+          />
+        )}
       </View>
       <View style={styles.projectTitleBottom}>
         <Text style={styles.bottomText}>Total: 7/10</Text>
@@ -119,11 +141,12 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
           pjState?.data?.project?.tasks.length > 0 &&
           pjState?.data?.project?.tasks.map((task: TTask) => {
             return taskSelected?.id === task.id && fetchingTask ? (
-              <TaskSekeleton key={task.id} />
+              <View style={styles.loadingSekeleton}>
+                <TaskSekeleton key={task.id} />
+              </View>
             ) : (
               <View key={task.id} style={getColorTask(task)}>
                 <TouchableOpacity
-                  style={styles.task}
                   onPress={() => {
                     openModal(joinedPj, task)
                     setIdPj(joinedPj.id)
@@ -132,7 +155,9 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
                 >
                   <View style={styles.taskWrap}>
                     <View style={styles.taskLeft}>
-                      <Text numberOfLines={2}>{task.task_id}</Text>
+                      <Text numberOfLines={2} style={styles.taskContent}>
+                        {task.task_id}
+                      </Text>
                     </View>
                     <View style={styles.taskRight}>
                       <Checkbox
@@ -152,27 +177,33 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
               </View>
             )
           })}
-        {fetchingTask && !taskSelected && <TaskSekeleton />}
-        {listTask && listTask?.data?.project?.tasks.length === 0 && (
-          <View>
-            <Text>Bạn chưa có task nào cả</Text>
+        {fetchingTask && !taskSelected && (
+          <View style={styles.loadingSekeleton}>
+            <TaskSekeleton />
           </View>
         )}
-        <View style={styles.createTaskContainer}>
-          <TextInput
-            onChangeText={text => setTaskId(text)}
-            value={taskId}
-            allowFontScaling={false}
-            placeholder="Input text"
-            style={styles.createTask}
-            onSubmitEditing={createTask}
-          />
-          {createTaskLoading && (
-            <View style={styles.loading}>
-              <ActivityIndicator size="small" color="#0000ff" />
-            </View>
-          )}
-        </View>
+        {listTask && listTask?.data?.project?.tasks.length === 0 && (
+          <View>
+            <Text style={styles.noData}>Bạn chưa có task nào cả</Text>
+          </View>
+        )}
+        {showCreateTask && (
+          <View style={styles.createTaskContainer}>
+            <TextInput
+              onChangeText={text => setTaskId(text)}
+              value={taskId}
+              allowFontScaling={false}
+              placeholder="Input text"
+              style={styles.createTask}
+              onSubmitEditing={createTask}
+            />
+            {createTaskLoading && (
+              <View style={styles.loading}>
+                <ActivityIndicator size="small" color="#0000ff" />
+              </View>
+            )}
+          </View>
+        )}
       </View>
     </View>
   )
@@ -188,12 +219,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomColor: 'rgba(33, 33, 33, 0.08)',
     borderBottomWidth: 1,
+    padding: 10,
   },
   projectTitleBottom: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   projectName: {
     marginLeft: 10,
@@ -205,7 +239,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   containerContent: {
-    padding: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.12)',
     flex: 1,
     marginBottom: 15,
@@ -216,7 +249,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     color: '#6D6D6D',
   },
-  bottomTextTitle:{
+  bottomTextTitle: {
     fontWeight: '400',
     fontSize: 14,
     lineHeight: 20,
@@ -224,9 +257,6 @@ const styles = StyleSheet.create({
   },
   listTasks: {
     marginTop: 10,
-  },
-  task: {
-    marginBottom: 10,
   },
   taskWrap: {
     display: 'flex',
@@ -255,5 +285,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     color: ENUM_COLOR.black,
+  },
+  noData: {
+    marginLeft: 15,
+  },
+  taskContent: {
+    marginLeft: 15,
+  },
+  loadingSekeleton: {
+    padding: 10,
   },
 })

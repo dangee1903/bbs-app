@@ -1,6 +1,6 @@
 import { TSelect, TSelects } from '@model/index'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { HelperText } from 'react-native-paper'
 
@@ -30,8 +30,10 @@ const DropdownCommon = ({
   }
 
   return (
-    <View>
-      <Text>{label}</Text>
+    <View style={styles.selectWarp}>
+      <View style={styles.label}>
+        <Text>{label}</Text>
+      </View>
       <DropDownPicker
         defaultValue={value || null}
         items={items}
@@ -39,6 +41,7 @@ const DropdownCommon = ({
         onChangeItem={(item: TSelect) => {
           handleChange(item)
         }}
+        stickyHeader
       />
       <HelperText type="error" visible={!!errors}>
         {errors}
@@ -48,3 +51,20 @@ const DropdownCommon = ({
 }
 
 export default DropdownCommon
+
+const styles = StyleSheet.create({
+  selectWarp: {
+    position: 'relative',
+  },
+  label: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: 'white',
+    position: 'absolute',
+    top: 0,
+    left: 10,
+    zIndex: 1,
+    transform: [{ translateY: -10 }],
+    fontSize: 12,
+  },
+})
