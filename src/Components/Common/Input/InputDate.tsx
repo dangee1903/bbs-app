@@ -83,6 +83,5 @@ const styles = StyleSheet.create({
   },
   dateInput: {
     width: '100%',
-    marginTop: 10,
   },
 })

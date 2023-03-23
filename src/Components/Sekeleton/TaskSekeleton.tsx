@@ -7,6 +7,7 @@ const TaskSekeleton = () => {
   return (
     <Placeholder Animation={Fade} style={styles.containerContent}>
       <PlaceholderLine />
+      <PlaceholderLine />
     </Placeholder>
   )
 }
