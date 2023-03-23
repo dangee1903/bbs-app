@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { ENUM_COLOR } from '@constants/enum'
 import { TProject, TTask } from '@model/Project/ProjectType'
 import { useCreateMutation, useOvewiewQuery } from '@services/modules/project'
 import React, { useEffect, useState } from 'react'
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
   },
   createTask: {
     marginTop: 10,
-    backgroundColor: '#fffff',
+    backgroundColor: ENUM_COLOR.white,
     fontSize: 14,
     height: 30,
     flex: 1,
@@ -248,11 +249,11 @@ const styles = StyleSheet.create({
   taskRight: {},
   createTaskContainer: {
     flexDirection: 'row',
-    borderColor: '#000',
+    borderColor: ENUM_COLOR.black,
   },
   loading: {
     justifyContent: 'center',
     alignItems: 'center',
-    color: 'black',
+    color: ENUM_COLOR.black,
   },
 })

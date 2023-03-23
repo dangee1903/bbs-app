@@ -1,6 +1,7 @@
 import Slider from '@react-native-community/slider'
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
+import { HelperText } from 'react-native-paper'
 
 type TProps = {
   value: number
@@ -46,7 +47,9 @@ const SliderCommon = ({
         onSlidingComplete={handleChange}
         value={value}
       />
-      {errors && <Text style={{ fontSize: 10, color: 'red' }}>{errors}</Text>}
+      <HelperText type="error" visible={!!errors}>
+        {errors}
+      </HelperText>
     </>
   )
 }

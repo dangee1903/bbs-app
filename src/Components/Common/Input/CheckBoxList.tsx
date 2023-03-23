@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useState } from 'react'
-import { Checkbox, Text } from 'react-native-paper'
+import { Checkbox, HelperText, Text } from 'react-native-paper'
 import { View, StyleSheet } from 'react-native'
 import { TSelectString } from '@model/index'
 
@@ -43,12 +43,14 @@ const CheckBoxList = ({
                   onSelect(item.value, !selected.includes(item.value))
                 }}
               />
-              <Text>{item.label}</Text>
+              <Text style={styles.label}>{item.label}</Text>
             </View>
           )
         })}
       </View>
-      {errors && <Text style={{ fontSize: 10, color: 'red' }}>{errors}</Text>}
+      <HelperText type="error" visible={!!errors}>
+        {errors}
+      </HelperText>
     </>
   )
 }
@@ -73,11 +75,11 @@ const styles = StyleSheet.create({
   checkboxItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 10,
     borderRadius: 30,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
     backgroundColor: 'rgba(33, 33, 33, 0.08)',
+  },
+  label: {
+    marginRight: 10,
   },
 })
 

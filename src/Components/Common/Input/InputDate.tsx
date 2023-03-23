@@ -6,13 +6,13 @@ import {
   StyleSheet,
   NativeSyntheticEvent,
   TextInputFocusEventData,
-  Text,
 } from 'react-native'
 import { TextInput } from 'react-native-paper'
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker'
 import moment from 'moment'
+import { ENUM_COLOR } from '@constants/enum'
 import InputText from './InputText'
 
 type TProps = {
@@ -44,22 +44,27 @@ const InputDate = ({
       setValueDate(newDate)
     }
   }
+
+  const openDatePicker = () => {
+    setShow(true)
+  }
   return (
     <View>
-      <TouchableOpacity style={styles.datePicker} onPress={() => setShow(true)}>
+      <TouchableOpacity style={styles.datePicker}>
         <InputText
           mode="outlined"
           label="Chọn ngày"
           placeholder="Nhập ngày"
           value={value}
           right={
-            <TextInput.Icon icon="calendar" onPress={() => setShow(true)} />
+            <TextInput.Icon icon="calendar-range" onPress={openDatePicker} />
           }
           handleBlur={handleBlur}
           style={styles.dateInput}
+          errors={errors}
+          onPress={openDatePicker}
         />
       </TouchableOpacity>
-      {errors && <Text style={{ fontSize: 10, color: 'red' }}>{errors}</Text>}
       {show && (
         <DateTimePicker
           value={new Date()}
@@ -67,7 +72,7 @@ const InputDate = ({
           is24Hour
           minimumDate={minDate}
           onChange={onChangeDate}
-          style={{ width: 320, backgroundColor: 'white' }}
+          style={{ width: 320, backgroundColor: ENUM_COLOR.white }}
         />
       )}
     </View>
@@ -78,7 +83,7 @@ export default InputDate
 
 const styles = StyleSheet.create({
   datePicker: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
   },
   dateInput: {

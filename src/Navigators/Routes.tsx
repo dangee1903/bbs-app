@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
 import { SideBar } from '@components/SideBar'
+import { ENUM_COLOR } from '@constants/enum'
 
 const Drawer = createDrawerNavigator()
 
@@ -18,9 +19,9 @@ const Routers = () => {
       drawerContent={props => <CustomDrawer {...props} />}
       screenOptions={{
         headerShown: false,
-        drawerActiveBackgroundColor: '#6200EE',
-        drawerActiveTintColor: '#fff',
-        drawerInactiveTintColor: '#333',
+        drawerActiveBackgroundColor: ENUM_COLOR.mainColor,
+        drawerActiveTintColor: ENUM_COLOR.white,
+        drawerInactiveTintColor: ENUM_COLOR.black,
       }}
       useLegacyImplementation={false}
     >
@@ -32,11 +33,11 @@ const Routers = () => {
             component={_.component}
             options={{
               headerShown: _.showHeader,
-              drawerIcon: () => _.icon,
+              drawerIcon: props => _.icon(props.color),
               headerLeftLabelVisible: true,
               headerTitle: '',
               headerStyle: {
-                backgroundColor: '#6200EE',
+                backgroundColor: ENUM_COLOR.mainColor,
               },
               headerLeft: () => {
                 return (
@@ -46,14 +47,18 @@ const Routers = () => {
                     }
                     style={{ paddingLeft: 20 }}
                   >
-                    <Ionicons name="menu" size={30} color="white" />
+                    <Ionicons name="menu" size={30} color={ENUM_COLOR.white} />
                   </TouchableOpacity>
                 )
               },
               headerRight: () => {
                 return (
                   <TouchableOpacity style={{ paddingRight: 20 }}>
-                    <Ionicons name="search" size={24} color="white" />
+                    <Ionicons
+                      name="search"
+                      size={24}
+                      color={ENUM_COLOR.white}
+                    />
                   </TouchableOpacity>
                 )
               },

@@ -5,6 +5,7 @@ import RenderHTML from 'react-native-render-html'
 import { TDetailEventType } from '@model/Event/DetailEventType'
 import { converDate } from '@helpers/datatime'
 import commonStyle from '@styles/commonStyle'
+import { ENUM_COLOR } from '@constants/enum'
 
 type TProps = {
   data: TDetailPostType | TDetailEventType
@@ -21,7 +22,7 @@ const DetailItem = ({ data, type }: TProps) => {
   return (
     <ScrollView
       style={{
-        backgroundColor: 'white',
+        backgroundColor: ENUM_COLOR.white,
         paddingHorizontal: 10,
       }}
       showsVerticalScrollIndicator={false}

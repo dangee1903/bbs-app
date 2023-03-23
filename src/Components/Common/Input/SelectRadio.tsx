@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react'
-import { RadioButton, Text } from 'react-native-paper'
+import { HelperText, RadioButton, Text } from 'react-native-paper'
 import { View, StyleSheet } from 'react-native'
 import { TSelectString } from '@model/index'
 
@@ -28,12 +28,14 @@ const CheckBoxList = ({
                 status={value === item.value ? 'checked' : 'unchecked'}
                 onPress={() => changeValue(item.value)}
               />
-              <Text>{item.label}</Text>
+              <Text style={styles.label}>{item.label}</Text>
             </View>
           )
         })}
       </View>
-      {errors && <Text style={{ fontSize: 10, color: 'red' }}>{errors}</Text>}
+      <HelperText type="error" visible={!!errors}>
+        {errors}
+      </HelperText>
     </>
   )
 }
@@ -60,9 +62,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 10,
     borderRadius: 30,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
     backgroundColor: 'rgba(33, 33, 33, 0.08)',
+  },
+  label: {
+    marginRight: 10,
   },
 })
 

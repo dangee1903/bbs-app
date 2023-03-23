@@ -2,6 +2,7 @@ import { TSelect, TSelects } from '@model/index'
 import React from 'react'
 import { Text, View } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
+import { HelperText } from 'react-native-paper'
 
 type TProps = {
   items: TSelects | []
@@ -39,7 +40,9 @@ const DropdownCommon = ({
           handleChange(item)
         }}
       />
-      {errors && <Text style={{ fontSize: 10, color: 'red' }}>{errors}</Text>}
+      <HelperText type="error" visible={!!errors}>
+        {errors}
+      </HelperText>
     </View>
   )
 }

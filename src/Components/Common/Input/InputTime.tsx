@@ -7,11 +7,12 @@ import {
   NativeSyntheticEvent,
   TextInputFocusEventData,
 } from 'react-native'
-import { TextInput, Text } from 'react-native-paper'
+import { TextInput } from 'react-native-paper'
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker'
 import moment from 'moment'
+import { ENUM_COLOR } from '@constants/enum'
 import InputText from './InputText'
 
 type TProps = {
@@ -46,6 +47,10 @@ const InputTime = ({
       setValueDate(date)
     }
   }
+
+  const openTimePicker = () => {
+    setShow(true)
+  }
   return (
     <View style={{ width }}>
       <TouchableOpacity onPress={() => setShow(true)}>
@@ -56,17 +61,18 @@ const InputTime = ({
           value={moment(value).format('hh:mm A')}
           right={
             <TextInput.Icon
-              color="#fff"
-              icon="clock"
+              color={ENUM_COLOR.white}
+              icon="alarm"
               onPress={() => setShow(true)}
               style={{ paddingLeft: 10 }}
             />
           }
           handleBlur={handleBlur}
           style={styles.dateInput}
+          errors={errors}
+          onPress={openTimePicker}
         />
       </TouchableOpacity>
-      {errors && <Text style={{ fontSize: 10, color: 'red' }}>{errors}</Text>}
       {show && (
         <DateTimePicker
           mode="time"

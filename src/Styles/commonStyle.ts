@@ -1,3 +1,4 @@
+import { ENUM_COLOR } from '@constants/enum'
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
@@ -29,7 +30,7 @@ export default StyleSheet.create({
     fontWeight: '500',
     fontSize: 14,
     lineHeight: 16,
-    color: '#6200EE',
+    color: ENUM_COLOR.mainColor,
     letterSpacing: 1.25,
     textTransform: 'uppercase',
   },
