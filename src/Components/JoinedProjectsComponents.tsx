@@ -160,7 +160,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
                       </Text>
                     </View>
                     <View style={styles.taskRight}>
-                      <Checkbox
+                      <Checkbox.Android
                         status={
                           Number(task.progress) === 100
                             ? 'checked'
