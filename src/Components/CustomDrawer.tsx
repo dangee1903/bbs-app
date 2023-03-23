@@ -2,7 +2,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import {
   DrawerContentScrollView,
   DrawerContentComponentProps,
@@ -12,6 +12,8 @@ import { AntDesign } from '@expo/vector-icons'
 import { useReduxDispatch, useReduxSelector } from '@store/index'
 import { clear } from '@store/loginReducer'
 import { removeToken } from '@helpers/token'
+import { ENUM_COLOR } from '@constants/enum'
+import { Avatar, Divider } from 'react-native-paper'
 
 const CustomDrawer = (props: DrawerContentComponentProps) => {
   const [image, setImage] = useState({ uri: '/dist/img/no-avatar.png' })
@@ -33,30 +35,25 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{ backgroundColor: '#6200EE' }}
+        contentContainerStyle={{ backgroundColor: ENUM_COLOR.white }}
       >
-        <View style={{ flex: 1, flexDirection: 'row-reverse', marginLeft: 5 }}>
+        <View style={{ flex: 1, flexDirection: 'row-reverse', marginLeft: 10 }}>
           <AntDesign
             onPress={() => props.navigation.closeDrawer()}
             name="close"
             size={24}
-            color="white"
+            color={ENUM_COLOR.mainColor}
           />
         </View>
         <View style={{ padding: 20 }}>
-          <Image
-            // eslint-disable-next-line global-require, import/extensions
+          <Avatar.Image
+            size={80}
+            style={{ backgroundColor: ENUM_COLOR.white, marginBottom: 10 }}
             source={image}
-            style={{
-              height: 80,
-              width: 80,
-              borderRadius: 40,
-              marginBottom: 10,
-            }}
           />
           <Text
             style={{
-              color: '#fff',
+              color: ENUM_COLOR.black,
               fontSize: 22,
               marginBottom: 5,
             }}
@@ -66,7 +63,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
           <View style={{ flexDirection: 'row' }}>
             <Text
               style={{
-                color: '#fff',
+                color: ENUM_COLOR.black,
                 marginRight: 5,
               }}
             >
@@ -74,7 +71,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
             </Text>
             <Text
               style={{
-                color: '#fff',
+                color: ENUM_COLOR.black,
                 marginRight: 5,
               }}
             >
@@ -82,11 +79,20 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
             </Text>
           </View>
         </View>
-        <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 10 }}>
+        <Divider />
+        <View
+          style={{ flex: 1, backgroundColor: ENUM_COLOR.white, paddingTop: 10 }}
+        >
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
-      <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: '#ccc' }}>
+      <View
+        style={{
+          padding: 20,
+          borderTopWidth: 1,
+          borderTopColor: ENUM_COLOR.grayBordor,
+        }}
+      >
         <TouchableOpacity
           onPress={handleSignOut}
           style={{ paddingVertical: 15 }}

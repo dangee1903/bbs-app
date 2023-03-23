@@ -1,13 +1,14 @@
+import { ENUM_COLOR } from '@constants/enum'
 import { PERMISSION_TYPE } from '@constants/request'
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons'
 import { TDataShow } from '@model/Request'
-import React, { useState } from 'react'
+import React from 'react'
 import {
-  View,
   Text,
   TouchableOpacity,
   StyleSheet,
-  GestureResponderEvent,
+  Dimensions,
+  View,
 } from 'react-native'
 import { Menu } from 'react-native-paper'
 import CreateButton from './CreateButton'
@@ -27,15 +28,9 @@ const MenuRequest = ({
   setShowModal,
   setDateShow,
 }: TProps) => {
-  const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
-  const onIconPress = (event: GestureResponderEvent) => {
-    const { nativeEvent } = event
-    const anchor = {
-      x: nativeEvent.pageX,
-      y: nativeEvent.pageY,
-    }
-
-    setMenuAnchor(anchor)
+  const { height } = Dimensions.get('window')
+  const { width } = Dimensions.get('window')
+  const onIconPress = () => {
     openMenu()
   }
 
@@ -43,10 +38,10 @@ const MenuRequest = ({
     <View>
       <CreateButton openMenu={onIconPress} />
       <Menu
-        style={styles.menuContainer}
+        style={{ display: width && height ? 'flex' : 'none' }}
         visible={showMenu}
         onDismiss={closeMenu}
-        anchor={menuAnchor}
+        anchor={{ x: width - 15, y: height - 125 }}
       >
         <TouchableOpacity
           onPress={() => {
@@ -64,7 +59,7 @@ const MenuRequest = ({
             style={styles.menuIcon}
             name="work"
             size={18}
-            color="black"
+            color={ENUM_COLOR.black}
           />
           <Text style={styles.menuText}>Xin đi muộn</Text>
         </TouchableOpacity>
@@ -84,7 +79,7 @@ const MenuRequest = ({
             style={styles.menuIcon}
             name="work-off"
             size={18}
-            color="black"
+            color={ENUM_COLOR.black}
           />
           <Text style={styles.menuText}>Xin về sớm</Text>
         </TouchableOpacity>
@@ -104,7 +99,7 @@ const MenuRequest = ({
             style={styles.menuIcon}
             name="calendar-times"
             size={18}
-            color="black"
+            color={ENUM_COLOR.black}
           />
           <Text style={styles.menuText}>Xin nghỉ phép</Text>
         </TouchableOpacity>
@@ -125,7 +120,7 @@ const MenuRequest = ({
             style={styles.menuIcon}
             name="more-time"
             size={18}
-            color="black"
+            color={ENUM_COLOR.black}
           />
           <Text style={styles.menuText}>Log Overtime</Text>
         </TouchableOpacity>
@@ -145,7 +140,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     borderRadius: 5,
-    backgroundColor: '#FFF',
+    backgroundColor: ENUM_COLOR.white,
   },
   menuItem: {
     flexDirection: 'row',

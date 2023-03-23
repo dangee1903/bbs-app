@@ -12,6 +12,7 @@ import commonStyle from '@styles/commonStyle'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import ModalRequest from '@screens/Home/Modal/ModalRequest'
 import { TDataShow } from '@model/Request'
+import { ENUM_COLOR } from '@constants/enum'
 
 type TProps = {
   navigation: any
@@ -62,7 +63,7 @@ const Home = ({ navigation }: TProps) => {
       <ScrollView
         style={{
           flex: 1,
-          backgroundColor: 'white',
+          backgroundColor: ENUM_COLOR.white,
         }}
         showsVerticalScrollIndicator={false}
       >
@@ -113,6 +114,7 @@ export default Home
 const styles = StyleSheet.create({
   homeContent: {
     margin: 16,
+    paddingBottom: 60,
   },
   contentHead: {
     fontSize: 20,
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   createBtn: {
-    backgroundColor: '#6200EE',
+    backgroundColor: ENUM_COLOR.mainColor,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     ...commonStyle.btn,
-    color: '#FFFFFF',
+    color: ENUM_COLOR.white,
     marginLeft: 17,
   },
 })

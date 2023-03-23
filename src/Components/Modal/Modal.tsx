@@ -4,6 +4,7 @@ import { Button, Modal, Portal } from 'react-native-paper'
 import { StyleSheet, View, Text } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import Toast from 'react-native-toast-message'
+import { ENUM_COLOR } from '@constants/enum'
 
 type TProps = {
   isShowModal?: boolean
@@ -42,8 +43,8 @@ const ModalCommon = ({
           <AntDesign
             onPress={() => setShowModal(false)}
             name="close"
-            size={14}
-            color="#6200EE"
+            size={18}
+            color={ENUM_COLOR.mainColor}
           />
         </View>
         {children}
@@ -73,7 +74,7 @@ export default ModalCommon
 
 const styles = StyleSheet.create({
   containerStyle: {
-    backgroundColor: 'white',
+    backgroundColor: ENUM_COLOR.white,
     marginLeft: 20,
     marginRight: 20,
     padding: 20,
@@ -93,13 +94,13 @@ const styles = StyleSheet.create({
   },
   buttonFooter: {
     paddingHorizontal: 10,
-    color: '#6200EE',
+    color: ENUM_COLOR.mainColor,
   },
   textCancleFooter: {
     fontSize: 14,
   },
   textConfirmFooter: {
     fontSize: 14,
-    color: '#6200EE',
+    color: ENUM_COLOR.mainColor,
   },
 })

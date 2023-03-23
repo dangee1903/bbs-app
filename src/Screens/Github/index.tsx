@@ -4,6 +4,7 @@ import InputCommon from '@components/Common/InputCommon'
 import SliderCommon from '@components/Common/SliderCommon'
 import JoinedProjectsComponent from '@components/JoinedProjectsComponents'
 import JoinedProjectsSekeleton from '@components/Sekeleton/JoinedProjectsSekeleton'
+import { ENUM_COLOR } from '@constants/enum'
 import { converYearMonthDay } from '@helpers/datatime'
 import { TSelects } from '@model/index'
 import { TProject, TTask } from '@model/Project/ProjectType'
@@ -136,7 +137,6 @@ const Github = () => {
               handleSubmit,
               values,
               errors,
-              isValid,
               setFieldValue,
             }) => (
               <>
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   containerStyle: {
-    backgroundColor: 'white',
+    backgroundColor: ENUM_COLOR.white,
     marginLeft: 20,
     marginRight: 20,
     padding: 20,

@@ -14,8 +14,6 @@ export const requestValidationSchema = (permissionType: string) => {
     return yup.object().shape({
       note: yup.string().required(message.required),
       work_day: yup.string().required(message.required),
-      start_at: yup.string().required(message.required),
-      end_at: yup.string().required(message.required),
       project: yup.string().required(message.required),
     })
   }

@@ -5,12 +5,11 @@ import {
   KeyboardTypeOptions,
   NativeSyntheticEvent,
   StyleProp,
-  Text,
   TextInputFocusEventData,
   TextStyle,
   View,
 } from 'react-native'
-import { TextInput } from 'react-native-paper'
+import { HelperText, TextInput } from 'react-native-paper'
 
 type TProps = {
   placeholder: string
@@ -27,6 +26,7 @@ type TProps = {
   label?: string
   right?: JSX.Element
   style?: StyleProp<TextStyle>
+  onPress?: () => void
 }
 
 const InputText = ({
@@ -44,6 +44,7 @@ const InputText = ({
   right,
   style,
   setChangeValue,
+  onPress = () => {},
 }: TProps) => {
   const handleChangeText = (v: string) => {
     return setChangeValue ? setChangeValue(v) : handleChange(v)
@@ -63,8 +64,11 @@ const InputText = ({
         label={label}
         right={right}
         style={style}
+        onFocus={onPress}
       />
-      {errors && <Text style={{ fontSize: 10, color: 'red' }}>{errors}</Text>}
+      <HelperText type="error" visible={!!errors}>
+        {errors}
+      </HelperText>
     </View>
   )
 }

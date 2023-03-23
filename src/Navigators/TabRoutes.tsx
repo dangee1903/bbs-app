@@ -4,8 +4,8 @@ import { tabArr } from '@components/Tab'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
-import { TouchableOpacity, Text } from 'react-native'
-import { ENUM_COLOR_TAB_BAR } from '@constants/enum'
+import { TouchableOpacity } from 'react-native'
+import { ENUM_COLOR, ENUM_COLOR_TAB_BAR } from '@constants/enum'
 
 const Tab = createBottomTabNavigator()
 export const TabHome = () => {
@@ -16,7 +16,7 @@ export const TabHome = () => {
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: '#6200EE',
+          backgroundColor: ENUM_COLOR.mainColor,
         },
         unmountOnBlur: true,
         tabBarActiveTintColor: ENUM_COLOR_TAB_BAR.active,
@@ -41,7 +41,7 @@ export const TabHome = () => {
               headerLeftLabelVisible: true,
               headerTitle: '',
               headerStyle: {
-                backgroundColor: '#6200EE',
+                backgroundColor: ENUM_COLOR.mainColor,
               },
               headerLeft: () => {
                 return (
@@ -51,14 +51,18 @@ export const TabHome = () => {
                     }
                     style={{ paddingLeft: 20 }}
                   >
-                    <Ionicons name="menu" size={30} color="white" />
+                    <Ionicons name="menu" size={30} color={ENUM_COLOR.white} />
                   </TouchableOpacity>
                 )
               },
               headerRight: () => {
                 return (
                   <TouchableOpacity style={{ paddingRight: 20 }}>
-                    <Ionicons name="search" size={24} color="white" />
+                    <Ionicons
+                      name="search"
+                      size={24}
+                      color={ENUM_COLOR.white}
+                    />
                   </TouchableOpacity>
                 )
               },

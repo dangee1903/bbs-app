@@ -7,6 +7,7 @@ import {
   Text,
   TextInputFocusEventData,
 } from 'react-native'
+import { HelperText } from 'react-native-paper'
 
 type TProps = {
   placeholder: string
@@ -40,7 +41,9 @@ const InputCommon = ({
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
       />
-      {errors && <Text style={{ fontSize: 10, color: 'red' }}>{errors}</Text>}
+      <HelperText type="error" visible={!!errors}>
+        {errors}
+      </HelperText>
     </>
   )
 }

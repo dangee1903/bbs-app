@@ -1,3 +1,4 @@
+import { ENUM_COLOR } from '@constants/enum'
 import { AntDesign } from '@expo/vector-icons'
 import React from 'react'
 import {
@@ -14,7 +15,7 @@ type TProps = {
 const CreateButton = ({ openMenu }: TProps) => {
   return (
     <TouchableOpacity onPress={openMenu} style={styles.buttonContainer}>
-      <AntDesign name="plus" size={14} color="white" />
+      <AntDesign name="plus" size={14} color={ENUM_COLOR.white} />
       <Text style={styles.buttonText}>CREATE</Text>
     </TouchableOpacity>
   )
@@ -29,17 +30,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 48,
     borderRadius: 50,
-    backgroundColor: '#6200EE',
+    backgroundColor: ENUM_COLOR.mainColor,
     bottom: 20,
     right: 20,
     paddingHorizontal: 20,
   },
   buttonText: {
     fontSize: 14,
-    color: '#fff',
+    color: ENUM_COLOR.white,
     marginLeft: 10,
   },
   buttonView: {
-    color: '#fff',
+    color: ENUM_COLOR.white,
   },
 })

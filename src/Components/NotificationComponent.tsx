@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { TPostType } from '@model/Post/PostType'
 import { converDate } from '@helpers/datatime'
 import commonStyle from '@styles/commonStyle'
+import { ENUM_COLOR } from '@constants/enum'
 
 type TProps = {
   data: TPostType
@@ -73,6 +74,6 @@ const styles = StyleSheet.create({
   },
   bottomBtn: {
     ...commonStyle.btn,
-    color: '#6200EE',
+    color: ENUM_COLOR.mainColor,
   },
 })

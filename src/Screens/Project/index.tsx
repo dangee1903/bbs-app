@@ -1,10 +1,11 @@
+import { ENUM_COLOR } from '@constants/enum'
 import React from 'react'
-import { ScrollView, StyleSheet, Text } from 'react-native'
+import { ScrollView, Text } from 'react-native'
 
 const Project = () => {
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: 'white' }}
+      style={{ flex: 1, backgroundColor: ENUM_COLOR.white }}
       showsVerticalScrollIndicator={false}
     >
       <Text>Project</Text>
@@ -12,5 +13,3 @@ const Project = () => {
   )
 }
 export default Project
-
-const styles = StyleSheet.create({})

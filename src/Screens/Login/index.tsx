@@ -13,6 +13,7 @@ import { RUser } from '@services/modules/login/login'
 import { useUsersMutation } from '@services/modules/users'
 import { Formik } from 'formik'
 import InputCommon from '@components/Common/InputCommon'
+import { ENUM_COLOR } from '@constants/enum'
 import { loginValidationSchema } from './loginState'
 
 const Login = () => {
@@ -21,7 +22,7 @@ const Login = () => {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: 'white' }}
+      style={{ flex: 1, backgroundColor: ENUM_COLOR.white }}
       showsVerticalScrollIndicator={false}
     >
       {/* <Toast position="top" /> */}
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bottomView: {
-    backgroundColor: 'white',
+    backgroundColor: ENUM_COLOR.white,
     flex: 1,
     bottom: 50,
     borderTopStartRadius: 50,

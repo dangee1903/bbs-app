@@ -4,6 +4,7 @@ import { useGetDetailPostMutation } from '@services/modules/post'
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import DetailItem from '@components/DetailItem'
+import { ENUM_COLOR } from '@constants/enum'
 
 const TYPE_POST = {
   post: 'Post',
@@ -33,7 +34,7 @@ const Details = ({ route, navigation }: TProps) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: ENUM_COLOR.white,
       }}
     >
       {loadingPost || loadingEvent ? (
