@@ -7,7 +7,7 @@ import {
   NativeSyntheticEvent,
   TextInputFocusEventData,
 } from 'react-native'
-import { TextInput } from 'react-native-paper'
+import { Modal, TextInput } from 'react-native-paper'
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker'
@@ -42,7 +42,7 @@ const InputTime = ({
     date?: Date | undefined,
   ) => {
     if (date) {
-      setShow(false)
+      setShow(true)
       setValue(date)
       setValueDate(date)
     }
@@ -73,13 +73,16 @@ const InputTime = ({
           onPress={openTimePicker}
         />
       </TouchableOpacity>
-      <DateTimePicker
-        mode="time"
-        value={value ?? new Date()}
-        testID="dateTimePicker"
-        onChange={onChangeDate}
-        display="compact"
-      />
+      {show && (
+        <DateTimePicker
+          style={{ flex: 1, height: 320, backgroundColor: 'white' }}
+          mode="time"
+          value={value ?? new Date()}
+          testID="dateTimePicker"
+          onChange={onChangeDate}
+          display="compact"
+        />
+      )}
     </View>
   )
 }

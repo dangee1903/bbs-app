@@ -14,7 +14,6 @@ import {
   ViewStyle,
 } from 'react-native'
 import {
-  Button,
   Checkbox,
   IconButton,
   MD3Colors,
@@ -141,8 +140,8 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
           pjState?.data?.project?.tasks.length > 0 &&
           pjState?.data?.project?.tasks.map((task: TTask) => {
             return taskSelected?.id === task.id && fetchingTask ? (
-              <View style={styles.loadingSekeleton}>
-                <TaskSekeleton key={task.id} />
+              <View style={styles.loadingSekeleton} key={task.id}>
+                <TaskSekeleton />
               </View>
             ) : (
               <View key={task.id} style={getColorTask(task)}>
@@ -187,7 +186,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
             <Text style={styles.noData}>Bạn chưa có task nào cả</Text>
           </View>
         )}
-        {showCreateTask && (
+        {(showCreateTask || createTaskLoading) && (
           <View style={styles.createTaskContainer}>
             <TextInput
               onChangeText={text => setTaskId(text)}
@@ -270,11 +269,11 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
   },
   createTask: {
-    marginTop: 10,
-    backgroundColor: ENUM_COLOR.white,
+    backgroundColor: ENUM_COLOR.drakWhite,
     fontSize: 14,
-    height: 30,
+    height: 40,
     flex: 1,
+    borderBottomColor: '#E8E8E8',
   },
   taskRight: {},
   createTaskContainer: {
@@ -288,6 +287,7 @@ const styles = StyleSheet.create({
   },
   noData: {
     marginLeft: 15,
+    marginBottom: 10,
   },
   taskContent: {
     marginLeft: 15,

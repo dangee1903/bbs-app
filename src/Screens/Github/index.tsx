@@ -136,6 +136,7 @@ const Github = () => {
               handleSubmit,
               values,
               errors,
+              isValid,
               setFieldValue,
             }) => (
               <>
@@ -143,7 +144,7 @@ const Github = () => {
                   <DropdownCommon
                     items={selectAssigneeLists()}
                     label="Assignee"
-                    value={values.user_id ?? null}
+                    value={!values.user_id ? null : values.user_id}
                     errors={errors.user_id}
                     setFieldValue={setFieldValue}
                     name="user_id"
@@ -192,7 +193,6 @@ const Github = () => {
                     errors={errors.progress}
                   />
                 </Stack>
-
                 <Stack style={styles.buttonWrap}>
                   <Button
                     style={styles.button}
@@ -202,7 +202,7 @@ const Github = () => {
                     }}
                     disabled={!isValid}
                   >
-                    {selectedTask ? 'Sửa task' : 'Tạo task'}
+                    Sửa task
                   </Button>
                   {selectedTask && (
                     <Button

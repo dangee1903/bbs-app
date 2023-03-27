@@ -30,22 +30,22 @@ const DropdownCommon = ({
   }
 
   return (
-    <View style={styles.selectWarp}>
-      <View style={styles.label}>
-        <Text>{label}</Text>
-      </View>
-      <DropDownPicker
-        defaultValue={value || null}
-        items={items}
-        containerStyle={{ height: 40 }}
-        onChangeItem={(item: TSelect) => {
-          handleChange(item)
-        }}
-        stickyHeader
-      />
-      <HelperText type="error" visible={!!errors}>
-        {errors}
-      </HelperText>
+    <View>
+      {items.length > 0 && (
+        <>
+          <DropDownPicker
+            defaultValue={value}
+            items={items}
+            containerStyle={{ height: 40 }}
+            onChangeItem={(item: TSelect) => {
+              handleChange(item)
+            }}
+          />
+          <HelperText type="error" visible={!!errors}>
+            {errors}
+          </HelperText>
+        </>
+      )}
     </View>
   )
 }
