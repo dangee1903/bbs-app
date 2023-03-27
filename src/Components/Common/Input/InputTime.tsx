@@ -73,15 +73,13 @@ const InputTime = ({
           onPress={openTimePicker}
         />
       </TouchableOpacity>
-      {show && (
-        <DateTimePicker
-          mode="time"
-          value={value ?? new Date()}
-          testID="dateTimePicker"
-          onChange={onChangeDate}
-          display="compact"
-        />
-      )}
+      <DateTimePicker
+        mode="time"
+        value={value ?? new Date()}
+        testID="dateTimePicker"
+        onChange={onChangeDate}
+        display="compact"
+      />
     </View>
   )
 }

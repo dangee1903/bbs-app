@@ -7,7 +7,7 @@ import {
   NativeSyntheticEvent,
   TextInputFocusEventData,
 } from 'react-native'
-import { TextInput } from 'react-native-paper'
+import { Modal, TextInput } from 'react-native-paper'
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker'
@@ -65,19 +65,17 @@ const InputDate = ({
           onPress={openDatePicker}
         />
       </TouchableOpacity>
-      {show && (
-        <View>
-          <DateTimePicker
-            value={new Date()}
-            testID="dateTimePicker"
-            is24Hour
-            display="spinner"
-            minimumDate={minDate}
-            onChange={onChangeDate}
-            style={{ width: '100%', backgroundColor: 'red' }}
-          />
-        </View>
-      )}
+      <Modal visible={show} onDismiss={() => setShow(false)}>
+        <DateTimePicker
+          value={new Date()}
+          testID="dateTimePicker"
+          is24Hour
+          display="spinner"
+          minimumDate={minDate}
+          onChange={onChangeDate}
+          style={{ width: '100%', backgroundColor: 'red' }}
+        />
+      </Modal>
     </View>
   )
 }
