@@ -70,6 +70,7 @@ const InputDate = ({
           value={new Date()}
           testID="dateTimePicker"
           is24Hour
+          display="spinner"
           minimumDate={minDate}
           onChange={onChangeDate}
           style={{ width: 320, backgroundColor: ENUM_COLOR.white }}
