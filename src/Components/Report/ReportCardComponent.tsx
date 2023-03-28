@@ -17,7 +17,6 @@ const ReportCard = ({ title, sender, onPress }: ItemProps) => {
       style={styles.container}
       activeOpacity={0.6}
     >
-      {/* <View style={styles.container} onTouchEnd={() => onPress('ReportDetail')}> */}
       <View style={styles.content}>
         <View style={styles.imageSection}>
           <Image
@@ -55,7 +54,6 @@ const ReportCard = ({ title, sender, onPress }: ItemProps) => {
           />
         </View>
       </View>
-      {/* </View> */}
     </TouchableOpacity>
   )
 }
@@ -76,18 +74,14 @@ const styles = StyleSheet.create({
   },
   imageSection: {
     width: '15%',
-    // justifyContent: 'flex-start',
-    // alignItems: 'center'
   },
   image: {
     width: 40,
     height: 40,
     objectFit: 'cover',
     borderRadius: 50,
-    // marginBottom: 20,
   },
   titleSection: {
-    // width: %',
     flex: 1,
   },
   title: {

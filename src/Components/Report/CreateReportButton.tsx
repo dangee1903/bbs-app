@@ -4,11 +4,9 @@ import React from 'react'
 import {
   StyleSheet,
   TouchableOpacity,
-  GestureResponderEvent,
 } from 'react-native'
 
 type TProps = {
-  // press: (event: GestureResponderEvent) => void,
   onPress: (route: string) => void
 }
 

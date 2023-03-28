@@ -26,8 +26,6 @@ const DropdownCommon = ({
   name,
 }: TProps) => {
   const handleChange = (item: TSelect) => {
-    console.log('name', name);
-    console.log('item.value', item.value);
     setFieldValue(name, item.value)
   }
 
