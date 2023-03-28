@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Details from '@screens/Details'
 import Home from '@screens/Home'
 import Login from '@screens/Login'
+import ReportCreate from '@screens/Project/Create'
+import DetailReport from '@screens/Project/Details'
 import { useReduxSelector } from '@store/index'
 import * as React from 'react'
 import Routers from './Routes'
@@ -36,6 +38,16 @@ const ApplicationNavigator = () => {
               name="Details"
               component={Details}
               options={({ route }: any) => ({ title: route?.params?.name })}
+            />
+            <Stack.Screen
+              name="ReportDetail"
+              component={DetailReport}
+              options={({ route }: any) => ({ title: 'Chi tiết báo cáo' })}
+            />
+            <Stack.Screen
+              name="ReportCreate"
+              component={ReportCreate}
+              options={({ route }: any) => ({ title: 'Tạo báo cáo mới' })}
             />
           </Stack.Group>
         )}
