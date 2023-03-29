@@ -6,7 +6,7 @@ import { HelperText } from 'react-native-paper'
 
 type TProps = {
   items: TSelects | []
-  label: string
+  label?: string
   value: string | number | null
   errors?: string
   setFieldValue: (
@@ -33,14 +33,21 @@ const DropdownCommon = ({
     <View>
       {items.length > 0 && (
         <>
-          <DropDownPicker
-            defaultValue={value}
-            items={items}
-            containerStyle={{ height: 40 }}
-            onChangeItem={(item: TSelect) => {
-              handleChange(item)
-            }}
-          />
+          <View style={styles.selectWarp}>
+            <View style={styles.label}>
+              <Text>{label}</Text>
+            </View>
+            <DropDownPicker
+              defaultValue={value}
+              labelStyle={{flex: 1}}
+              items={items}
+              containerStyle={{ height: 40 }}
+              onChangeItem={(item: TSelect) => {
+                handleChange(item)
+              }}
+              stickyHeader
+            />
+          </View>
           <HelperText type="error" visible={!!errors}>
             {errors}
           </HelperText>
