@@ -34,6 +34,7 @@ export type TUser = {
   official_contract_date?: null
   is_remote_checkin_vpn: number
   team_name: string
+  leader_id: number
   group_name: string
   job_name: string
 }

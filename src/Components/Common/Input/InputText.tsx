@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ENUM_COLOR } from '@constants/enum'
 import React, { ChangeEvent } from 'react'
 import {
   KeyboardTypeOptions,
@@ -12,7 +13,7 @@ import {
 import { HelperText, TextInput } from 'react-native-paper'
 
 type TProps = {
-  placeholder: string
+  placeholder?: string
   handleChange?: (e: string | ChangeEvent<any>) => void
   setChangeValue?: (e: string) => void
   handleBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
@@ -31,8 +32,8 @@ type TProps = {
 
 const InputText = ({
   placeholder,
-  handleChange = () => {},
-  handleBlur = () => {},
+  handleChange = () => { },
+  handleBlur = () => { },
   value,
   secureTextEntry = false,
   errors,
@@ -44,7 +45,7 @@ const InputText = ({
   right,
   style,
   setChangeValue,
-  onPress = () => {},
+  onPress = () => { },
 }: TProps) => {
   const handleChangeText = (v: string) => {
     return setChangeValue ? setChangeValue(v) : handleChange(v)
@@ -65,6 +66,7 @@ const InputText = ({
         right={right}
         style={style}
         onFocus={onPress}
+        selectionColor={ENUM_COLOR.white}
       />
       <HelperText type="error" visible={!!errors}>
         {errors}

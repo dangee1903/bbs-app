@@ -38,6 +38,7 @@
     "expo-status-bar": "~1.4.0",
     "expo-updates": "~0.14.7",
     "formik": "^2.2.9",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "native-base": "^3.4.19",
     "prettier": "^2.7.1",
