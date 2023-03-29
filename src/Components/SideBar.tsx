@@ -5,7 +5,7 @@ import Noti from '@screens/Noti'
 import TimeWork from '@screens/TimeWork'
 import Request from '@screens/Request'
 import { TabHome } from '@navigators/TabRoutes'
-import { Path, Svg } from 'react-native-svg'
+import IconNotiSidebar from './Icon/IconNotiSidebar'
 
 export const SideBar = [
   {
@@ -51,12 +51,7 @@ export const SideBar = [
     label: 'Noti',
     icon: (color: string) => (
       // eslint-disable-next-line import/extensions, global-require
-      <Svg width="18" height="20" viewBox="0 0 18 20" fill="none">
-        <Path
-          d="M10 8.16667H15L18 5.41667L15 2.66667H10V0.833334H8V2.66667H1V8.16667H8V10H3L0 12.75L3 15.5H8V19.1667H10V15.5H17V10H10V8.16667Z"
-          fill={color}
-        />
-      </Svg>
+      <IconNotiSidebar color={color} />
     ),
     component: Noti,
     showHeader: true,
