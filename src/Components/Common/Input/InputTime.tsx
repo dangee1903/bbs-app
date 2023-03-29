@@ -75,7 +75,6 @@ const InputTime = ({
       </TouchableOpacity>
       {show && (
         <DateTimePicker
-          style={{ flex: 1, height: 320, backgroundColor: 'white' }}
           mode="time"
           value={value ?? new Date()}
           testID="dateTimePicker"

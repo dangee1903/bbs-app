@@ -65,7 +65,7 @@ const InputDate = ({
           onPress={openDatePicker}
         />
       </TouchableOpacity>
-      <Modal visible={show} onDismiss={() => setShow(false)}>
+      {show && (
         <DateTimePicker
           value={new Date()}
           testID="dateTimePicker"
@@ -73,9 +73,8 @@ const InputDate = ({
           display="spinner"
           minimumDate={minDate}
           onChange={onChangeDate}
-          style={{ width: '100%', backgroundColor: 'red' }}
         />
-      </Modal>
+      )}
     </View>
   )
 }
