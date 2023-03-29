@@ -1,7 +1,6 @@
 import { ENUM_COLOR } from '@constants/enum';
 import { TUser } from '@model/Users/UsersType';
 import * as React from 'react';
-import { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Avatar, Card, Text } from 'react-native-paper';
 
@@ -11,14 +10,6 @@ type TProps = {
 }
 
 const CardUser = ({ user, handlePress }: TProps) => {
-    const [image, setImage] = useState({ uri: process.env.BASE_URL + '/dist/img/no-avatar.png' })
-
-    useEffect(() => {
-        setImage(pre => ({
-            ...pre,
-            uri: process.env.BASE_URL + user.avatar,
-        }))
-    }, [user.avatar])
     return (
         <Card onPress={handlePress} style={styles.containCard}>
             <Card.Content style={styles.contentCard}>
@@ -26,7 +17,7 @@ const CardUser = ({ user, handlePress }: TProps) => {
                     <Avatar.Image
                         size={65}
                         style={{ backgroundColor: ENUM_COLOR.white }}
-                        source={image}
+                        source={{uri: process.env.BASE_URL + user.avatar}}
                     />
                 </View>
                 <View style={styles.infoUser}>

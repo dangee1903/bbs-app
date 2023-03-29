@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Avatar, Modal } from 'react-native-paper'
 import { StyleSheet, View, Text, TouchableOpacity, Platform, Linking } from 'react-native'
 import { ENUM_COLOR } from '@constants/enum'
@@ -13,15 +13,6 @@ type TProps = {
 
 
 const ModalUser = ({ showModal = false, setShowModal = () => { }, user }: TProps) => {
-    const [image, setImage] = useState({ uri: process.env.BASE_URL + '/dist/img/no-avatar.png' })
-
-    useEffect(() => {
-        setImage(pre => ({
-            ...pre,
-            uri: process.env.BASE_URL + user.avatar,
-        }))
-    }, [user.avatar])
-
     const handlePhoneCall = () => {
         if (user.phone) {
             if (Platform.OS === 'android') {
@@ -39,7 +30,7 @@ const ModalUser = ({ showModal = false, setShowModal = () => { }, user }: TProps
                 <Avatar.Image
                     size={128}
                     style={{ backgroundColor: ENUM_COLOR.white }}
-                    source={image}
+                    source={{uri: process.env.BASE_URL + user.avatar}}
                 />
                 <Text style={styles.jobName}>{user.job_name}</Text>
                 <Text
