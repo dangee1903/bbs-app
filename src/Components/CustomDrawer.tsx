@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import {
   DrawerContentScrollView,
@@ -16,16 +16,8 @@ import { ENUM_COLOR } from '@constants/enum'
 import { Avatar, Divider } from 'react-native-paper'
 
 const CustomDrawer = (props: DrawerContentComponentProps) => {
-  const [image, setImage] = useState({ uri: '/dist/img/no-avatar.png' })
   const { data } = useReduxSelector(state => state.login.user)
   const dispatch = useReduxDispatch()
-
-  useEffect(() => {
-    setImage(pre => ({
-      ...pre,
-      uri: process.env.BASE_URL + data.avatar,
-    }))
-  }, [data.avatar])
 
   const handleSignOut = async () => {
     await removeToken()
@@ -49,7 +41,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
           <Avatar.Image
             size={80}
             style={{ backgroundColor: ENUM_COLOR.white, marginBottom: 10 }}
-            source={image}
+            source={{uri: process.env.BASE_URL + data.avatar}}
           />
           <Text
             style={{

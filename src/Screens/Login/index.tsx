@@ -36,9 +36,9 @@ const Login = () => {
                 onSubmit={async (values: RUser) => {
                   try {
                     await login(values).unwrap()
-                    await users()
+                    await users({})
                     // eslint-disable-next-line no-empty
-                  } catch (error) {}
+                  } catch (error) { }
                 }}
                 validateOnBlur={false}
               >

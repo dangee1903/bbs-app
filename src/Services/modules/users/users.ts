@@ -1,7 +1,9 @@
+import { TUsers } from '@model/Users/UsersType'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
+import { number } from 'yup'
 
 export default (build: EndpointBuilder<any, any, any>) =>
-  build.mutation<any, void>({
+  build.mutation<TListUser, RListUser>({
     query: () => ({
       url: 'users',
       method: 'GET',
@@ -10,3 +12,24 @@ export default (build: EndpointBuilder<any, any, any>) =>
       },
     }),
   })
+
+export type RListUser = {
+  start_date?: string,
+  end_date?: string
+}
+
+export type TListUser = {
+  meta: TMeta,
+  users: TUsers
+}
+
+export type TMeta = {
+  pagination: {
+    total: number,
+    count: number,
+    per_page: number,
+    current_page: number,
+    total_page: number,
+    link: []
+  }
+}
