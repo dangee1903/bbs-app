@@ -6,8 +6,8 @@ import { useReduxSelector } from '@store/index'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, Text, StyleSheet, View } from 'react-native'
 import { filter } from 'lodash'
-import ModalUser from './Modal/ModalUser'
 import { convertStringtoSearch } from '@helpers/string'
+import ModalUser from './Modal/ModalUser'
 
 const ListStaff = () => {
   const { users } = useReduxSelector(state => state.users)
@@ -19,15 +19,21 @@ const ListStaff = () => {
   useEffect(() => {
     if (valueSearch) {
       let userFilter = users
-      const listKey = convertStringtoSearch(valueSearch.trim()).split(" ")
-      listKey.forEach((value) => {
-        userFilter = filter(userFilter, (o) => convertStringtoSearch(o?.name).includes(value) || convertStringtoSearch(o?.group_name).includes(value) || convertStringtoSearch(o?.team_name).includes(value))
+      const listKey = convertStringtoSearch(valueSearch.trim()).split(' ')
+      listKey.forEach(value => {
+        userFilter = filter(
+          userFilter,
+          o =>
+            convertStringtoSearch(o?.name).includes(value) ||
+            convertStringtoSearch(o?.group_name).includes(value) ||
+            convertStringtoSearch(o?.team_name).includes(value),
+        )
       })
       setListUser(userFilter)
     } else {
       setListUser(users)
     }
-  }, [valueSearch])
+  }, [valueSearch, users])
 
   const handleChangeValue = (value: string) => {
     setValueSearch(value)
@@ -48,13 +54,29 @@ const ListStaff = () => {
       >
         <View style={styles.contentListUser}>
           <Text style={styles.contentHeader}>DANH SÁCH NHÂN VIÊN</Text>
-          <InputText style={{ backgroundColor: ENUM_COLOR.white, marginBottom: 10 }} mode='flat' value={valueSearch} setChangeValue={handleChangeValue} placeholder="Nhập tên hoặc mã nhân viên .v.v." />
-          {listUser.map((user: TUser) => <CardUser handlePress={() => handlePress(user)} key={user.id} user={user} />)}
+          <InputText
+            style={{ backgroundColor: ENUM_COLOR.white, marginBottom: 10 }}
+            mode="flat"
+            value={valueSearch}
+            setChangeValue={handleChangeValue}
+            placeholder="Nhập tên hoặc mã nhân viên .v.v."
+          />
+          {listUser?.map((user: TUser) => (
+            <CardUser
+              handlePress={() => handlePress(user)}
+              key={user.id}
+              user={user}
+            />
+          ))}
         </View>
       </ScrollView>
-      {
-        userSelected && (<ModalUser showModal={showModal} setShowModal={handleShowModal} user={userSelected} />)
-      }
+      {userSelected && (
+        <ModalUser
+          showModal={showModal}
+          setShowModal={handleShowModal}
+          user={userSelected}
+        />
+      )}
     </>
   )
 }
@@ -63,7 +85,7 @@ export default ListStaff
 const styles = StyleSheet.create({
   containerListUser: {
     flex: 1,
-    backgroundColor: ENUM_COLOR.white
+    backgroundColor: ENUM_COLOR.white,
   },
   contentListUser: {
     paddingHorizontal: 16,
@@ -73,6 +95,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 24,
     fontWeight: '500',
-    marginBottom: 20
-  }
+    marginBottom: 20,
+  },
 })

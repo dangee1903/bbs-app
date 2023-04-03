@@ -1,12 +1,12 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
 import Github from '@screens/Github'
-import Home from '@screens/Home'
+import HomeStack from '@screens/HomeStack/HomeStack'
 import Noti from '@screens/Noti'
 import Project from '@screens/Project'
 import Setting from '@screens/Setting'
 
-export const tabArr = [
+export const TabArr = [
   {
     route: 'Project',
     label: 'Project',
@@ -24,12 +24,12 @@ export const tabArr = [
     showHeader: true,
   },
   {
-    route: 'Home',
-    label: 'Home',
+    route: 'HomeStack',
+    label: 'HomeStack',
     icon: (color: string) => (
       <MaterialIcons name="home" size={26} color={color} />
     ),
-    component: Home,
+    component: HomeStack,
     showHeader: true,
   },
   {

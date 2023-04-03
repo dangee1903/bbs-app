@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/react-in-jsx-scope */
-import { tabArr } from '@components/Tab'
+import { TabArr } from '@components/Tab'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
@@ -23,7 +23,7 @@ export const TabHome = () => {
         tabBarInactiveTintColor: ENUM_COLOR_TAB_BAR.inActive,
       }}
     >
-      {tabArr.map(_ => {
+      {TabArr.map(_ => {
         return (
           <Tab.Screen
             key={_.label}
