@@ -12,7 +12,7 @@ export const TabHome = () => {
   const navigation = useNavigation()
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeStack"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {

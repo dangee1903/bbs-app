@@ -32,8 +32,8 @@ type TProps = {
 
 const InputText = ({
   placeholder,
-  handleChange = () => { },
-  handleBlur = () => { },
+  handleChange = () => {},
+  handleBlur = () => {},
   value,
   secureTextEntry = false,
   errors,
@@ -45,7 +45,7 @@ const InputText = ({
   right,
   style,
   setChangeValue,
-  onPress = () => { },
+  onPress = () => {},
 }: TProps) => {
   const handleChangeText = (v: string) => {
     return setChangeValue ? setChangeValue(v) : handleChange(v)

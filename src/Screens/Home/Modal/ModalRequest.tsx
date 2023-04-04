@@ -20,7 +20,6 @@ import {
   useDayOffMutation,
 } from '@services/modules/request'
 import InputText from '@components/Common/Input/InputText'
-import { Formik } from 'formik'
 import DropdownCommon from '@components/Common/DropdownCommon'
 import { useJoinedQuery } from '@services/modules/project'
 import { TSelects } from '@model/index'
@@ -28,6 +27,7 @@ import SelectRadio from '@components/Common/Input/SelectRadio'
 import { useReduxSelector } from '@store/index'
 import Toast from 'react-native-toast-message'
 import moment from 'moment'
+import { Formik } from 'formik'
 import ModalCommon from '../../../Components/Modal/Modal'
 import { requestValidationSchema } from './ModalState'
 
@@ -172,6 +172,7 @@ const ModalRequest = ({
                 handleBlur={handleBlur('note')}
                 value={values.note}
                 errors={errors.note}
+                style={styles.reasonRequest}
               />
             )}
             {dataShow.time && (
@@ -248,5 +249,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexWrap: 'nowrap',
     width: '100%',
+  },
+  reasonRequest: {
+    height: 85,
   },
 })
