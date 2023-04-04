@@ -48,7 +48,7 @@ const InputText = ({
   onPress = () => {},
 }: TProps) => {
   const handleChangeText = (v: string) => {
-    return setChangeValue ? setChangeValue(v) : handleChange(v)
+    return setChangeValue ? setChangeValue(v.trim()) : handleChange(v.trim())
   }
   return (
     <View style={{ flexDirection: 'column', width: '100%' }}>
