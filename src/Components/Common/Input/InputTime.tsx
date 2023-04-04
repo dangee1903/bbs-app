@@ -7,7 +7,7 @@ import {
   NativeSyntheticEvent,
   TextInputFocusEventData,
 } from 'react-native'
-import { Modal, TextInput } from 'react-native-paper'
+import { TextInput } from 'react-native-paper'
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker'

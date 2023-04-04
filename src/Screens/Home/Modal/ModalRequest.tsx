@@ -14,7 +14,7 @@ import {
   OT_TYPE,
 } from '@constants/request'
 import InputTime from '@components/Common/Input/InputTime'
-import { TDataShow } from '@model/Request'
+import { TDataShow, TRequestState } from '@model/Request'
 import {
   useRequestMutation,
   useDayOffMutation,
@@ -62,15 +62,17 @@ const ModalRequest = ({
   return (
     <Formik
       validationSchema={requestValidationSchema(dataShow.permission_type)}
-      initialValues={{
-        note: '',
-        work_day: '',
-        option_time: [],
-        project: '',
-        session: '0',
-        start_at: undefined,
-        end_at: undefined,
-      }}
+      initialValues={
+        {
+          note: '',
+          work_day: '',
+          option_time: [],
+          project: '',
+          session: '0',
+          start_at: undefined,
+          end_at: undefined,
+        } as TRequestState
+      }
       onSubmit={async values => {
         try {
           if (dataShow.permission_type === PERMISSION_TYPE.NORMAL) {
@@ -121,7 +123,7 @@ const ModalRequest = ({
         } catch (error) {}
       }}
       validate={values => {
-        const errors = { end_at: '' }
+        const errors = { end_at: '', option_time: '' }
         if (values.start_at && values.end_at) {
           if (
             new Date(values.start_at).getTime() >
@@ -129,6 +131,17 @@ const ModalRequest = ({
             dataShow.permission_type === PERMISSION_TYPE.OVERTIME
           ) {
             errors.end_at = 'Giờ kết thúc phải lớn hơn giờ bắt đầu'
+            return errors
+          }
+        }
+        if (values.option_time.length) {
+          const res = values.option_time
+            .map(time => Number(time))
+            .reduce((total, currentValue) => {
+              return total + currentValue
+            })
+          if (res > 2) {
+            errors.option_time = 'Vui lòng chọn thời gian không quá 2h'
             return errors
           }
         }

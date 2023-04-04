@@ -7,12 +7,11 @@ import {
   NativeSyntheticEvent,
   TextInputFocusEventData,
 } from 'react-native'
-import { Modal, TextInput } from 'react-native-paper'
+import { TextInput } from 'react-native-paper'
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker'
 import moment from 'moment'
-import { ENUM_COLOR } from '@constants/enum'
 import InputText from './InputText'
 
 type TProps = {
@@ -70,7 +69,6 @@ const InputDate = ({
           value={new Date()}
           testID="dateTimePicker"
           is24Hour
-          display="spinner"
           minimumDate={minDate}
           onChange={onChangeDate}
         />
