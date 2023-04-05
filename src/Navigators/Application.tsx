@@ -1,4 +1,3 @@
-import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Details from '@screens/Details'
@@ -18,7 +17,7 @@ const ApplicationNavigator = () => {
   const nav = () => navigationRef.current
 
   // eslint-disable-next-line react/no-unstable-nested-components, react/jsx-props-no-spreading
-  const YourComponent = (props: any) => <Routers {...props} nav={nav} />
+  const SideBarComponent = (props: any) => <Routers {...props} nav={nav} />
 
   return (
     <NavigationContainer ref={navigationRef}>
@@ -36,7 +35,7 @@ const ApplicationNavigator = () => {
             <Stack.Screen
               options={{ headerShown: false }}
               name="Routes"
-              component={YourComponent}
+              component={SideBarComponent}
             />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen

@@ -16,8 +16,8 @@ import { ENUM_COLOR } from '@constants/enum'
 import InputText from './InputText'
 
 type TProps = {
-  valueDate?: Date
-  setValueDate?: (newDate: Date) => void
+  valueDate?: string
+  setValueDate?: (newDate: string) => void
   handleBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
   label?: string
   placeholder?: string
@@ -34,7 +34,7 @@ const InputTime = ({
   width = '100%',
   errors,
 }: TProps) => {
-  const [value, setValue] = React.useState<Date | undefined>(valueDate)
+  const [value, setValue] = React.useState<string>(valueDate ?? '')
   const [show, setShow] = React.useState(false)
 
   const onChangeDate = (
@@ -42,15 +42,17 @@ const InputTime = ({
     date?: Date | undefined,
   ) => {
     if (date) {
-      setShow(true)
-      setValue(date)
-      setValueDate(date)
+      const newDate = moment(date).format('hh:mm A')
+      setShow(false)
+      setValue(newDate)
+      setValueDate(newDate)
     }
   }
 
   const openTimePicker = () => {
     setShow(true)
   }
+
   return (
     <View style={{ width }}>
       <TouchableOpacity onPress={() => setShow(true)}>
@@ -58,7 +60,7 @@ const InputTime = ({
           mode="outlined"
           label={label}
           placeholder={placeholder}
-          value={moment(value).format('hh:mm A')}
+          value={value}
           right={
             <TextInput.Icon
               color={ENUM_COLOR.white}
@@ -76,7 +78,7 @@ const InputTime = ({
       {show && (
         <DateTimePicker
           mode="time"
-          value={value ?? new Date()}
+          value={new Date()}
           testID="dateTimePicker"
           onChange={onChangeDate}
           display="compact"

@@ -28,6 +28,7 @@ import { useReduxSelector } from '@store/index'
 import Toast from 'react-native-toast-message'
 import moment from 'moment'
 import { Formik } from 'formik'
+import { converStringToDate } from '@helpers/string'
 import ModalCommon from '../../../Components/Modal/Modal'
 import { requestValidationSchema } from './ModalState'
 
@@ -69,8 +70,8 @@ const ModalRequest = ({
           option_time: [],
           project: '',
           session: '0',
-          start_at: undefined,
-          end_at: undefined,
+          start_at: '',
+          end_at: '',
         } as TRequestState
       }
       onSubmit={async values => {
@@ -126,8 +127,8 @@ const ModalRequest = ({
         const errors = { end_at: '', option_time: '' }
         if (values.start_at && values.end_at) {
           if (
-            new Date(values.start_at).getTime() >
-              new Date(values.end_at).getTime() &&
+            converStringToDate(values.start_at, 'hh:mm A').getTime() >
+              converStringToDate(values.end_at, 'hh:mm A').getTime() &&
             dataShow.permission_type === PERMISSION_TYPE.OVERTIME
           ) {
             errors.end_at = 'Giờ kết thúc phải lớn hơn giờ bắt đầu'

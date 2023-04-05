@@ -20,13 +20,13 @@ const Drawer = createDrawerNavigator()
 
 const Routers = ({ nav }: TProps) => {
   const navigation = useNavigation()
-  const YourComponent = (props: DrawerContentComponentProps) => (
+  const CustomDrawerComponent = (props: DrawerContentComponentProps) => (
     <CustomDrawer {...props} nav={nav} />
   )
   return (
     <Drawer.Navigator
       // eslint-disable-next-line react/no-unstable-nested-components
-      drawerContent={YourComponent}
+      drawerContent={CustomDrawerComponent}
       screenOptions={{
         headerShown: false,
         drawerActiveBackgroundColor: ENUM_COLOR.mainColor,

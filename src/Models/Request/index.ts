@@ -23,6 +23,6 @@ export type TRequestState = {
   option_time: string[]
   project: string
   session: string
-  start_at?: Date
-  end_at?: Date
+  start_at?: string
+  end_at?: string
 }
