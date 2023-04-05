@@ -8,6 +8,7 @@ import { NativeBaseProvider } from 'native-base'
 import { Provider as PaperProvider } from 'react-native-paper'
 import 'expo-dev-menu'
 import ToaskError from '@components/ToaskError'
+import ToastCommon from '@components/ToaskCommon'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <ToaskError>
             <ApplicationNavigator />
           </ToaskError>
+          <ToastCommon position="top" />
         </PaperProvider>
       </NativeBaseProvider>
     </Provider>

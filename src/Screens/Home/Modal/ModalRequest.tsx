@@ -116,9 +116,11 @@ const ModalRequest = ({
               note: values.note,
             }).unwrap()
           }
-          setShowModal(false)
           Toast.show({
-            text2: 'Success',
+            text1: 'Tạo đơn thành công',
+            onShow() {
+              setShowModal(false)
+            },
           })
           // eslint-disable-next-line no-empty
         } catch (error) {}
