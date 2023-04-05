@@ -1,8 +1,14 @@
 import { TSelect, TSelects } from '@model/index'
-import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
-import DropDownPicker from 'react-native-dropdown-picker'
+import React, { useState } from 'react'
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native'
 import { HelperText } from 'react-native-paper'
+import DropDown from 'react-native-paper-dropdown'
 
 type TProps = {
   items: TSelects | []
@@ -25,35 +31,62 @@ const DropdownCommon = ({
   setFieldValue,
   name,
 }: TProps) => {
+  const [showDropDown, setShowDropDown] = useState(false)
+  const [gender, setGender] = useState<string>('')
+
   const handleChange = (item: TSelect) => {
     setFieldValue(name, item.value)
   }
 
+  const genderList = [
+    {
+      label: 'Male',
+      value: 'male',
+    },
+    {
+      label: 'Female',
+      value: 'female',
+    },
+    {
+      label: 'Others',
+      value: 'others',
+    },
+  ]
+
   return (
-    <View>
-      {items.length > 0 && (
-        <>
-          <View style={styles.selectWarp}>
-            <View style={styles.label}>
-              <Text>{label}</Text>
+    <TouchableWithoutFeedback
+      onPress={Keyboard.dismiss}
+      accessible={false}
+      style={styles.selectWarp}
+    >
+      <View>
+        {items.length > 0 && (
+          <>
+            <View style={styles.selectWarp}>
+              <DropDown
+                label="Gender"
+                mode="outlined"
+                visible={showDropDown}
+                showDropDown={() => setShowDropDown(true)}
+                onDismiss={() => setShowDropDown(false)}
+                value={gender}
+                setValue={setGender}
+                list={genderList}
+                dropDownStyle={{
+                  backgroundColor: '#fffff',
+                }}
+                dropDownItemStyle={{
+                  backgroundColor: '#fffff',
+                }}
+              />
             </View>
-            <DropDownPicker
-              defaultValue={value}
-              labelStyle={{flex: 1}}
-              items={items}
-              containerStyle={{ height: 40 }}
-              onChangeItem={(item: TSelect) => {
-                handleChange(item)
-              }}
-              stickyHeader
-            />
-          </View>
-          <HelperText type="error" visible={!!errors}>
-            {errors}
-          </HelperText>
-        </>
-      )}
-    </View>
+            <HelperText type="error" visible={!!errors}>
+              {errors}
+            </HelperText>
+          </>
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -62,6 +95,7 @@ export default DropdownCommon
 const styles = StyleSheet.create({
   selectWarp: {
     position: 'relative',
+    zIndex: 1,
   },
   label: {
     paddingLeft: 10,

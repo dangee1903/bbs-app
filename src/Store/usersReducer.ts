@@ -22,7 +22,7 @@ const usersReducer = createSlice({
     builder.addMatcher(
       userApi.endpoints.users.matchFulfilled,
       (state, { payload }) => {
-        return { users: payload?.users }
+        return { users: payload?.data?.users }
       },
     )
   },

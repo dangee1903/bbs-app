@@ -3,11 +3,13 @@
 import { ENUM_COLOR } from '@constants/enum'
 import React, { ChangeEvent } from 'react'
 import {
+  Keyboard,
   KeyboardTypeOptions,
   NativeSyntheticEvent,
   StyleProp,
   TextInputFocusEventData,
   TextStyle,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native'
 import { HelperText, TextInput } from 'react-native-paper'
@@ -32,8 +34,8 @@ type TProps = {
 
 const InputText = ({
   placeholder,
-  handleChange = () => { },
-  handleBlur = () => { },
+  handleChange = () => {},
+  handleBlur = () => {},
   value,
   secureTextEntry = false,
   errors,
@@ -45,33 +47,36 @@ const InputText = ({
   right,
   style,
   setChangeValue,
-  onPress = () => { },
+  onPress = () => {},
 }: TProps) => {
   const handleChangeText = (v: string) => {
     return setChangeValue ? setChangeValue(v) : handleChange(v)
   }
   return (
-    <View style={{ flexDirection: 'column', width: '100%' }}>
-      <TextInput
-        multiline={multiline}
-        numberOfLines={numberOfLines}
-        mode={mode}
-        placeholder={placeholder}
-        value={value}
-        onChangeText={handleChangeText}
-        onBlur={handleBlur}
-        keyboardType={keyboardType}
-        secureTextEntry={secureTextEntry}
-        label={label}
-        right={right}
-        style={style}
-        onFocus={onPress}
-        selectionColor={ENUM_COLOR.white}
-      />
-      <HelperText type="error" visible={!!errors}>
-        {errors}
-      </HelperText>
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={{ flexDirection: 'column', width: '100%' }}>
+        <TextInput
+          multiline={multiline}
+          numberOfLines={numberOfLines}
+          mode={mode}
+          placeholder={placeholder}
+          value={value}
+          onChangeText={handleChangeText}
+          onBlur={handleBlur}
+          keyboardType={keyboardType}
+          secureTextEntry={secureTextEntry}
+          label={label}
+          right={right}
+          style={style}
+          onFocus={onPress}
+          selectionColor={ENUM_COLOR.white}
+          showSoftInputOnFocus
+        />
+        <HelperText type="error" visible={!!errors}>
+          {errors}
+        </HelperText>
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 

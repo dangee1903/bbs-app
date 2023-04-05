@@ -2,16 +2,16 @@
 import { ENUM_COLOR } from '@constants/enum'
 import { TProject, TTask } from '@model/Project/ProjectType'
 import { useCreateMutation, useOvewiewQuery } from '@services/modules/project'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   ActivityIndicator,
   Image,
   StyleProp,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
   ViewStyle,
+  StyleSheet,
 } from 'react-native'
 import {
   Checkbox,
@@ -132,7 +132,10 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
         )}
       </View>
       <View style={styles.projectTitleBottom}>
-        <Text style={styles.bottomText}>Total: 7/10</Text>
+        <Text style={styles.bottomText}>
+          Total:
+          {joinedPj.total_closed}/{joinedPj.total}
+        </Text>
         <Text style={styles.bottomText}>List users</Text>
       </View>
       <View style={styles.listTasks}>
@@ -218,7 +221,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomColor: 'rgba(33, 33, 33, 0.08)',
     borderBottomWidth: 1,
-    padding: 10,
+    padding: 5,
+    paddingBottom: 0,
   },
   projectTitleBottom: {
     display: 'flex',
@@ -230,6 +234,7 @@ const styles = StyleSheet.create({
   },
   projectName: {
     marginLeft: 10,
+    marginBottom: 10,
   },
   projectImage: {
     display: 'flex',
@@ -250,7 +255,7 @@ const styles = StyleSheet.create({
   },
   bottomTextTitle: {
     fontWeight: '400',
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 20,
     color: 'black',
   },
@@ -279,6 +284,7 @@ const styles = StyleSheet.create({
   createTaskContainer: {
     flexDirection: 'row',
     borderColor: ENUM_COLOR.black,
+    backgroundColor: 'rgba(224, 224, 224, 0.3)',
   },
   loading: {
     justifyContent: 'center',

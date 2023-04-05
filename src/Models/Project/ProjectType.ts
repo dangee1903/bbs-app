@@ -25,6 +25,8 @@ export type TProject = {
   }
   current_members: [TCurrentMembers]
   tasks?: []
+  total: number
+  total_closed: number
 }
 
 export type TTask = {
