@@ -2,7 +2,7 @@
 import { ENUM_COLOR } from '@constants/enum'
 import { TProject, TTask } from '@model/Project/ProjectType'
 import { useCreateMutation, useOvewiewQuery } from '@services/modules/project'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   ActivityIndicator,
   Image,
@@ -32,7 +32,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
   const [getedTask, setGetedTask] = useState<boolean>(false)
   const [pjState, setPjState] = useState<any>()
   const [idPj, setIdPj] = useState<number | undefined>()
-  const [taskId, setTaskId] = useState<string>('')
+  const [taskName, setTaskName] = useState<string>('')
   const [taskSelected, setTaskSelected] = useState<TTask>()
 
   const {
@@ -58,13 +58,13 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
   }, [listTask])
 
   const createTask = (): void => {
-    if (taskId) {
+    if (taskName) {
       create({
         pjId: joinedPj?.id,
-        task_id: taskId,
+        name: taskName,
       })
       setIdPj(joinedPj?.id)
-      setTaskId('')
+      setTaskName('')
       setTaskSelected(undefined)
       setShowCreateTask(false)
     } else {
@@ -104,10 +104,10 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
             source={require('../../assets/project.png')}
           />
           <View style={styles.projectName}>
-            <TouchableOpacity>
-              <Text style={styles.bottomTextTitle}>{joinedPj?.name}</Text>
-              <Text style={styles.bottomText}>{joinedPj?.customer}</Text>
-            </TouchableOpacity>
+            <Text style={styles.bottomTextTitle} numberOfLines={1}>
+              {joinedPj?.name}
+            </Text>
+            <Text style={styles.bottomText}>{joinedPj?.customer}</Text>
           </View>
         </View>
         {getedTask ? (
@@ -157,8 +157,8 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
                 >
                   <View style={styles.taskWrap}>
                     <View style={styles.taskLeft}>
-                      <Text numberOfLines={2} style={styles.taskContent}>
-                        {task.task_id}
+                      <Text numberOfLines={1} style={styles.taskContent}>
+                        {task.name}
                       </Text>
                     </View>
                     <View style={styles.taskRight}>
@@ -192,8 +192,8 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
         {(showCreateTask || createTaskLoading) && (
           <View style={styles.createTaskContainer}>
             <TextInput
-              onChangeText={text => setTaskId(text)}
-              value={taskId}
+              onChangeText={text => setTaskName(text)}
+              value={taskName}
               allowFontScaling={false}
               placeholder="Input text"
               style={styles.createTask}
@@ -254,6 +254,7 @@ const styles = StyleSheet.create({
     color: '#6D6D6D',
   },
   bottomTextTitle: {
+    width: 150,
     fontWeight: '400',
     fontSize: 16,
     lineHeight: 20,

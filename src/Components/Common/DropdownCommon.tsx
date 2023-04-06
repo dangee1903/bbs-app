@@ -1,9 +1,8 @@
-import { TSelect, TSelects } from '@model/index'
+import { TSelects } from '@model/index'
 import React, { useState } from 'react'
 import {
   StyleSheet,
   View,
-  Text,
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native'
@@ -17,7 +16,7 @@ type TProps = {
   errors?: string
   setFieldValue: (
     field: string,
-    value: any,
+    value: string | number,
     shouldValidate?: boolean | undefined,
   ) => void
   name: string
@@ -32,26 +31,10 @@ const DropdownCommon = ({
   name,
 }: TProps) => {
   const [showDropDown, setShowDropDown] = useState(false)
-  const [gender, setGender] = useState<string>('')
 
-  const handleChange = (item: TSelect) => {
-    setFieldValue(name, item.value)
+  const handleChange = (item: string | number) => {
+    setFieldValue(name, item)
   }
-
-  const genderList = [
-    {
-      label: 'Male',
-      value: 'male',
-    },
-    {
-      label: 'Female',
-      value: 'female',
-    },
-    {
-      label: 'Others',
-      value: 'others',
-    },
-  ]
 
   return (
     <TouchableWithoutFeedback
@@ -64,20 +47,14 @@ const DropdownCommon = ({
           <>
             <View style={styles.selectWarp}>
               <DropDown
-                label="Gender"
+                label={label}
                 mode="outlined"
                 visible={showDropDown}
                 showDropDown={() => setShowDropDown(true)}
                 onDismiss={() => setShowDropDown(false)}
-                value={gender}
-                setValue={setGender}
-                list={genderList}
-                dropDownStyle={{
-                  backgroundColor: '#fffff',
-                }}
-                dropDownItemStyle={{
-                  backgroundColor: '#fffff',
-                }}
+                value={value}
+                setValue={handleChange}
+                list={items}
               />
             </View>
             <HelperText type="error" visible={!!errors}>

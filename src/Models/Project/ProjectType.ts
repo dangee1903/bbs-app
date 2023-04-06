@@ -43,6 +43,7 @@ export type TTask = {
   issue: string
   created_at: string
   updated_at: string
+  name: string
 }
 
 export type TProjects = {

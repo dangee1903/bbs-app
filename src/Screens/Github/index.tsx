@@ -3,7 +3,6 @@ import InputDate from '@components/Common/Input/InputDate'
 import InputText from '@components/Common/Input/InputText'
 import SliderCommon from '@components/Common/SliderCommon'
 import JoinedProjectsComponent from '@components/JoinedProjectsComponents'
-import KeyboardAvoidingComponent from '@components/KeyboardAvoidingView'
 import JoinedProjectsSekeleton from '@components/Sekeleton/JoinedProjectsSekeleton'
 import { ENUM_COLOR } from '@constants/enum'
 import { converYearMonthDay } from '@helpers/datatime'
@@ -29,17 +28,10 @@ import {
 } from 'react-native'
 import { IconButton, Modal, Portal } from 'react-native-paper'
 import { githubValidationSchema } from './githubState'
-
-type TTaskState = {
-  task_id: string
-  issue: string
-  progress: number
-  deadline?: string
-  user_id?: number
-}
+import { TTaskState } from '../../Services/modules/project/edit'
 
 const initialState: TTaskState = {
-  task_id: '',
+  content: '',
   issue: '',
   progress: 0,
   deadline: converYearMonthDay(new Date()),
@@ -67,6 +59,7 @@ const Github = () => {
         progress: task.progress,
         deadline: task.deadline ?? converYearMonthDay(new Date()),
         user_id: task.user_id,
+        content: task.content ?? '',
       })
     } else {
       setTaskState(initialState)
@@ -78,11 +71,6 @@ const Github = () => {
     setShowModal(false)
     setSelectedTask(undefined)
     setSelectedPj(undefined)
-    setTaskState({
-      task_id: '',
-      issue: '',
-      progress: 0,
-    })
   }
 
   const selectAssigneeLists = (): TSelects | [] => {
@@ -105,7 +93,9 @@ const Github = () => {
           contentContainerStyle={styles.containerStyle}
         >
           <View style={styles.modalTitle}>
-            <Text>{selectedTask?.task_id}</Text>
+            <Text numberOfLines={1} style={styles.taskName}>
+              {selectedTask?.name}
+            </Text>
             <IconButton
               icon="close"
               size={20}
@@ -159,15 +149,15 @@ const Github = () => {
                   </Stack>
                   <Stack>
                     <InputText
-                      placeholder="Task id"
-                      handleBlur={handleBlur('task_id')}
-                      value={values.task_id}
-                      errors={errors.task_id}
+                      placeholder="Description"
+                      handleBlur={handleBlur('content')}
+                      value={values.content}
+                      errors={errors.content}
                       mode="outlined"
-                      label="Task id"
+                      label="Description"
                       multiline
                       numberOfLines={3}
-                      setChangeValue={handleChange('task_id')}
+                      setChangeValue={handleChange('content')}
                     />
                   </Stack>
                   <Stack>
@@ -258,6 +248,9 @@ const Github = () => {
 export default Github
 
 const styles = StyleSheet.create({
+  taskName: {
+    width: '90%',
+  },
   pjTitle: {
     fontSize: 16,
     marginBottom: 5,
