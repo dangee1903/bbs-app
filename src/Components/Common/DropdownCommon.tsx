@@ -1,8 +1,13 @@
-import { TSelect, TSelects } from '@model/index'
-import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
-import DropDownPicker from 'react-native-dropdown-picker'
+import { TSelects } from '@model/index'
+import React, { useState } from 'react'
+import {
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native'
 import { HelperText } from 'react-native-paper'
+import DropDown from 'react-native-paper-dropdown'
 
 type TProps = {
   items: TSelects | []
@@ -11,7 +16,7 @@ type TProps = {
   errors?: string
   setFieldValue: (
     field: string,
-    value: any,
+    value: string | number,
     shouldValidate?: boolean | undefined,
   ) => void
   name: string
@@ -25,35 +30,40 @@ const DropdownCommon = ({
   setFieldValue,
   name,
 }: TProps) => {
-  const handleChange = (item: TSelect) => {
-    setFieldValue(name, item.value)
+  const [showDropDown, setShowDropDown] = useState(false)
+
+  const handleChange = (item: string | number) => {
+    setFieldValue(name, item)
   }
 
   return (
-    <View>
-      {items.length > 0 && (
-        <>
-          <View style={styles.selectWarp}>
-            <View style={styles.label}>
-              <Text>{label}</Text>
+    <TouchableWithoutFeedback
+      onPress={Keyboard.dismiss}
+      accessible={false}
+      style={styles.selectWarp}
+    >
+      <View>
+        {items.length > 0 && (
+          <>
+            <View style={styles.selectWarp}>
+              <DropDown
+                label={label}
+                mode="outlined"
+                visible={showDropDown}
+                showDropDown={() => setShowDropDown(true)}
+                onDismiss={() => setShowDropDown(false)}
+                value={value}
+                setValue={handleChange}
+                list={items}
+              />
             </View>
-            <DropDownPicker
-              defaultValue={value}
-              labelStyle={{flex: 1}}
-              items={items}
-              containerStyle={{ height: 40 }}
-              onChangeItem={(item: TSelect) => {
-                handleChange(item)
-              }}
-              stickyHeader
-            />
-          </View>
-          <HelperText type="error" visible={!!errors}>
-            {errors}
-          </HelperText>
-        </>
-      )}
-    </View>
+            <HelperText type="error" visible={!!errors}>
+              {errors}
+            </HelperText>
+          </>
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -62,6 +72,7 @@ export default DropdownCommon
 const styles = StyleSheet.create({
   selectWarp: {
     position: 'relative',
+    zIndex: 1,
   },
   label: {
     paddingLeft: 10,

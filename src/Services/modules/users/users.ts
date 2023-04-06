@@ -14,22 +14,24 @@ export default (build: EndpointBuilder<any, any, any>) =>
   })
 
 export type RListUser = {
-  start_date?: string,
+  start_date?: string
   end_date?: string
 }
 
 export type TListUser = {
-  meta: TMeta,
-  users: TUsers
+  data: {
+    meta: TMeta
+    users: TUsers
+  }
 }
 
 export type TMeta = {
   pagination: {
-    total: number,
-    count: number,
-    per_page: number,
-    current_page: number,
-    total_page: number,
+    total: number
+    count: number
+    per_page: number
+    current_page: number
+    total_page: number
     link: []
   }
 }

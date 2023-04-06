@@ -1,33 +1,21 @@
-import { useHeaderHeight } from '@react-navigation/elements'
 import React, { ReactElement } from 'react'
-import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native'
-import { ScrollView } from 'native-base'
+import { StyleSheet } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 type TProps = {
   children: ReactElement
 }
 
 const KeyboardAvoidingComponent = ({ children }: TProps) => {
-  const headerHeight = useHeaderHeight()
-
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      enabled
-      keyboardVerticalOffset={headerHeight}
-    >
-      <ScrollView
-        contentContainerStyle={{ flex: 1 }}
-        style={{ backgroundColor: 'white' }}
-        bounces={false}
-      >
-        {children}
-      </ScrollView>
-    </KeyboardAvoidingView>
+    <KeyboardAwareScrollView style={styles.scrollView}>
+      {children}
+    </KeyboardAwareScrollView>
   )
 }
 
 export default KeyboardAvoidingComponent
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  scrollView: {},
+})

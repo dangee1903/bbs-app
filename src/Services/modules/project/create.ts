@@ -14,6 +14,6 @@ export default (build: EndpointBuilder<any, any, any>) =>
 
 type TTaskState = {
   pjId: number
-  task_id?: string
+  name?: string
   issue?: string
 }

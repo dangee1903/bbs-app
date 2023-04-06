@@ -1,3 +1,4 @@
+import { ENUM_COLOR } from '@constants/enum'
 import React, { ChangeEvent, useState } from 'react'
 import {
   KeyboardTypeOptions,
@@ -5,6 +6,7 @@ import {
   Text,
   TextInputFocusEventData,
   StyleSheet,
+  GestureResponderEvent,
 } from 'react-native'
 import { TextInput } from 'react-native-paper'
 
@@ -31,9 +33,23 @@ const InputPasswordCommon = ({
 
   const showIconEye = () => {
     return hidePass ? (
-      <TextInput.Icon icon="eye" onPress={() => setHidePass(!hidePass)} />
+      <TextInput.Icon
+        style={{ zIndex: 1 }}
+        icon="eye"
+        onPress={(e: GestureResponderEvent) => {
+          e.stopPropagation()
+          setHidePass(!hidePass)
+        }}
+      />
     ) : (
-      <TextInput.Icon icon="eye-off" onPress={() => setHidePass(!hidePass)} />
+      <TextInput.Icon
+        style={{ zIndex: 1 }}
+        icon="eye-off"
+        onPress={(e: GestureResponderEvent) => {
+          e.stopPropagation()
+          setHidePass(!hidePass)
+        }}
+      />
     )
   }
 
@@ -48,6 +64,16 @@ const InputPasswordCommon = ({
         secureTextEntry={hidePass}
         error={!!errors}
         right={secureTextEntry && showIconEye()}
+        mode="flat"
+        activeUnderlineColor={ENUM_COLOR.mainColor}
+        theme={{
+          colors: {
+            background: 'white',
+          },
+        }}
+        style={{
+          backgroundColor: ENUM_COLOR.backgroundGray,
+        }}
       />
       {errors && <Text style={styles.error}>{errors}</Text>}
     </>

@@ -5,16 +5,29 @@ import store from '@store/index'
 import { registerRootComponent } from 'expo'
 import ApplicationNavigator from '@navigators/Application'
 import { NativeBaseProvider } from 'native-base'
-import { Provider as PaperProvider } from 'react-native-paper'
+import {
+  DefaultTheme,
+  MD3LightTheme,
+  Provider as PaperProvider,
+} from 'react-native-paper'
 import 'expo-dev-menu'
 import ToastError from '@components/ToastError'
 import ToastCommon from '@components/Common/ToastCommon'
+import { ThemeProp } from 'react-native-paper/lib/typescript/src/types'
+
+const theme: ThemeProp | undefined = {
+  ...DefaultTheme,
+  dark: false,
+  colors: {
+    ...MD3LightTheme.colors,
+  },
+}
 
 export default function App() {
   return (
     <Provider store={store}>
       <NativeBaseProvider>
-        <PaperProvider>
+        <PaperProvider theme={theme}>
           <ToastError>
             <ApplicationNavigator />
           </ToastError>

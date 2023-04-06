@@ -25,6 +25,8 @@ export type TProject = {
   }
   current_members: [TCurrentMembers]
   tasks?: []
+  total: number
+  total_closed: number
 }
 
 export type TTask = {
@@ -41,6 +43,7 @@ export type TTask = {
   issue: string
   created_at: string
   updated_at: string
+  name: string
 }
 
 export type TProjects = {

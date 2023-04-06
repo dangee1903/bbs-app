@@ -1,6 +1,5 @@
 import DropdownCommon from '@components/Common/DropdownCommon'
 import InputDate from '@components/Common/Input/InputDate'
-import InputCommon from '@components/Common/Input/InputPasswordCommon'
 import InputText from '@components/Common/Input/InputText'
 import SliderCommon from '@components/Common/SliderCommon'
 import JoinedProjectsComponent from '@components/JoinedProjectsComponents'
@@ -20,20 +19,19 @@ import { useReduxSelector } from '@store/index'
 import { Formik } from 'formik'
 import { Button, Stack } from 'native-base'
 import React, { useState } from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { IconButton, Modal, Portal } from 'react-native-paper'
 import { githubValidationSchema } from './githubState'
-
-type TTaskState = {
-  task_id: string
-  issue: string
-  progress: number
-  deadline?: string
-  user_id?: number
-}
+import { TTaskState } from '../../Services/modules/project/edit'
 
 const initialState: TTaskState = {
-  task_id: '',
+  content: '',
   issue: '',
   progress: 0,
   deadline: converYearMonthDay(new Date()),
@@ -61,6 +59,7 @@ const Github = () => {
         progress: task.progress,
         deadline: task.deadline ?? converYearMonthDay(new Date()),
         user_id: task.user_id,
+        content: task.content ?? '',
       })
     } else {
       setTaskState(initialState)
@@ -72,15 +71,10 @@ const Github = () => {
     setShowModal(false)
     setSelectedTask(undefined)
     setSelectedPj(undefined)
-    setTaskState({
-      task_id: '',
-      issue: '',
-      progress: 0,
-    })
   }
 
   const selectAssigneeLists = (): TSelects | [] => {
-    if (selectedPj) {
+    if (selectedPj && users) {
       return selectedPj?.current_members?.map(member => ({
         label:
           users.find((user: TUser) => user.id === member.user_id)?.name ?? '',
@@ -99,7 +93,9 @@ const Github = () => {
           contentContainerStyle={styles.containerStyle}
         >
           <View style={styles.modalTitle}>
-            <Text>{selectedTask?.task_id}</Text>
+            <Text numberOfLines={1} style={styles.taskName}>
+              {selectedTask?.name}
+            </Text>
             <IconButton
               icon="close"
               size={20}
@@ -109,128 +105,131 @@ const Github = () => {
               style={styles.closeModal}
             />
           </View>
-          <Formik
-            validationSchema={githubValidationSchema}
-            initialValues={taskState}
-            onSubmit={async (values: TTaskState) => {
-              if (selectedPj) {
-                if (selectedTask) {
-                  edit({
-                    pjId: selectedPj.id,
-                    id: selectedTask.id,
-                    ...values,
-                  })
-                } else {
-                  create({
-                    pjId: selectedPj.id,
-                    ...values,
-                  })
+          <KeyboardAvoidingView behavior="padding">
+            <Formik
+              validationSchema={githubValidationSchema}
+              initialValues={taskState}
+              onSubmit={async (values: TTaskState) => {
+                if (selectedPj) {
+                  if (selectedTask) {
+                    edit({
+                      pjId: selectedPj.id,
+                      id: selectedTask.id,
+                      ...values,
+                    })
+                  } else {
+                    create({
+                      pjId: selectedPj.id,
+                      ...values,
+                    })
+                  }
                 }
-              }
-              hideModal()
-            }}
-          >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              isValid,
-              setFieldValue,
-            }) => (
-              <>
-                <Stack>
-                  <DropdownCommon
-                    items={selectAssigneeLists()}
-                    label="Assignee"
-                    value={!values.user_id ? null : values.user_id}
-                    errors={errors.user_id}
-                    setFieldValue={setFieldValue}
-                    name="user_id"
-                  />
-                </Stack>
-                <Stack>
-                  <InputText
-                    placeholder="Task id"
-                    handleBlur={handleBlur('task_id')}
-                    value={values.task_id}
-                    errors={errors.task_id}
-                    mode="outlined"
-                    label="Task id"
-                    multiline
-                    numberOfLines={3}
-                    setChangeValue={handleChange('task_id')}
-                  />
-                </Stack>
-                <Stack>
-                  <InputText
-                    placeholder="Issue"
-                    handleBlur={handleBlur('issue')}
-                    value={values.issue}
-                    errors={errors.issue}
-                    mode="outlined"
-                    label="Issue"
-                    multiline
-                    numberOfLines={3}
-                    setChangeValue={handleChange('issue')}
-                  />
-                </Stack>
-                <Stack>
-                  <InputDate
-                    valueDate={values.deadline}
-                    setValueDate={newValue =>
-                      setFieldValue('deadline', newValue)
-                    }
-                    handleBlur={handleBlur('deadline')}
-                  />
-                </Stack>
-                <Stack>
-                  <SliderCommon
-                    setFieldValue={setFieldValue}
-                    value={values.progress}
-                    name="progress"
-                    errors={errors.progress}
-                  />
-                </Stack>
-                <Stack style={styles.buttonWrap}>
-                  <Button
-                    style={styles.button}
-                    size="sm"
-                    onPress={() => {
-                      handleSubmit()
-                    }}
-                    disabled={!isValid}
-                  >
-                    Sửa task
-                  </Button>
-                  {selectedTask && (
+                hideModal()
+              }}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                isValid,
+                setFieldValue,
+              }) => (
+                <>
+                  <Stack>
+                    <DropdownCommon
+                      items={selectAssigneeLists()}
+                      label="Assignee"
+                      value={!values.user_id ? null : values.user_id}
+                      errors={errors.user_id}
+                      setFieldValue={setFieldValue}
+                      name="user_id"
+                    />
+                  </Stack>
+                  <Stack>
+                    <InputText
+                      placeholder="Description"
+                      handleBlur={handleBlur('content')}
+                      value={values.content}
+                      errors={errors.content}
+                      mode="outlined"
+                      label="Description"
+                      multiline
+                      numberOfLines={3}
+                      setChangeValue={handleChange('content')}
+                    />
+                  </Stack>
+                  <Stack>
+                    <InputText
+                      placeholder="Issue"
+                      handleBlur={handleBlur('issue')}
+                      value={values.issue}
+                      errors={errors.issue}
+                      mode="outlined"
+                      label="Issue"
+                      multiline
+                      numberOfLines={3}
+                      setChangeValue={handleChange('issue')}
+                    />
+                  </Stack>
+                  <Stack>
+                    <InputDate
+                      valueDate={values.deadline}
+                      setValueDate={newValue =>
+                        setFieldValue('deadline', newValue)
+                      }
+                      handleBlur={handleBlur('deadline')}
+                    />
+                  </Stack>
+                  <Stack>
+                    <SliderCommon
+                      setFieldValue={setFieldValue}
+                      value={values.progress}
+                      name="progress"
+                      errors={errors.progress}
+                    />
+                  </Stack>
+                  <Stack style={styles.buttonWrap}>
                     <Button
                       style={styles.button}
                       size="sm"
                       onPress={() => {
-                        if (selectedPj && selectedTask) {
-                          remove({
-                            id: selectedTask?.id,
-                            pjId: selectedPj?.id,
-                          })
-                          hideModal()
-                        }
+                        handleSubmit()
                       }}
+                      disabled={!isValid}
                     >
-                      Xóa task
+                      Sửa task
                     </Button>
-                  )}
-                </Stack>
-              </>
-            )}
-          </Formik>
+                    {selectedTask && (
+                      <Button
+                        style={styles.button}
+                        size="sm"
+                        onPress={() => {
+                          if (selectedPj && selectedTask) {
+                            remove({
+                              id: selectedTask?.id,
+                              pjId: selectedPj?.id,
+                            })
+                            hideModal()
+                          }
+                        }}
+                      >
+                        Xóa task
+                      </Button>
+                    )}
+                  </Stack>
+                </>
+              )}
+            </Formik>
+          </KeyboardAvoidingView>
         </Modal>
       </Portal>
       <ScrollView
         style={styles.projectWrap}
         showsVerticalScrollIndicator={false}
       >
+        <Text style={styles.pjTitle}>Joined Projects</Text>
         {loadingJoined &&
           // eslint-disable-next-line react/no-array-index-key
           [...Array(5)].map((x, i) => <JoinedProjectsSekeleton key={i} />)}
@@ -249,6 +248,13 @@ const Github = () => {
 export default Github
 
 const styles = StyleSheet.create({
+  taskName: {
+    width: '90%',
+  },
+  pjTitle: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
   projectWrap: {
     padding: 20,
   },
