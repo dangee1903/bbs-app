@@ -31,7 +31,7 @@ export default function App() {
           <ToastError>
             <ApplicationNavigator />
           </ToastError>
-          <ToastCommon position="top" />
+          <ToastCommon />
         </PaperProvider>
       </NativeBaseProvider>
     </Provider>

@@ -14,6 +14,7 @@ type TProps = {
   handleConfirm: () => void
   disable?: boolean
   handleCancle?: () => void
+  isError?: boolean
 }
 
 const ModalCommon = ({
@@ -24,6 +25,7 @@ const ModalCommon = ({
   handleConfirm,
   disable = false,
   handleCancle = () => {},
+  isError = false,
 }: TProps) => {
   React.useEffect(() => {
     if (handleCancle) {
@@ -37,7 +39,7 @@ const ModalCommon = ({
         onDismiss={() => setShowModal(false)}
         contentContainerStyle={styles.containerStyle}
       >
-        <ToastCommon disableError />
+        {isError && <ToastCommon disableError />}
         <View style={styles.headerModal}>
           <Text style={styles.headerText}>{title}</Text>
           <AntDesign

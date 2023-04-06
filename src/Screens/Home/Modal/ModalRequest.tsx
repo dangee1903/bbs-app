@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import InputDate from '@components/Common/Input/InputDate'
 import CheckBoxList from '@components/Common/Input/CheckBoxList'
@@ -63,6 +63,10 @@ const ModalRequest = ({
     return []
   }
 
+  useEffect(() => {
+    setErrApi('')
+  }, [])
+
   return (
     <Formik
       validationSchema={requestValidationSchema(dataShow.permission_type)}
@@ -110,8 +114,8 @@ const ModalRequest = ({
             }).unwrap()
           } else {
             await postRequest({
-              permission_early: 2,
-              permission_late: 1,
+              permission_early: 1,
+              permission_late: 2,
               permission_type: dataShow.permission_type,
               work_day: values.work_day,
               permission_status: PERMISSION_STATUS.NOT_APPROVED_YET,
@@ -182,6 +186,7 @@ const ModalRequest = ({
           handleConfirm={() => handleSubmit()}
           handleCancle={handleReset}
           disable={!isValid}
+          isError={!errApi}
         >
           <HelperText type="error" visible={!!errApi}>
             {errApi}

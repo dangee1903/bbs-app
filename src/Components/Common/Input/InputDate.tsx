@@ -2,17 +2,15 @@
 import React from 'react'
 import {
   TouchableOpacity,
-  View,
   StyleSheet,
   NativeSyntheticEvent,
   TextInputFocusEventData,
+  View,
 } from 'react-native'
 import { TextInput } from 'react-native-paper'
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker'
 import moment from 'moment'
 import { FormatDate } from '@constants/date'
+import { DatePickerModal } from 'react-native-paper-dates'
 import InputText from './InputText'
 
 type TProps = {
@@ -33,21 +31,26 @@ const InputDate = ({
   const [value, setValue] = React.useState<string>(valueDate)
   const [show, setShow] = React.useState(false)
 
-  const onChangeDate = (
-    event: DateTimePickerEvent,
-    date?: Date | undefined,
-  ) => {
-    if (date) {
-      const newDate = moment(date).format(FormatDate.DATE_FULL)
-      setShow(false)
-      setValue(newDate)
-      setValueDate(newDate)
-    }
-  }
-
   const openDatePicker = () => {
     setShow(true)
   }
+
+  const onDismissSingle = React.useCallback(() => {
+    setShow(false)
+  }, [setShow])
+
+  const onConfirmSingle = React.useCallback(
+    (params: any) => {
+      if (params?.date) {
+        const newDate = moment(params.date).format(FormatDate.DATE_FULL)
+        setShow(false)
+        setValue(newDate)
+        setValueDate(newDate)
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  )
   return (
     <View>
       <TouchableOpacity style={styles.datePicker}>
@@ -65,15 +68,17 @@ const InputDate = ({
           onPress={openDatePicker}
         />
       </TouchableOpacity>
-      {show && (
-        <DateTimePicker
-          value={new Date()}
-          testID="dateTimePicker"
-          is24Hour
-          minimumDate={minDate}
-          onChange={onChangeDate}
-        />
-      )}
+      <DatePickerModal
+        locale="vi"
+        mode="single"
+        visible={show}
+        onDismiss={onDismissSingle}
+        date={new Date()}
+        onConfirm={onConfirmSingle}
+        saveLabel="Lưu"
+        label="Chọn ngày"
+        validRange={{ startDate: minDate }}
+      />
     </View>
   )
 }

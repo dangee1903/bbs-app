@@ -6,14 +6,14 @@ import {
   StyleSheet,
   NativeSyntheticEvent,
   TextInputFocusEventData,
+  Keyboard,
 } from 'react-native'
 import { TextInput } from 'react-native-paper'
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker'
-import moment from 'moment'
 import { ENUM_COLOR } from '@constants/enum'
-import { FormatDate } from '@constants/date'
+import { FormatDate, nowHour, nowMinute } from '@constants/date'
+import { TimePickerModal } from 'react-native-paper-dates'
+import moment from 'moment'
+import { converStringToDate } from '@helpers/string'
 import InputText from './InputText'
 
 type TProps = {
@@ -24,6 +24,11 @@ type TProps = {
   placeholder?: string
   width?: string | number
   errors?: string
+}
+
+type TTime = {
+  hours: number
+  minutes: number
 }
 
 const InputTime = ({
@@ -38,53 +43,69 @@ const InputTime = ({
   const [value, setValue] = React.useState<string>(valueDate ?? '')
   const [show, setShow] = React.useState(false)
 
-  const onChangeDate = (
-    event: DateTimePickerEvent,
-    date?: Date | undefined,
-  ) => {
-    if (date) {
-      const newDate = moment(date).format(FormatDate.TIME_12_HOUR)
-      setShow(false)
-      setValue(newDate)
-      setValueDate(newDate)
-    }
-  }
-
   const openTimePicker = () => {
     setShow(true)
   }
 
+  const onDismiss = React.useCallback(() => {
+    setShow(false)
+  }, [setShow])
+
+  const onConfirm = React.useCallback(
+    ({ hours, minutes }: TTime) => {
+      const date = `${hours}:${minutes}`
+      const newDate = moment(converStringToDate(date, FormatDate.TIME)).format(
+        FormatDate.TIME_12_HOUR,
+      )
+      setShow(false)
+      setValue(newDate)
+      setValueDate(newDate)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  )
+
   return (
     <View style={{ width }}>
-      <TouchableOpacity onPress={() => setShow(true)}>
-        <InputText
-          mode="outlined"
-          label={label}
-          placeholder={placeholder}
-          value={value}
-          right={
-            <TextInput.Icon
-              color={ENUM_COLOR.white}
-              icon="alarm"
-              onPress={() => setShow(true)}
-              style={{ paddingLeft: 10 }}
-            />
-          }
-          handleBlur={handleBlur}
-          style={styles.dateInput}
-          errors={errors}
-          onPress={openTimePicker}
-        />
+      <TouchableOpacity
+        onPress={() => {
+          setShow(true)
+          Keyboard.dismiss()
+        }}
+      >
+        <View pointerEvents="none">
+          <InputText
+            mode="outlined"
+            label={label}
+            placeholder={placeholder}
+            value={value}
+            right={
+              <TextInput.Icon
+                color={ENUM_COLOR.white}
+                icon="alarm"
+                onPress={() => setShow(true)}
+                style={{ paddingLeft: 10 }}
+              />
+            }
+            handleBlur={handleBlur}
+            style={styles.dateInput}
+            errors={errors}
+            onPress={openTimePicker}
+          />
+        </View>
       </TouchableOpacity>
-      {show && (
-        <DateTimePicker
-          mode="time"
-          value={new Date()}
-          testID="dateTimePicker"
-          onChange={onChangeDate}
-          display="compact"
-        />
-      )}
+      <TimePickerModal
+        locale="vi"
+        visible={show}
+        onDismiss={onDismiss}
+        onConfirm={onConfirm}
+        hours={nowHour}
+        minutes={nowMinute}
+        use24HourClock={false}
+        label="Chọn giờ"
+        cancelLabel="Hủy"
+        confirmLabel="Lưu"
+      />
     </View>
   )
 }
