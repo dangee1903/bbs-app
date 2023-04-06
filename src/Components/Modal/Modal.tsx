@@ -3,8 +3,8 @@ import * as React from 'react'
 import { Button, Modal, Portal } from 'react-native-paper'
 import { StyleSheet, View, Text } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
-import Toast from 'react-native-toast-message'
 import { ENUM_COLOR } from '@constants/enum'
+import ToastCommon from '@components/Common/ToastCommon'
 
 type TProps = {
   isShowModal?: boolean
@@ -37,7 +37,7 @@ const ModalCommon = ({
         onDismiss={() => setShowModal(false)}
         contentContainerStyle={styles.containerStyle}
       >
-        <Toast position="top" />
+        <ToastCommon disableError />
         <View style={styles.headerModal}>
           <Text style={styles.headerText}>{title}</Text>
           <AntDesign

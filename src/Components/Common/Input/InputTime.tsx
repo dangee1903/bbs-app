@@ -13,6 +13,7 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker'
 import moment from 'moment'
 import { ENUM_COLOR } from '@constants/enum'
+import { FormatDate } from '@constants/date'
 import InputText from './InputText'
 
 type TProps = {
@@ -42,7 +43,7 @@ const InputTime = ({
     date?: Date | undefined,
   ) => {
     if (date) {
-      const newDate = moment(date).format('hh:mm A')
+      const newDate = moment(date).format(FormatDate.TIME_12_HOUR)
       setShow(false)
       setValue(newDate)
       setValueDate(newDate)

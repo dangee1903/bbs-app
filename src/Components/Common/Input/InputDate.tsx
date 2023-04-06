@@ -12,6 +12,7 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker'
 import moment from 'moment'
+import { FormatDate } from '@constants/date'
 import InputText from './InputText'
 
 type TProps = {
@@ -37,7 +38,7 @@ const InputDate = ({
     date?: Date | undefined,
   ) => {
     if (date) {
-      const newDate = moment(date).format('YYYY-MM-DD')
+      const newDate = moment(date).format(FormatDate.DATE_FULL)
       setShow(false)
       setValue(newDate)
       setValueDate(newDate)

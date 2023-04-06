@@ -10,4 +10,5 @@ export enum ENUM_COLOR {
   black = '#000000',
   drakWhite = '#E0E0E0',
   success = '#4BB543',
+  error = '#ff3333',
 }

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
+import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import InputDate from '@components/Common/Input/InputDate'
 import CheckBoxList from '@components/Common/Input/CheckBoxList'
@@ -29,6 +29,8 @@ import Toast from 'react-native-toast-message'
 import moment from 'moment'
 import { Formik } from 'formik'
 import { converStringToDate } from '@helpers/string'
+import { FormatDate } from '@constants/date'
+import { HelperText } from 'react-native-paper'
 import ModalCommon from '../../../Components/Modal/Modal'
 import { requestValidationSchema } from './ModalState'
 
@@ -49,6 +51,7 @@ const ModalRequest = ({
   const [postDayOff] = useDayOffMutation()
   const { data: joinedPjs, isLoading: loadingJoined } = useJoinedQuery()
   const { data } = useReduxSelector(state => state.login.user)
+  const [errApi, setErrApi] = useState('')
 
   const selectAssigneeLists = (): TSelects | [] => {
     if (!loadingJoined && joinedPjs?.data?.projects?.length) {
@@ -96,19 +99,19 @@ const ModalRequest = ({
               note: values.note,
               ot_type: OT_TYPE.PROJECT,
               project_id: Number(values.project),
-              start_at: moment(values.start_at).format('hh:mm A'),
-              end_at: moment(values.end_at).format('hh:mm A'),
+              // default break_time
+              break_time: '0',
+              start_at: moment(
+                converStringToDate(values.start_at, FormatDate.TIME_12_HOUR),
+              ).format(FormatDate.TIME),
+              end_at: moment(
+                converStringToDate(values.end_at, FormatDate.TIME_12_HOUR),
+              ).format(FormatDate.TIME),
             }).unwrap()
           } else {
             await postRequest({
-              permission_early:
-                dataShow.permission_type === PERMISSION_TYPE.LATE
-                  ? undefined
-                  : null,
-              permission_late:
-                dataShow.permission_type === PERMISSION_TYPE.LATE
-                  ? null
-                  : undefined,
+              permission_early: 2,
+              permission_late: 1,
               permission_type: dataShow.permission_type,
               work_day: values.work_day,
               permission_status: PERMISSION_STATUS.NOT_APPROVED_YET,
@@ -123,14 +126,22 @@ const ModalRequest = ({
             },
           })
           // eslint-disable-next-line no-empty
-        } catch (error) {}
+        } catch (error: any) {
+          setErrApi('Tạo đơn thất bại. Vui lòng thử lại.')
+        }
       }}
       validate={values => {
         const errors = { end_at: '', option_time: '' }
         if (values.start_at && values.end_at) {
           if (
-            converStringToDate(values.start_at, 'hh:mm A').getTime() >
-              converStringToDate(values.end_at, 'hh:mm A').getTime() &&
+            converStringToDate(
+              values.start_at,
+              FormatDate.TIME_12_HOUR,
+            ).getTime() >
+              converStringToDate(
+                values.end_at,
+                FormatDate.TIME_12_HOUR,
+              ).getTime() &&
             dataShow.permission_type === PERMISSION_TYPE.OVERTIME
           ) {
             errors.end_at = 'Giờ kết thúc phải lớn hơn giờ bắt đầu'
@@ -172,6 +183,9 @@ const ModalRequest = ({
           handleCancle={handleReset}
           disable={!isValid}
         >
+          <HelperText type="error" visible={!!errApi}>
+            {errApi}
+          </HelperText>
           <View
             style={{
               flexDirection:
