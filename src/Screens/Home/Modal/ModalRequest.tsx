@@ -31,6 +31,7 @@ import { Formik } from 'formik'
 import { converStringToDate } from '@helpers/string'
 import { FormatDate } from '@constants/date'
 import { HelperText } from 'react-native-paper'
+import { message } from '@constants/message'
 import ModalCommon from '../../../Components/Modal/Modal'
 import { requestValidationSchema } from './ModalState'
 
@@ -124,14 +125,14 @@ const ModalRequest = ({
             }).unwrap()
           }
           Toast.show({
-            text1: 'Tạo đơn thành công',
+            text1: message.create_request_success,
             onShow() {
               setShowModal(false)
             },
           })
           // eslint-disable-next-line no-empty
         } catch (error: any) {
-          setErrApi('Tạo đơn thất bại. Vui lòng thử lại.')
+          setErrApi(message.create_request_error)
         }
       }}
       validate={values => {
@@ -148,7 +149,7 @@ const ModalRequest = ({
               ).getTime() &&
             dataShow.permission_type === PERMISSION_TYPE.OVERTIME
           ) {
-            errors.end_at = 'Giờ kết thúc phải lớn hơn giờ bắt đầu'
+            errors.end_at = message.min_end_time_error
             return errors
           }
         }
@@ -159,7 +160,7 @@ const ModalRequest = ({
               return total + currentValue
             })
           if (res > 2) {
-            errors.option_time = 'Vui lòng chọn thời gian không quá 2h'
+            errors.option_time = message.min_option_time_error
             return errors
           }
         }
