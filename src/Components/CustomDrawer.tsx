@@ -10,6 +10,7 @@ import { clear } from '@store/loginReducer'
 import { removeToken } from '@helpers/token'
 import { ENUM_COLOR } from '@constants/enum'
 import { Avatar, Divider } from 'react-native-paper'
+import { convertUrl } from '@helpers/url'
 import { SideBar } from './SideBar'
 
 const CustomDrawer = (props: any) => {
@@ -39,7 +40,7 @@ const CustomDrawer = (props: any) => {
           <Avatar.Image
             size={80}
             style={{ backgroundColor: ENUM_COLOR.white, marginBottom: 10 }}
-            source={{ uri: process.env.BASE_URL + data.avatar }}
+            source={{ uri: convertUrl(data.avatar) }}
           />
           <Text
             style={{

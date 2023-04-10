@@ -11,6 +11,7 @@ import {
 import { ENUM_COLOR } from '@constants/enum'
 import { TUser } from '@model/Users/UsersType'
 import IconPhone from '@components/Icon/IconPhone'
+import { convertUrl } from '@helpers/url'
 
 type TProps = {
   showModal?: boolean
@@ -43,7 +44,7 @@ const ModalUser = ({
         <Avatar.Image
           size={128}
           style={{ backgroundColor: ENUM_COLOR.white }}
-          source={{ uri: process.env.BASE_URL + user.avatar }}
+          source={{ uri: convertUrl(user.avatar) }}
         />
         <Text style={styles.jobName}>{user.job_name}</Text>
         <Text style={styles.name}>{user.name}</Text>
