@@ -14,6 +14,10 @@ const Stack = createNativeStackNavigator()
 
 const ApplicationNavigator = () => {
   const { login } = useReduxSelector(state => state.login)
+  const nav = () => navigationRef.current
+
+  // eslint-disable-next-line react/no-unstable-nested-components, react/jsx-props-no-spreading
+  const SideBarComponent = (props: any) => <Routers {...props} nav={nav} />
 
   return (
     <NavigationContainer ref={navigationRef}>
@@ -31,7 +35,7 @@ const ApplicationNavigator = () => {
             <Stack.Screen
               options={{ headerShown: false }}
               name="Routes"
-              component={Routers}
+              component={SideBarComponent}
             />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen

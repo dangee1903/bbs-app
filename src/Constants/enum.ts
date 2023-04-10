@@ -9,5 +9,7 @@ export enum ENUM_COLOR {
   grayBordor = '#cccccc',
   black = '#000000',
   drakWhite = '#E0E0E0',
+  success = '#4BB543',
+  error = '#ff3333',
   backgroundGray = '#21212114',
 }

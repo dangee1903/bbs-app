@@ -7,13 +7,14 @@ import ApplicationNavigator from '@navigators/Application'
 import { NativeBaseProvider } from 'native-base'
 import {
   DefaultTheme,
-  MD3Colors,
   MD3LightTheme,
   Provider as PaperProvider,
 } from 'react-native-paper'
 import 'expo-dev-menu'
-import ToaskError from '@components/ToaskError'
+import ToastError from '@components/ToastError'
+import ToastCommon from '@components/Common/ToastCommon'
 import { ThemeProp } from 'react-native-paper/lib/typescript/src/types'
+import '@constants/configLocaleDatePicker'
 
 const theme: ThemeProp | undefined = {
   ...DefaultTheme,
@@ -28,9 +29,10 @@ export default function App() {
     <Provider store={store}>
       <NativeBaseProvider>
         <PaperProvider theme={theme}>
-          <ToaskError>
+          <ToastError>
             <ApplicationNavigator />
-          </ToaskError>
+          </ToastError>
+          <ToastCommon />
         </PaperProvider>
       </NativeBaseProvider>
     </Provider>

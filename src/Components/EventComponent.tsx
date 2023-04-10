@@ -3,7 +3,10 @@ import { converDate } from '@helpers/datatime'
 import { TEventType } from '@model/Event/EventType'
 import commonStyle from '@styles/commonStyle'
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, Share, StyleSheet, Text, View } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
+import { Button } from 'react-native-paper'
+import { ENUM_COLOR } from '@constants/enum'
 
 type TProps = {
   data: TEventType
@@ -13,6 +16,13 @@ type TProps = {
 const EventComponent = ({ data, onPress }: TProps) => {
   const TYPE = 'Event'
   const { name, created_at: createdAt, introduction, id } = data
+
+  const handleShare = () => {
+    Share.share({
+      message: introduction,
+      title: name,
+    })
+  }
   return (
     <View style={styles.containerContent}>
       <View style={styles.contentTop}>
@@ -28,6 +38,9 @@ const EventComponent = ({ data, onPress }: TProps) => {
           </Text>
           <Text style={styles.contentTopDate}>{converDate(createdAt)}</Text>
         </View>
+        <Button style={styles.shareBtn} onPress={handleShare}>
+          <MaterialIcons name="share" size={20} color={ENUM_COLOR.mainColor} />
+        </Button>
       </View>
       <View style={styles.content}>
         <Image
@@ -118,5 +131,8 @@ const styles = StyleSheet.create({
   bottomBtn: {
     ...commonStyle.btn,
     marginLeft: 25,
+  },
+  shareBtn: {
+    marginLeft: 15,
   },
 })

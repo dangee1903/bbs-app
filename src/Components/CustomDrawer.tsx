@@ -2,22 +2,20 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
-import {
-  DrawerContentScrollView,
-  DrawerContentComponentProps,
-  DrawerItemList,
-} from '@react-navigation/drawer'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
 import { AntDesign } from '@expo/vector-icons'
 import { useReduxDispatch, useReduxSelector } from '@store/index'
 import { clear } from '@store/loginReducer'
 import { removeToken } from '@helpers/token'
 import { ENUM_COLOR } from '@constants/enum'
 import { Avatar, Divider } from 'react-native-paper'
+import { SideBar } from './SideBar'
 
-const CustomDrawer = (props: DrawerContentComponentProps) => {
+const CustomDrawer = (props: any) => {
   const { data } = useReduxSelector(state => state.login.user)
   const dispatch = useReduxDispatch()
+  const currentRouteName = props.nav()?.getCurrentRoute().name
 
   const handleSignOut = async () => {
     await removeToken()
@@ -41,7 +39,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
           <Avatar.Image
             size={80}
             style={{ backgroundColor: ENUM_COLOR.white, marginBottom: 10 }}
-            source={{uri: process.env.BASE_URL + data.avatar}}
+            source={{ uri: process.env.BASE_URL + data.avatar }}
           />
           <Text
             style={{
@@ -75,7 +73,34 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
         <View
           style={{ flex: 1, backgroundColor: ENUM_COLOR.white, paddingTop: 10 }}
         >
-          <DrawerItemList {...props} />
+          {SideBar.map(_ => {
+            const focusedRouteItem = SideBar.find(
+              r => r.key === currentRouteName,
+            )
+            const focused = focusedRouteItem
+              ? _.key === focusedRouteItem?.key
+              : _.key === 'HomeStack'
+            return (
+              <DrawerItem
+                key={_.key}
+                label={() => (
+                  <Text
+                    style={[
+                      styles.drawerItem,
+                      focused ? styles.drawerItemFocused : null,
+                    ]}
+                  >
+                    {_.label}
+                  </Text>
+                )}
+                onPress={() => props.navigation.navigate(_.key)}
+                icon={() =>
+                  _.icon(focused ? ENUM_COLOR.white : ENUM_COLOR.black)
+                }
+                style={focused ? styles.drawerLabelFocused : styles.drawerLabel}
+              />
+            )
+          })}
         </View>
       </DrawerContentScrollView>
       <View
@@ -96,7 +121,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
                 marginLeft: 5,
               }}
             >
-              Sign Out
+              Đăng xuất
             </Text>
           </View>
         </TouchableOpacity>
@@ -106,3 +131,16 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
 }
 
 export default CustomDrawer
+
+const styles = StyleSheet.create({
+  drawerLabelFocused: {
+    backgroundColor: ENUM_COLOR.mainColor,
+  },
+  drawerLabel: {
+    backgroundColor: ENUM_COLOR.white,
+  },
+  drawerItemFocused: {
+    color: ENUM_COLOR.white,
+  },
+  drawerItem: {},
+})

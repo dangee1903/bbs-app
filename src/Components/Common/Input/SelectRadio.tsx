@@ -20,7 +20,7 @@ const CheckBoxList = ({
   return (
     <>
       <View style={styles.checkboxTime}>
-        {data.map(item => {
+        {data?.map(item => {
           return (
             <View key={item.value} style={styles.checkboxItem}>
               <RadioButton.Android

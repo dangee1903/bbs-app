@@ -30,6 +30,7 @@ type TProps = {
   right?: JSX.Element
   style?: StyleProp<TextStyle>
   onPress?: () => void
+  disable?: boolean
 }
 
 const InputText = ({
@@ -48,6 +49,7 @@ const InputText = ({
   style,
   setChangeValue,
   onPress = () => {},
+  disable = false,
 }: TProps) => {
   const handleChangeText = (v: string) => {
     return setChangeValue ? setChangeValue(v) : handleChange(v)
@@ -71,6 +73,7 @@ const InputText = ({
           onFocus={onPress}
           selectionColor={ENUM_COLOR.white}
           showSoftInputOnFocus
+          disabled={disable}
         />
         <HelperText type="error" visible={!!errors}>
           {errors}

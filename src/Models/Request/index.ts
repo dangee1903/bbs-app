@@ -16,3 +16,13 @@ export type TDataRequest = {
   option_time: string[]
   note: string
 }
+
+export type TRequestState = {
+  note: string
+  work_day: string
+  option_time: string[]
+  project: string
+  session: string
+  start_at?: string
+  end_at?: string
+}

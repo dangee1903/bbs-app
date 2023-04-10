@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import InputDate from '@components/Common/Input/InputDate'
 import CheckBoxList from '@components/Common/Input/CheckBoxList'
@@ -14,13 +14,12 @@ import {
   OT_TYPE,
 } from '@constants/request'
 import InputTime from '@components/Common/Input/InputTime'
-import { TDataShow } from '@model/Request'
+import { TDataShow, TRequestState } from '@model/Request'
 import {
   useRequestMutation,
   useDayOffMutation,
 } from '@services/modules/request'
 import InputText from '@components/Common/Input/InputText'
-import { Formik } from 'formik'
 import DropdownCommon from '@components/Common/DropdownCommon'
 import { useJoinedQuery } from '@services/modules/project'
 import { TSelects } from '@model/index'
@@ -28,6 +27,11 @@ import SelectRadio from '@components/Common/Input/SelectRadio'
 import { useReduxSelector } from '@store/index'
 import Toast from 'react-native-toast-message'
 import moment from 'moment'
+import { Formik } from 'formik'
+import { converStringToDate } from '@helpers/string'
+import { FormatDate } from '@constants/date'
+import { HelperText } from 'react-native-paper'
+import { message } from '@constants/message'
 import ModalCommon from '../../../Components/Modal/Modal'
 import { requestValidationSchema } from './ModalState'
 
@@ -48,6 +52,7 @@ const ModalRequest = ({
   const [postDayOff] = useDayOffMutation()
   const { data: joinedPjs, isLoading: loadingJoined } = useJoinedQuery()
   const { data } = useReduxSelector(state => state.login.user)
+  const [errApi, setErrApi] = useState('')
 
   const selectAssigneeLists = (): TSelects | [] => {
     if (!loadingJoined && joinedPjs?.data?.projects?.length) {
@@ -59,18 +64,24 @@ const ModalRequest = ({
     return []
   }
 
+  useEffect(() => {
+    setErrApi('')
+  }, [dataShow])
+
   return (
     <Formik
       validationSchema={requestValidationSchema(dataShow.permission_type)}
-      initialValues={{
-        note: '',
-        work_day: '',
-        option_time: [],
-        project: '',
-        session: '0',
-        start_at: undefined,
-        end_at: undefined,
-      }}
+      initialValues={
+        {
+          note: '',
+          work_day: '',
+          option_time: [],
+          project: '',
+          session: '0',
+          start_at: '',
+          end_at: '',
+        } as TRequestState
+      }
       onSubmit={async values => {
         try {
           if (dataShow.permission_type === PERMISSION_TYPE.NORMAL) {
@@ -93,8 +104,14 @@ const ModalRequest = ({
               note: values.note,
               ot_type: OT_TYPE.PROJECT,
               project_id: Number(values.project),
-              start_at: moment(values.start_at).format('hh:mm A'),
-              end_at: moment(values.end_at).format('hh:mm A'),
+              // default break_time
+              break_time: '0',
+              start_at: moment(
+                converStringToDate(values.start_at, FormatDate.TIME_12_HOUR),
+              ).format(FormatDate.TIME),
+              end_at: moment(
+                converStringToDate(values.end_at, FormatDate.TIME_12_HOUR),
+              ).format(FormatDate.TIME),
             }).unwrap()
           } else {
             await postRequest({
@@ -113,22 +130,44 @@ const ModalRequest = ({
               note: values.note,
             }).unwrap()
           }
-          setShowModal(false)
           Toast.show({
-            text2: 'Success',
+            text1: message.create_request_success,
+            onShow() {
+              setShowModal(false)
+              setErrApi('')
+            },
           })
           // eslint-disable-next-line no-empty
-        } catch (error) {}
+        } catch (error: any) {
+          setErrApi(message.create_request_error)
+        }
       }}
       validate={values => {
-        const errors = { end_at: '' }
+        const errors = { end_at: '', option_time: '' }
         if (values.start_at && values.end_at) {
           if (
-            new Date(values.start_at).getTime() >
-              new Date(values.end_at).getTime() &&
+            converStringToDate(
+              values.start_at,
+              FormatDate.TIME_12_HOUR,
+            ).getTime() >
+              converStringToDate(
+                values.end_at,
+                FormatDate.TIME_12_HOUR,
+              ).getTime() &&
             dataShow.permission_type === PERMISSION_TYPE.OVERTIME
           ) {
-            errors.end_at = 'Giờ kết thúc phải lớn hơn giờ bắt đầu'
+            errors.end_at = message.min_end_time_error
+            return errors
+          }
+        }
+        if (values.option_time.length) {
+          const res = values.option_time
+            .map(time => Number(time))
+            .reduce((total, currentValue) => {
+              return total + currentValue
+            })
+          if (res > 2) {
+            errors.option_time = message.min_option_time_error
             return errors
           }
         }
@@ -155,7 +194,11 @@ const ModalRequest = ({
           handleConfirm={() => handleSubmit()}
           handleCancle={handleReset}
           disable={!isValid}
+          isError={!!errApi}
         >
+          <HelperText type="error" visible={!!errApi}>
+            {errApi}
+          </HelperText>
           <View
             style={{
               flexDirection:
@@ -172,6 +215,7 @@ const ModalRequest = ({
                 handleBlur={handleBlur('note')}
                 value={values.note}
                 errors={errors.note}
+                style={styles.reasonRequest}
               />
             )}
             {dataShow.time && (
@@ -248,5 +292,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexWrap: 'nowrap',
     width: '100%',
+  },
+  reasonRequest: {
+    height: 85,
   },
 })

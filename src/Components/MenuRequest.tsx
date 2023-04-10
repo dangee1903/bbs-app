@@ -1,8 +1,6 @@
 import { ENUM_COLOR } from '@constants/enum'
-import { PERMISSION_TYPE } from '@constants/request'
-import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons'
 import { TDataShow } from '@model/Request'
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Text,
   TouchableOpacity,
@@ -12,6 +10,7 @@ import {
 } from 'react-native'
 import { Menu } from 'react-native-paper'
 import CreateButton from './CreateButton'
+import { ListMenu } from './ListMenu'
 
 type TProps = {
   showMenu: boolean
@@ -28,10 +27,21 @@ const MenuRequest = ({
   setShowModal,
   setDateShow,
 }: TProps) => {
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null)
   const { height } = Dimensions.get('window')
   const { width } = Dimensions.get('window')
   const onIconPress = () => {
     openMenu()
+  }
+
+  const handleClickMenu = (dataShow: TDataShow) => {
+    setShowModal(true)
+    setCurrentIndex(null)
+    setDateShow(dataShow)
+  }
+
+  const handleTouch = (index: number) => {
+    setCurrentIndex(index)
   }
 
   return (
@@ -43,87 +53,36 @@ const MenuRequest = ({
         onDismiss={closeMenu}
         anchor={{ x: width - 15, y: height - 125 }}
       >
-        <TouchableOpacity
-          onPress={() => {
-            setShowModal(true)
-            setDateShow({
-              reason: true,
-              date: true,
-              checkboxTime: true,
-              permission_type: PERMISSION_TYPE.LATE,
-            })
-          }}
-          style={styles.menuItem}
-        >
-          <MaterialIcons
-            style={styles.menuIcon}
-            name="work"
-            size={18}
-            color={ENUM_COLOR.black}
-          />
-          <Text style={styles.menuText}>Xin đi muộn</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setShowModal(true)
-            setDateShow({
-              reason: true,
-              date: true,
-              checkboxTime: true,
-              permission_type: PERMISSION_TYPE.EARLY,
-            })
-          }}
-          style={styles.menuItem}
-        >
-          <MaterialIcons
-            style={styles.menuIcon}
-            name="work-off"
-            size={18}
-            color={ENUM_COLOR.black}
-          />
-          <Text style={styles.menuText}>Xin về sớm</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setShowModal(true)
-            setDateShow({
-              reason: true,
-              date: true,
-              checkBoxSession: true,
-              permission_type: PERMISSION_TYPE.NORMAL,
-            })
-          }}
-          style={styles.menuItem}
-        >
-          <FontAwesome5
-            style={styles.menuIcon}
-            name="calendar-times"
-            size={18}
-            color={ENUM_COLOR.black}
-          />
-          <Text style={styles.menuText}>Xin nghỉ phép</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setShowModal(true)
-            setDateShow({
-              reason: true,
-              date: true,
-              time: true,
-              project: true,
-              permission_type: PERMISSION_TYPE.OVERTIME,
-            })
-          }}
-          style={styles.menuItem}
-        >
-          <MaterialIcons
-            style={styles.menuIcon}
-            name="more-time"
-            size={18}
-            color={ENUM_COLOR.black}
-          />
-          <Text style={styles.menuText}>Log Overtime</Text>
-        </TouchableOpacity>
+        {ListMenu.map((menuItem, index) => {
+          return (
+            <View
+              key={`Request-${String(index)}`}
+              onTouchStart={() => handleTouch(index)}
+              style={
+                currentIndex === index ? styles.menuTouch : styles.menuNormal
+              }
+            >
+              <TouchableOpacity
+                onPress={() => handleClickMenu(menuItem.dataShow)}
+                style={styles.menuItem}
+              >
+                {menuItem.icon(
+                  styles.menuIcon,
+                  currentIndex === index ? ENUM_COLOR.white : ENUM_COLOR.black,
+                )}
+                <Text
+                  style={
+                    currentIndex === index
+                      ? styles.textMenuTouch
+                      : styles.textMenuNormal
+                  }
+                >
+                  {menuItem.label}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )
+        })}
       </Menu>
     </View>
   )
@@ -146,13 +105,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     fontSize: 14,
-    padding: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   menuIcon: {
     paddingRight: 20,
   },
-  menuText: {
-    textAlign: 'left',
-    width: 100,
+  textMenuNormal: {
+    color: ENUM_COLOR.black,
+  },
+  textMenuTouch: {
+    color: ENUM_COLOR.white,
+  },
+  menuTouch: {
+    backgroundColor: ENUM_COLOR.mainColor,
+  },
+  menuNormal: {
+    backgroundColor: ENUM_COLOR.white,
   },
 })
