@@ -66,7 +66,7 @@ const ModalRequest = ({
 
   useEffect(() => {
     setErrApi('')
-  }, [])
+  }, [dataShow])
 
   return (
     <Formik
@@ -115,8 +115,14 @@ const ModalRequest = ({
             }).unwrap()
           } else {
             await postRequest({
-              permission_early: 1,
-              permission_late: 2,
+              permission_early:
+                dataShow.permission_type === PERMISSION_TYPE.LATE
+                  ? undefined
+                  : null,
+              permission_late:
+                dataShow.permission_type === PERMISSION_TYPE.LATE
+                  ? null
+                  : undefined,
               permission_type: dataShow.permission_type,
               work_day: values.work_day,
               permission_status: PERMISSION_STATUS.NOT_APPROVED_YET,
@@ -128,6 +134,7 @@ const ModalRequest = ({
             text1: message.create_request_success,
             onShow() {
               setShowModal(false)
+              setErrApi('')
             },
           })
           // eslint-disable-next-line no-empty
@@ -187,7 +194,7 @@ const ModalRequest = ({
           handleConfirm={() => handleSubmit()}
           handleCancle={handleReset}
           disable={!isValid}
-          isError={!errApi}
+          isError={!!errApi}
         >
           <HelperText type="error" visible={!!errApi}>
             {errApi}

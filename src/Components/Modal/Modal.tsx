@@ -32,6 +32,7 @@ const ModalCommon = ({
       handleCancle()
     }
   }, [handleCancle, isShowModal])
+
   return (
     <Portal>
       <Modal
@@ -39,7 +40,7 @@ const ModalCommon = ({
         onDismiss={() => setShowModal(false)}
         contentContainerStyle={styles.containerStyle}
       >
-        {isError && <ToastCommon disableError />}
+        {isError && <ToastCommon />}
         <View style={styles.headerModal}>
           <Text style={styles.headerText}>{title}</Text>
           <AntDesign

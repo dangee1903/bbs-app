@@ -57,7 +57,7 @@ const toastConfig = (disableError = false) => {
 const ToastCommon = ({
   config,
   position = 'top',
-  disableError = false,
+  disableError = true,
 }: TProps) => {
   return (
     <Toast config={config ?? toastConfig(disableError)} position={position} />
