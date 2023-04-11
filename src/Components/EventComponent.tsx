@@ -7,6 +7,7 @@ import { Image, Share, StyleSheet, Text, View } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Button } from 'react-native-paper'
 import { ENUM_COLOR } from '@constants/enum'
+import { convertUrl } from '@helpers/url'
 
 type TProps = {
   data: TEventType
@@ -15,21 +16,23 @@ type TProps = {
 
 const EventComponent = ({ data, onPress }: TProps) => {
   const TYPE = 'Event'
-  const { name, created_at: createdAt, introduction, id } = data
+  const { name, created_at: createdAt, introduction, id, image_url } = data
 
   const handleShare = () => {
     Share.share({
       message: introduction,
       title: name,
+      url: convertUrl(`/detail/${id}`, process.env.WEB_URL),
     })
   }
+
   return (
     <View style={styles.containerContent}>
       <View style={styles.contentTop}>
         <Image
           style={styles.logo}
           source={{
-            uri: 'https://reactnative.dev/img/logo-og.png',
+            uri: 'https://jvb-corp.com/img/logo.png',
           }}
         />
         <View style={styles.title}>
@@ -46,7 +49,7 @@ const EventComponent = ({ data, onPress }: TProps) => {
         <Image
           style={styles.contentImage}
           source={{
-            uri: 'https://reactnative.dev/img/logo-og.png',
+            uri: convertUrl(image_url),
           }}
         />
         <Text style={styles.contentText} numberOfLines={2}>
@@ -58,9 +61,9 @@ const EventComponent = ({ data, onPress }: TProps) => {
           style={styles.bottomBtn}
           onPress={() => onPress('Details', id, TYPE, name)}
         >
-          View
+          XEM CHI TIẾT
         </Text>
-        <Text style={styles.bottomBtn}>Join</Text>
+        <Text style={styles.bottomBtn}>THAM GIA</Text>
       </View>
     </View>
   )

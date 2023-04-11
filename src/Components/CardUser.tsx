@@ -3,6 +3,7 @@ import { TUser } from '@model/Users/UsersType'
 import * as React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Avatar, Card, Text } from 'react-native-paper'
+import { convertUrl } from '@helpers/url'
 
 type TProps = {
   user: TUser
@@ -17,7 +18,7 @@ const CardUser = ({ user, handlePress }: TProps) => {
           <Avatar.Image
             size={65}
             style={{ backgroundColor: ENUM_COLOR.white }}
-            source={{ uri: process.env.BASE_URL + user.avatar }}
+            source={{ uri: convertUrl(user.avatar) }}
           />
         </View>
         <View style={styles.infoUser}>

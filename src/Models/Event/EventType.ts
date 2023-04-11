@@ -3,6 +3,7 @@ export interface TEventType {
   name: string
   slug_name?: string
   event_date?: string
+  image_url?: string
   event_end_date?: string
   introduction: string
   place?: string
