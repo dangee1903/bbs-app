@@ -1,8 +1,13 @@
 /* eslint-disable camelcase */
 import { ENUM_COLOR } from '@constants/enum'
-import { TProject, TTask } from '@model/Project/ProjectType'
+import {
+  TCurrentMembers,
+  TProject,
+  TTask,
+  TUserOff,
+} from '@model/Project/ProjectType'
 import { useCreateMutation, useOvewiewQuery } from '@services/modules/project'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   ActivityIndicator,
   Image,
@@ -12,8 +17,10 @@ import {
   View,
   ViewStyle,
   StyleSheet,
+  TextInput as RNTextInput,
 } from 'react-native'
 import {
+  Avatar,
   Checkbox,
   IconButton,
   MD3Colors,
@@ -21,11 +28,16 @@ import {
   TextInput,
 } from 'react-native-paper'
 import TaskSekeleton from './Sekeleton/TaskSekeleton'
+import { useReduxSelector } from '../Store'
+import { TUser } from '../Models/Users/UsersType'
+import { convertUrl } from '../Helpers/url'
 
 type TProps = {
   joinedPj: TProject
   openModal: (idPj: TProject, task?: TTask | undefined) => void
 }
+
+const defaultPjImage = require('../../assets/project.png')
 
 const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
   const [showCreateTask, setShowCreateTask] = useState<boolean>(false)
@@ -34,6 +46,8 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
   const [idPj, setIdPj] = useState<number | undefined>()
   const [taskName, setTaskName] = useState<string>('')
   const [taskSelected, setTaskSelected] = useState<TTask>()
+  const refInput = useRef<RNTextInput | null>(null)
+  const { users } = useReduxSelector(state => state.users)
 
   const {
     data: listTask,
@@ -42,6 +56,10 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
   } = useOvewiewQuery(idPj, { skip: !idPj })
 
   const [create, { isLoading: createTaskLoading }] = useCreateMutation()
+
+  useEffect(() => {
+    if (refInput) refInput.current?.focus()
+  }, [showCreateTask])
 
   const getListTask = async (id: number) => {
     if (!idPj) {
@@ -95,13 +113,46 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
     return {}
   }
 
+  const genUsersAvatar = () => {
+    return joinedPj.current_members?.length
+      ? joinedPj.current_members.map((member: TCurrentMembers) => {
+          const avatar = users.find((user: TUser) => member.user_id === user.id)
+          const userOff = joinedPj.userInfo.off.find(
+            (user: TUserOff) => user.user_id === member.user_id,
+          )
+
+          return (
+            <View style={styles.avatar} key={member.user_id}>
+              <Avatar.Image
+                size={20}
+                source={{
+                  uri: convertUrl(avatar?.avatar),
+                }}
+                style={{ backgroundColor: '#ffffff' }}
+              />
+              {userOff && userOff.status === 1 ? (
+                <View
+                  style={{ ...styles.avatarStatus, backgroundColor: 'red' }}
+                />
+              ) : (
+                <View
+                  style={{ ...styles.avatarStatus, backgroundColor: '#11D660' }}
+                />
+              )}
+            </View>
+          )
+        })
+      : ''
+  }
+
   return (
     <View style={styles.containerContent}>
       <View style={styles.projectTitleTop}>
         <View style={styles.projectImage}>
           <Image
-            // eslint-disable-next-line global-require, import/extensions
-            source={require('../../assets/project.png')}
+            style={{ width: 100, height: 60 }}
+            source={{ uri: convertUrl(joinedPj.image_url) }}
+            defaultSource={defaultPjImage}
           />
           <View style={styles.projectName}>
             <Text style={styles.bottomTextTitle} numberOfLines={1}>
@@ -116,6 +167,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
             size={20}
             iconColor="black"
             onPress={() => {
+              if (refInput) refInput.current?.focus()
               setShowCreateTask(true)
             }}
           />
@@ -136,7 +188,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
           Total:
           {joinedPj.total_closed}/{joinedPj.total}
         </Text>
-        <Text style={styles.bottomText}>List users</Text>
+        <Text style={styles.bottomText}>{genUsersAvatar()}</Text>
       </View>
       <View style={styles.listTasks}>
         {pjState &&
@@ -198,6 +250,7 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
               placeholder="Input text"
               style={styles.createTask}
               onSubmitEditing={createTask}
+              ref={refInput}
             />
             {createTaskLoading && (
               <View style={styles.loading}>
@@ -228,9 +281,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-end',
+    alignContent: 'center',
+    alignItems: 'center',
     paddingLeft: 10,
     paddingRight: 10,
+    paddingTop: 10,
   },
   projectName: {
     marginLeft: 10,
@@ -301,5 +356,17 @@ const styles = StyleSheet.create({
   },
   loadingSekeleton: {
     padding: 10,
+  },
+  avatar: {
+    position: 'relative',
+    paddingLeft: 5,
+  },
+  avatarStatus: {
+    width: 5,
+    height: 5,
+    borderRadius: 50,
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
 })

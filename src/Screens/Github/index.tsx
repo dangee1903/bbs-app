@@ -27,6 +27,7 @@ import {
   View,
 } from 'react-native'
 import { IconButton, Modal, Portal } from 'react-native-paper'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { githubValidationSchema } from './githubState'
 import { TTaskState } from '../../Services/modules/project/edit'
 
@@ -85,7 +86,7 @@ const Github = () => {
   }
 
   return (
-    <>
+    <KeyboardAwareScrollView extraHeight={150}>
       <Portal>
         <Modal
           visible={isShowModal}
@@ -242,7 +243,7 @@ const Github = () => {
             />
           ))}
       </ScrollView>
-    </>
+    </KeyboardAwareScrollView>
   )
 }
 export default Github

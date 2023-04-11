@@ -14,13 +14,14 @@ export type TProject = {
   id: number
   name: string
   customer: string
+  image_url: string
   project_type: number
   leader_id: number
   start_date: string
   end_date: null | string
   status: number
   userInfo: {
-    off: []
+    off: [TUserOff]
     asking: []
   }
   current_members: [TCurrentMembers]
@@ -48,4 +49,21 @@ export type TTask = {
 
 export type TProjects = {
   test: number[]
+}
+
+export type TUserOff = {
+  id: number
+  user_id: number
+  title: string
+  reason: string
+  number_off: any
+  status: number
+  start_date: string
+  end_date: string
+  approver_date: any
+  user: {
+    id: number
+    name: string
+    avatar: string
+  }
 }
