@@ -7,15 +7,78 @@ import { TEventType } from '@model/Event/EventType'
 import { TPostType } from '@model/Post/PostType'
 import { useGetEventQuery } from '@services/modules/event'
 import { useGetPostQuery } from '@services/modules/post'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import commonStyle from '@styles/commonStyle'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import {
+  Button,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import ModalRequest from '@screens/Home/Modal/ModalRequest'
 import { TDataShow } from '@model/Request'
 import { ENUM_COLOR } from '@constants/enum'
+import * as Device from 'expo-device'
+import * as Notifications from 'expo-notifications'
 
 type TProps = {
   navigation: any
+}
+async function sendPushNotification(expoPushToken: any) {
+  const message = {
+    to: expoPushToken,
+    sound: 'default',
+    title: 'Original Title',
+    body: 'And here is the body!',
+    data: { someData: 'goes here' },
+  }
+  console.log(expoPushToken, 'expoPushToken')
+
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  })
+}
+
+async function registerForPushNotificationsAsync() {
+  let token
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync()
+    // let finalStatus = existingStatus
+    console.log(existingStatus, 'existingStatus')
+    // if (existingStatus !== 'granted') {
+    //   const { status } = await Notifications.requestPermissionsAsync()
+    //   console.log(status, 'status')
+    //   finalStatus = status
+    // }
+    // if (finalStatus !== 'granted') {
+    //   alert('Failed to get push token for push notification!')
+    //   return
+    // }
+    token = (await Notifications.getExpoPushTokenAsync()).data
+    console.log(token, 'token')
+  } else {
+    alert('Must use physical device for Push Notifications')
+  }
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    })
+  }
+
+  // eslint-disable-next-line consistent-return
+  return token
 }
 
 const Home = ({ navigation }: TProps) => {
@@ -58,6 +121,32 @@ const Home = ({ navigation }: TProps) => {
     closeMenu()
   }
 
+  const [expoPushToken, setExpoPushToken] = useState<any>('')
+  const [notification, setNotification] = useState<any>(false)
+  const notificationListener = useRef<any>()
+  const responseListener = useRef<any>()
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token))
+
+    notificationListener.current =
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      Notifications.addNotificationReceivedListener((notifica: any) => {
+        console.log(notifica, 'notifica')
+        setNotification(notifica)
+      })
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener(response => {
+        console.log(response)
+      })
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current)
+      Notifications.removeNotificationSubscription(responseListener.current)
+    }
+  }, [])
+
   return (
     <>
       <ScrollView
@@ -93,6 +182,16 @@ const Home = ({ navigation }: TProps) => {
                 <EventComponent key={item.id} data={item} onPress={onPress} />
               ))}
         </View>
+        <Text>
+          Your expo push token:
+          {expoPushToken}
+        </Text>
+        <Button
+          title="Press to Send Notification"
+          onPress={async () => {
+            await sendPushNotification(expoPushToken)
+          }}
+        />
       </ScrollView>
       <MenuRequest
         openMenu={openMenu}

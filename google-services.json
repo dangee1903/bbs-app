@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "289099535539",
+    "project_id": "testnoti-167ae",
+    "storage_bucket": "testnoti-167ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289099535539:android:b5b35811a147fdca728cc6",
+        "android_client_info": {
+          "package_name": "com.bbsjs1.bbsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289099535539-gejgguv39466sh3qvjnavitammnhu9rh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bbsjs1.bbsapp",
+            "certificate_hash": "c91814b786177ba30bd5d1f763c3d62dc346b139"
+          }
+        },
+        {
+          "client_id": "289099535539-n34lvtgnjp1pomno6i4j6kqcs2kaun27.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bbsjs1.bbsapp",
+            "certificate_hash": "ecdf08e9d649cce6d0b5c1355876bc48d610caab"
+          }
+        },
+        {
+          "client_id": "289099535539-k418po3nqvdvt4v6friboj9kqn263q4o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC86zVd7yW4Rp2JcoXj4IRxNegElg9BOQQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289099535539-k418po3nqvdvt4v6friboj9kqn263q4o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
