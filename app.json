@@ -13,14 +13,18 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/e32934ab-3b0f-4dc8-9441-08e2733b7c0c"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bbsjs1.bbsapp"
+      "bundleIdentifier": "com.bbsjs1.bbsapp",
+      "runtimeVersion": {
+        "policy": "sdkVersion"
+      }
     },
     "android": {
       "googleServicesFile": "./google-services.json",
@@ -38,6 +42,14 @@
       "eas": {
         "projectId": "e32934ab-3b0f-4dc8-9441-08e2733b7c0c"
       }
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/perf",
+      "@react-native-firebase/crashlytics"
+    ],
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
