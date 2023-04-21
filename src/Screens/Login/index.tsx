@@ -62,10 +62,7 @@ const Login = () => {
                         ...values,
                         fcm_token: tokenDevide || undefined,
                       }).unwrap()
-                      await saveTokenToDatabase(
-                        tokenDevide,
-                        String(res.data.id),
-                      )
+                      await saveTokenToDatabase(tokenDevide, res.data.id)
                       await users({})
                       // eslint-disable-next-line no-empty
                     } catch (error) {}
@@ -120,10 +117,6 @@ const Login = () => {
                       >
                         LOGIN
                       </Button>
-                      <Text>
-                        tokenDevide:
-                        {tokenDevide}
-                      </Text>
                     </>
                   )}
                 </Formik>

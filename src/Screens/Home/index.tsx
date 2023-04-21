@@ -8,14 +8,12 @@ import { TEventType } from '@model/Event/EventType'
 import { TPostType } from '@model/Post/PostType'
 import { useGetEventQuery } from '@services/modules/event'
 import { useGetPostQuery } from '@services/modules/post'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import commonStyle from '@styles/commonStyle'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import ModalRequest from '@screens/Home/Modal/ModalRequest'
 import { TDataShow } from '@model/Request'
 import { ENUM_COLOR } from '@constants/enum'
-import messaging from '@react-native-firebase/messaging'
-import { Button } from 'react-native-paper'
 
 type TProps = {
   navigation: any
@@ -34,7 +32,6 @@ const Home = ({ navigation }: TProps) => {
     checkBoxSession: false,
     permission_type: '0',
   })
-  const [tokenDevide, setTokenDevice] = useState<string>('')
 
   const onPress = (
     routeName: string,
@@ -61,16 +58,6 @@ const Home = ({ navigation }: TProps) => {
     setShowModalRequest(active)
     closeMenu()
   }
-
-  const getToken = async () => {
-    await messaging().registerDeviceForRemoteMessages()
-    const token = await messaging().getToken()
-    setTokenDevice(token)
-  }
-
-  useEffect(() => {
-    getToken()
-  }, [])
 
   return (
     <>
@@ -107,10 +94,6 @@ const Home = ({ navigation }: TProps) => {
                 <EventComponent key={item.id} data={item} onPress={onPress} />
               ))}
         </View>
-        <Text>
-          Your expo push token:
-          {tokenDevide}
-        </Text>
       </ScrollView>
       <MenuRequest
         openMenu={openMenu}
