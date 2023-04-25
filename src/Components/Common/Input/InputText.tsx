@@ -74,6 +74,11 @@ const InputText = ({
           selectionColor={ENUM_COLOR.white}
           showSoftInputOnFocus
           disabled={disable}
+          contentStyle={{
+            paddingHorizontal: 10,
+            paddingTop: 10,
+            paddingBottom: 10,
+          }}
         />
         <HelperText type="error" visible={!!errors}>
           {errors}
