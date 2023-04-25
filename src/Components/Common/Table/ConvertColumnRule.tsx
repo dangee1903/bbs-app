@@ -1,30 +1,17 @@
 import { ENUM_COLOR } from '@constants/enum'
 import { Entypo } from '@expo/vector-icons'
 import { TListColumn } from '@model/Table/TableType'
-import { Text } from 'react-native'
-import * as FileSystem from 'expo-file-system'
+import { Alert, Linking, Text } from 'react-native'
 import { convertUrl } from '@helpers/url'
-import * as MediaLibrary from 'expo-media-library'
 
-const handleClick = (url: string) => {
-  const path = url.split('/')
-  const fileName = path[path.length - 1]
-  FileSystem.downloadAsync(url, `${FileSystem.documentDirectory + fileName}`)
-    .then(({ uri }) => {
-      MediaLibrary.createAssetAsync(uri).then(asset => {
-        console.log('asset', asset)
-        MediaLibrary.createAlbumAsync('myfolder', asset)
-          .then(() => {
-            console.log('success')
-          })
-          .catch(error => {
-            console.log('error')
-          })
-      })
-    })
-    .catch(error => {
-      console.error(error)
-    })
+const handleClick = async (url: string) => {
+  const supported = await Linking.canOpenURL(url)
+
+  if (supported) {
+    await Linking.openURL(url)
+  } else {
+    Alert.alert(`Don't know how to open this URL: ${url}`)
+  }
 }
 
 export const ConvertColumnRule = (
