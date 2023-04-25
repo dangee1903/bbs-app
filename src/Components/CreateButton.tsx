@@ -16,7 +16,7 @@ const CreateButton = ({ openMenu }: TProps) => {
   return (
     <TouchableOpacity onPress={openMenu} style={styles.buttonContainer}>
       <AntDesign name="plus" size={14} color={ENUM_COLOR.white} />
-      <Text style={styles.buttonText}>CREATE</Text>
+      <Text style={styles.buttonText}>TẠO MỚI</Text>
     </TouchableOpacity>
   )
 }
