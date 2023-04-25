@@ -78,6 +78,7 @@ const InputDate = ({
         saveLabel="Lưu"
         label="Chọn ngày"
         validRange={{ startDate: minDate }}
+        inputEnabled={false}
       />
     </View>
   )
