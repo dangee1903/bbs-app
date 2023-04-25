@@ -5,11 +5,11 @@ import {
   createDrawerNavigator,
   DrawerContentComponentProps,
 } from '@react-navigation/drawer'
-import CustomDrawer from '@components/CustomDrawer'
+import CustomDrawer from '@components/Navigator/CustomDrawer'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
-import { SideBar } from '@components/SideBar'
+import { SideBar } from '@components/Navigator/SideBar'
 import { ENUM_COLOR } from '@constants/enum'
 
 type TProps = {

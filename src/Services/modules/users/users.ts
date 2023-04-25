@@ -1,6 +1,5 @@
 import { TUsers } from '@model/Users/UsersType'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
-import { number } from 'yup'
 
 export default (build: EndpointBuilder<any, any, any>) =>
   build.mutation<TListUser, RListUser>({

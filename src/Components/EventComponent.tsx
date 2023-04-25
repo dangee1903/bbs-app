@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { converDate } from '@helpers/datatime'
+import { convertDate } from '@helpers/datatime'
 import { TEventType } from '@model/Event/EventType'
 import commonStyle from '@styles/commonStyle'
 import React from 'react'
@@ -39,7 +39,7 @@ const EventComponent = ({ data, onPress }: TProps) => {
           <Text style={styles.contentTopTitle} numberOfLines={2}>
             {name}
           </Text>
-          <Text style={styles.contentTopDate}>{converDate(createdAt)}</Text>
+          <Text style={styles.contentTopDate}>{convertDate(createdAt)}</Text>
         </View>
         <Button style={styles.shareBtn} onPress={handleShare}>
           <MaterialIcons name="share" size={20} color={ENUM_COLOR.mainColor} />

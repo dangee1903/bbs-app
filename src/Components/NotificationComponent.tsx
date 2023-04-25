@@ -2,7 +2,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { TPostType } from '@model/Post/PostType'
-import { converDate } from '@helpers/datatime'
+import { convertDate } from '@helpers/datatime'
 import commonStyle from '@styles/commonStyle'
 import { ENUM_COLOR } from '@constants/enum'
 
@@ -25,7 +25,7 @@ const NotificatioComponent = ({ data, onPress }: TProps) => {
           {introduction}
         </Text>
         <View style={styles.bottom}>
-          <Text style={styles.bottomText}>{converDate(createdAt)}</Text>
+          <Text style={styles.bottomText}>{convertDate(createdAt)}</Text>
           <Text
             style={styles.bottomBtn}
             onPress={() => onPress('Details', id, TYPE, name)}

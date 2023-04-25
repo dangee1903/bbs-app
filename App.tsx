@@ -11,7 +11,7 @@ import {
   Provider as PaperProvider,
 } from 'react-native-paper'
 import 'expo-dev-menu'
-import ToastError from '@components/ToastError'
+import ToastError from '@components/Common/ToastError'
 import ToastCommon from '@components/Common/ToastCommon'
 import { ThemeProp } from 'react-native-paper/lib/typescript/src/types'
 import '@constants/configLocaleDatePicker'

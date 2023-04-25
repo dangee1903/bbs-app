@@ -27,7 +27,7 @@ import {
   ProgressBar,
   TextInput,
 } from 'react-native-paper'
-import TaskSekeleton from './Sekeleton/TaskSekeleton'
+import TaskSkeleton from './Skeleton/TaskSkeleton'
 import { useReduxSelector } from '../Store'
 import { TUser } from '../Models/Users/UsersType'
 import { convertUrl } from '../Helpers/url'
@@ -195,8 +195,8 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
           pjState?.data?.project?.tasks.length > 0 &&
           pjState?.data?.project?.tasks.map((task: TTask) => {
             return taskSelected?.id === task.id && fetchingTask ? (
-              <View style={styles.loadingSekeleton} key={task.id}>
-                <TaskSekeleton />
+              <View style={styles.loadingSkeleton} key={task.id}>
+                <TaskSkeleton />
               </View>
             ) : (
               <View key={task.id} style={getColorTask(task)}>
@@ -232,8 +232,8 @@ const JoinedProjectsComponent = ({ joinedPj, openModal }: TProps) => {
             )
           })}
         {fetchingTask && !taskSelected && (
-          <View style={styles.loadingSekeleton}>
-            <TaskSekeleton />
+          <View style={styles.loadingSkeleton}>
+            <TaskSkeleton />
           </View>
         )}
         {listTask && listTask?.data?.project?.tasks.length === 0 && (
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
   taskContent: {
     marginLeft: 15,
   },
-  loadingSekeleton: {
+  loadingSkeleton: {
     padding: 10,
   },
   avatar: {

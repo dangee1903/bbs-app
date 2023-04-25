@@ -3,7 +3,7 @@ import React from 'react'
 import { ScrollView, StyleSheet, Text, useWindowDimensions } from 'react-native'
 import RenderHTML from 'react-native-render-html'
 import { TDetailEventType } from '@model/Event/DetailEventType'
-import { converDate } from '@helpers/datatime'
+import { convertDate } from '@helpers/datatime'
 import commonStyle from '@styles/commonStyle'
 import { ENUM_COLOR } from '@constants/enum'
 
@@ -46,7 +46,7 @@ const DetailItem = ({ data, type }: TProps) => {
               >
                 {data?.author_name}
               </Text>
-              <Text>{`, ${converDate(data?.created_at)}`}</Text>
+              <Text>{`, ${convertDate(data?.created_at)}`}</Text>
             </Text>
           )}
         </>
