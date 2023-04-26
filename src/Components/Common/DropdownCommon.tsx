@@ -1,3 +1,4 @@
+import { ENUM_COLOR } from '@constants/enum'
 import { TSelects } from '@model/index'
 import React, { useState } from 'react'
 import {
@@ -55,9 +56,18 @@ const DropdownCommon = ({
                 value={value}
                 setValue={handleChange}
                 list={items}
+                inputProps={{
+                  style: {
+                    backgroundColor: ENUM_COLOR.white,
+                  },
+                }}
               />
             </View>
-            <HelperText type="error" visible={!!errors}>
+            <HelperText
+              style={{ paddingVertical: 0 }}
+              type="error"
+              visible={!!errors}
+            >
               {errors}
             </HelperText>
           </>
@@ -77,7 +87,7 @@ const styles = StyleSheet.create({
   label: {
     paddingLeft: 10,
     paddingRight: 10,
-    backgroundColor: 'white',
+    backgroundColor: ENUM_COLOR.white,
     position: 'absolute',
     top: 0,
     left: 10,

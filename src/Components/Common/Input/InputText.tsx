@@ -69,7 +69,7 @@ const InputText = ({
           secureTextEntry={secureTextEntry}
           label={label}
           right={right}
-          style={style}
+          style={[style, { backgroundColor: ENUM_COLOR.white }]}
           onFocus={onPress}
           selectionColor={ENUM_COLOR.white}
           showSoftInputOnFocus
@@ -80,7 +80,11 @@ const InputText = ({
             paddingBottom: 10,
           }}
         />
-        <HelperText type="error" visible={!!errors}>
+        <HelperText
+          style={{ paddingVertical: 0 }}
+          type="error"
+          visible={!!errors}
+        >
           {errors}
         </HelperText>
       </View>

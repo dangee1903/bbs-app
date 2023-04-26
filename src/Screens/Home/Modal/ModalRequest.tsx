@@ -196,13 +196,19 @@ const ModalRequest = ({
           disable={!isValid}
           isError={!!errApi}
         >
-          <HelperText type="error" visible={!!errApi}>
+          <HelperText
+            style={{ paddingVertical: 0 }}
+            type="error"
+            visible={!!errApi}
+          >
             {errApi}
           </HelperText>
           <View
             style={{
               flexDirection:
-                dataShow.permission_type === '4' ? 'column-reverse' : 'column',
+                dataShow.permission_type === PERMISSION_TYPE.OVERTIME
+                  ? 'column-reverse'
+                  : 'column',
             }}
           >
             {dataShow.reason && (
@@ -295,5 +301,6 @@ const styles = StyleSheet.create({
   },
   reasonRequest: {
     height: 85,
+    margin: 0,
   },
 })

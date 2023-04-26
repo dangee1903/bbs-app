@@ -80,20 +80,20 @@ const styles = StyleSheet.create({
     backgroundColor: ENUM_COLOR.white,
     marginLeft: 20,
     marginRight: 20,
-    padding: 20,
+    padding: 10,
   },
   headerModal: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
   },
   headerText: {
     fontSize: 16,
+    padding: 0,
+    margin: 0,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginTop: 30,
   },
   buttonFooter: {
     paddingHorizontal: 10,

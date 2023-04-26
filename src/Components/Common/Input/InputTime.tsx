@@ -3,7 +3,6 @@ import React from 'react'
 import {
   TouchableOpacity,
   View,
-  StyleSheet,
   NativeSyntheticEvent,
   TextInputFocusEventData,
   Keyboard,
@@ -88,7 +87,6 @@ const InputTime = ({
               />
             }
             handleBlur={handleBlur}
-            style={styles.dateInput}
             errors={errors}
             onPress={openTimePicker}
           />
@@ -111,9 +109,3 @@ const InputTime = ({
 }
 
 export default InputTime
-
-const styles = StyleSheet.create({
-  dateInput: {
-    marginTop: 10,
-  },
-})

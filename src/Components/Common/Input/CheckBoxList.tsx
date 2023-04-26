@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Checkbox, HelperText, Text } from 'react-native-paper'
 import { View, StyleSheet } from 'react-native'
 import { TSelectString } from '@model/index'
+import { ENUM_COLOR } from '@constants/enum'
 
 type TProps = {
   data: TSelectString[]
@@ -48,7 +49,11 @@ const CheckBoxList = ({
           )
         })}
       </View>
-      <HelperText type="error" visible={!!errors}>
+      <HelperText
+        style={{ paddingVertical: 0 }}
+        type="error"
+        visible={!!errors}
+      >
         {errors}
       </HelperText>
     </>
@@ -63,12 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  dateInput: {
-    width: '100%',
-    marginTop: 10,
-  },
   checkboxTime: {
-    marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 30,
-    backgroundColor: 'rgba(33, 33, 33, 0.08)',
+    backgroundColor: ENUM_COLOR.backgroundGray,
   },
   label: {
     marginRight: 10,
