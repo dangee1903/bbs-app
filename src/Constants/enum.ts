@@ -13,4 +13,5 @@ export enum ENUM_COLOR {
   error = '#ff3333',
   backgroundGray = '#21212114',
   colorCancel = '#999999',
+  colorReason = 'rgba(0, 0, 0, 0.12)',
 }

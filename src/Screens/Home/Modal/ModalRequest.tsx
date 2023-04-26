@@ -32,6 +32,7 @@ import { converStringToDate } from '@helpers/string'
 import { FormatDate } from '@constants/date'
 import { HelperText } from 'react-native-paper'
 import { message } from '@constants/message'
+import { ENUM_COLOR } from '@constants/enum'
 import ModalCommon from '../../../Components/Modal/Modal'
 import { requestValidationSchema } from './ModalState'
 
@@ -222,6 +223,8 @@ const ModalRequest = ({
                 value={values.note}
                 errors={errors.note}
                 style={styles.reasonRequest}
+                selectionColor={ENUM_COLOR.black}
+                colorPlaceholder={ENUM_COLOR.colorReason}
               />
             )}
             {dataShow.time && (

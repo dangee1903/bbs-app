@@ -32,6 +32,7 @@ type TProps = {
   onPress?: () => void
   disable?: boolean
   selectionColor?: string
+  colorPlaceholder?: string
 }
 
 const InputText = ({
@@ -52,6 +53,7 @@ const InputText = ({
   onPress = () => {},
   disable = false,
   selectionColor = ENUM_COLOR.white,
+  colorPlaceholder,
 }: TProps) => {
   const handleChangeText = (v: string) => {
     return setChangeValue ? setChangeValue(v) : handleChange(v)
@@ -81,6 +83,7 @@ const InputText = ({
             paddingTop: 10,
             paddingBottom: 10,
           }}
+          placeholderTextColor={colorPlaceholder}
         />
         <HelperText
           style={{ paddingVertical: 0 }}
