@@ -72,25 +72,23 @@ const InputTime = ({
           Keyboard.dismiss()
         }}
       >
-        <View pointerEvents="none">
-          <InputText
-            mode="outlined"
-            label={label}
-            placeholder={placeholder}
-            value={value}
-            right={
-              <TextInput.Icon
-                color={ENUM_COLOR.white}
-                icon="alarm"
-                onPress={() => setShow(true)}
-                style={{ paddingLeft: 10 }}
-              />
-            }
-            handleBlur={handleBlur}
-            errors={errors}
-            onPress={openTimePicker}
-          />
-        </View>
+        <InputText
+          mode="outlined"
+          label={label}
+          placeholder={placeholder}
+          value={value}
+          right={
+            <TextInput.Icon
+              color={ENUM_COLOR.white}
+              icon="alarm"
+              onPress={() => setShow(true)}
+              style={{ paddingLeft: 10 }}
+            />
+          }
+          handleBlur={handleBlur}
+          errors={errors}
+          onPress={openTimePicker}
+        />
       </TouchableOpacity>
       <TimePickerModal
         locale="vi"
