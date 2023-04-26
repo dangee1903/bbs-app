@@ -12,4 +12,5 @@ export enum ENUM_COLOR {
   success = '#4BB543',
   error = '#ff3333',
   backgroundGray = '#21212114',
+  colorCancel = '#999999',
 }

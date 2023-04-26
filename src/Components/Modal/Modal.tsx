@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
   },
   textCancleFooter: {
     fontSize: 14,
+    color: ENUM_COLOR.colorCancel,
   },
   textConfirmFooter: {
     fontSize: 14,
