@@ -21,14 +21,18 @@ const toastConfig = (disableError = false) => {
       <BaseToast
         {...props}
         style={{
-          backgroundColor: ENUM_COLOR.white,
-          borderLeftColor: ENUM_COLOR.mainColor,
+          backgroundColor: ENUM_COLOR.success,
+          borderLeftColor: ENUM_COLOR.success,
+          justifyContent: 'center',
         }}
-        contentContainerStyle={{ paddingHorizontal: 15 }}
+        contentContainerStyle={{
+          paddingHorizontal: 15,
+        }}
         text1Style={{
           fontSize: 15,
           fontWeight: '400',
-          color: ENUM_COLOR.success,
+          color: ENUM_COLOR.white,
+          textAlign: 'center',
         }}
       />
     ),
