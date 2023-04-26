@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     marginBottom: 20,
+    backgroundColor: ENUM_COLOR.white,
   },
   contentCard: {
     flexDirection: 'row',
