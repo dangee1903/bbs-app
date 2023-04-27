@@ -67,7 +67,7 @@ const ModalRequest = ({
 
   useEffect(() => {
     setErrApi('')
-  }, [dataShow])
+  }, [dataShow, isShowModal])
 
   return (
     <Formik
