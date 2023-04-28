@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   StyleSheet,
   View,
@@ -17,11 +17,24 @@ import { Button, Checkbox } from 'react-native-paper'
 import KeyboardAvoidingComponent from '@components/KeyboardAvoidingView'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ENUM_COLOR } from '@constants/enum'
+import messaging from '@react-native-firebase/messaging'
+import { saveTokenToDatabase } from '@helpers/token'
 import { loginValidationSchema } from './loginState'
 
 const Login = () => {
   const [login, { isLoading }] = useLoginMutation()
   const [users] = useUsersMutation()
+  const [tokenDevide, setTokenDevice] = useState<string>('')
+
+  const getToken = async () => {
+    await messaging().registerDeviceForRemoteMessages()
+    const token = await messaging().getToken()
+    setTokenDevice(token)
+  }
+
+  useEffect(() => {
+    getToken()
+  }, [])
 
   return (
     <View style={{ flex: 1 }}>
@@ -45,7 +58,11 @@ const Login = () => {
                   }}
                   onSubmit={async (values: RUser) => {
                     try {
-                      await login(values).unwrap()
+                      const res = await login({
+                        ...values,
+                        fcm_token: tokenDevide || undefined,
+                      }).unwrap()
+                      await saveTokenToDatabase(tokenDevide, res.data.id)
                       await users({})
                       // eslint-disable-next-line no-empty
                     } catch (error) {}

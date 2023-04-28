@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import EventComponent from '@components/EventComponent'
 import NotificatioComponent from '@components/NotificationComponent'
 import MenuRequest from '@components/MenuRequest'

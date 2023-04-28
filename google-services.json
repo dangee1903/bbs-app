@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "483219705334",
+    "project_id": "test-bbs-app-d9d0d",
+    "storage_bucket": "test-bbs-app-d9d0d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483219705334:android:d74c23518b41fd7066cbd7",
+        "android_client_info": {
+          "package_name": "com.bbsjs1.bbsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "483219705334-p51vj28hks6l89a90h2t86grprb1c8eb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bbsjs1.bbsapp",
+            "certificate_hash": "03f679995616bb0853e88bb435e2faef5e77546a"
+          }
+        },
+        {
+          "client_id": "483219705334-7ipdcd0pvqjb0iovk6eed4bsfkjuie9b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxfBB3LOi1rM1_DWwgynLRrbPCxkZsr-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "483219705334-7ipdcd0pvqjb0iovk6eed4bsfkjuie9b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
