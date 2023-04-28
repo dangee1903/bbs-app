@@ -42,10 +42,11 @@ const InputDate = ({
   const onConfirmSingle = React.useCallback(
     (params: any) => {
       if (params?.date) {
-        const newDate = moment(params.date).format(FormatDate.DATE_FULL)
+        const newDate = moment(params.date).format(FormatDate.DATE_VIEW)
+        const dateSubmit = moment(params.date).format(FormatDate.DATE_FULL)
         setShow(false)
         setValue(newDate)
-        setValueDate(newDate)
+        setValueDate(dateSubmit)
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,6 +79,7 @@ const InputDate = ({
         saveLabel="Lưu"
         label="Chọn ngày"
         validRange={{ startDate: minDate }}
+        inputEnabled={false}
       />
     </View>
   )

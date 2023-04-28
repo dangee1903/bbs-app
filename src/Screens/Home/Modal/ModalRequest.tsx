@@ -32,6 +32,7 @@ import { converStringToDate } from '@helpers/string'
 import { FormatDate } from '@constants/date'
 import { HelperText } from 'react-native-paper'
 import { message } from '@constants/message'
+import { ENUM_COLOR } from '@constants/enum'
 import ModalCommon from '../../../Components/Modal/Modal'
 import { requestValidationSchema } from './ModalState'
 
@@ -66,7 +67,7 @@ const ModalRequest = ({
 
   useEffect(() => {
     setErrApi('')
-  }, [dataShow])
+  }, [dataShow, isShowModal])
 
   return (
     <Formik
@@ -196,13 +197,19 @@ const ModalRequest = ({
           disable={!isValid}
           isError={!!errApi}
         >
-          <HelperText type="error" visible={!!errApi}>
+          <HelperText
+            style={{ paddingVertical: 0 }}
+            type="error"
+            visible={!!errApi}
+          >
             {errApi}
           </HelperText>
           <View
             style={{
               flexDirection:
-                dataShow.permission_type === '4' ? 'column-reverse' : 'column',
+                dataShow.permission_type === PERMISSION_TYPE.OVERTIME
+                  ? 'column-reverse'
+                  : 'column',
             }}
           >
             {dataShow.reason && (
@@ -216,6 +223,8 @@ const ModalRequest = ({
                 value={values.note}
                 errors={errors.note}
                 style={styles.reasonRequest}
+                selectionColor={ENUM_COLOR.black}
+                colorPlaceholder={ENUM_COLOR.colorReason}
               />
             )}
             {dataShow.time && (
@@ -295,5 +304,6 @@ const styles = StyleSheet.create({
   },
   reasonRequest: {
     height: 85,
+    margin: 0,
   },
 })

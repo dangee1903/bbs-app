@@ -3,6 +3,7 @@ import React from 'react'
 import { HelperText, RadioButton, Text } from 'react-native-paper'
 import { View, StyleSheet } from 'react-native'
 import { TSelectString } from '@model/index'
+import { ENUM_COLOR } from '@constants/enum'
 
 type TProps = {
   data: TSelectString[]
@@ -33,7 +34,11 @@ const CheckBoxList = ({
           )
         })}
       </View>
-      <HelperText type="error" visible={!!errors}>
+      <HelperText
+        style={{ paddingVertical: 0 }}
+        type="error"
+        visible={!!errors}
+      >
         {errors}
       </HelperText>
     </>
@@ -62,7 +67,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 10,
     borderRadius: 30,
-    backgroundColor: 'rgba(33, 33, 33, 0.08)',
+    backgroundColor: ENUM_COLOR.backgroundGray,
   },
   label: {
     marginRight: 10,

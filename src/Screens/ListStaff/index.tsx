@@ -60,6 +60,7 @@ const ListStaff = () => {
             value={valueSearch}
             setChangeValue={handleChangeValue}
             placeholder="Nhập tên hoặc mã nhân viên .v.v."
+            selectionColor={ENUM_COLOR.mainColor}
           />
           {listUser?.map((user: TUser) => (
             <CardUser

@@ -3,7 +3,7 @@ import { convertDate } from '@helpers/datatime'
 import { TEventType } from '@model/Event/EventType'
 import commonStyle from '@styles/commonStyle'
 import React from 'react'
-import { Image, Share, StyleSheet, Text, View } from 'react-native'
+import { Image, Platform, Share, StyleSheet, Text, View } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Button } from 'react-native-paper'
 import { ENUM_COLOR } from '@constants/enum'
@@ -20,7 +20,10 @@ const EventComponent = ({ data, onPress }: TProps) => {
 
   const handleShare = () => {
     Share.share({
-      message: introduction,
+      message:
+        Platform.OS === 'android'
+          ? convertUrl(`/detail/${id}`, process.env.WEB_URL)
+          : introduction,
       title: name,
       url: convertUrl(`/detail/${id}`, process.env.WEB_URL),
     })
