@@ -13,6 +13,7 @@ import { Avatar, Divider } from 'react-native-paper'
 import { convertUrl } from '@helpers/url'
 import { SideBar } from './SideBar'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const CustomDrawer = (props: any) => {
   const { data } = useReduxSelector(state => state.login.user)
   const dispatch = useReduxDispatch()
@@ -108,7 +109,7 @@ const CustomDrawer = (props: any) => {
         style={{
           padding: 20,
           borderTopWidth: 1,
-          borderTopColor: ENUM_COLOR.grayBordor,
+          borderTopColor: ENUM_COLOR.grayBorder,
         }}
       >
         <TouchableOpacity

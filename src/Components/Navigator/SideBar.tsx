@@ -5,7 +5,9 @@ import Noti from '@screens/Noti'
 import TimeWork from '@screens/TimeWork'
 import Request from '@screens/Request'
 import { TabHome } from '@navigators/TabRoutes'
-import IconNotiSidebar from './Icon/IconNotiSidebar'
+import ListRule from '@screens/Rule'
+import IconNotiSidebar from '../Icon/IconNotiSidebar'
+import IconRuleSidebar from '../Icon/IconRuleSideBar'
 
 export const SideBar = [
   {
@@ -60,5 +62,16 @@ export const SideBar = [
     component: Noti,
     showHeader: true,
     key: 'Noti',
+  },
+  {
+    route: 'Rule',
+    label: 'Nội quy',
+    icon: (color: string) => (
+      // eslint-disable-next-line import/extensions, global-require
+      <IconRuleSidebar color={color} />
+    ),
+    component: ListRule,
+    showHeader: true,
+    key: 'Rule',
   },
 ]

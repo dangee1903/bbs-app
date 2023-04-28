@@ -6,7 +6,7 @@ export enum ENUM_COLOR_TAB_BAR {
 export enum ENUM_COLOR {
   mainColor = '#6200EE',
   white = '#ffffff',
-  grayBordor = '#cccccc',
+  grayBorder = '#cccccc',
   black = '#000000',
   drakWhite = '#E0E0E0',
   success = '#4BB543',

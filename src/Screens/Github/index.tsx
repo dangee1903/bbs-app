@@ -3,9 +3,9 @@ import InputDate from '@components/Common/Input/InputDate'
 import InputText from '@components/Common/Input/InputText'
 import SliderCommon from '@components/Common/SliderCommon'
 import JoinedProjectsComponent from '@components/JoinedProjectsComponents'
-import JoinedProjectsSekeleton from '@components/Sekeleton/JoinedProjectsSekeleton'
+import JoinedProjectsSkeleton from '@components/Skeleton/JoinedProjectsSkeleton'
 import { ENUM_COLOR } from '@constants/enum'
-import { converYearMonthDay } from '@helpers/datatime'
+import { convertYearMonthDay } from '@helpers/datatime'
 import { TSelects } from '@model/index'
 import { TProject, TTask } from '@model/Project/ProjectType'
 import { TUser } from '@model/Users/UsersType'
@@ -35,7 +35,7 @@ const initialState: TTaskState = {
   content: '',
   issue: '',
   progress: 0,
-  deadline: converYearMonthDay(new Date()),
+  deadline: convertYearMonthDay(new Date()),
 }
 
 const Github = () => {
@@ -58,7 +58,7 @@ const Github = () => {
         task_id: task.task_id,
         issue: task.issue,
         progress: task.progress,
-        deadline: task.deadline ?? converYearMonthDay(new Date()),
+        deadline: task.deadline ?? convertYearMonthDay(new Date()),
         user_id: task.user_id,
         content: task.content ?? '',
       })
@@ -233,7 +233,7 @@ const Github = () => {
         <Text style={styles.pjTitle}>Joined Projects</Text>
         {loadingJoined &&
           // eslint-disable-next-line react/no-array-index-key
-          [...Array(5)].map((x, i) => <JoinedProjectsSekeleton key={i} />)}
+          [...Array(5)].map((x, i) => <JoinedProjectsSkeleton key={i} />)}
         {joinedPjs?.data?.projects &&
           joinedPjs?.data?.projects.map((joinedPj: TProject) => (
             <JoinedProjectsComponent

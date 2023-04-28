@@ -1,4 +1,4 @@
-import CardUser from '@components/CardUser'
+import CardUser from '@components/User/CardUser'
 import InputText from '@components/Common/Input/InputText'
 import { ENUM_COLOR } from '@constants/enum'
 import { TUser, TUsers } from '@model/Users/UsersType'

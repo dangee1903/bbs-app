@@ -1,19 +1,22 @@
 import commonStyle from '@styles/commonStyle'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Fade, Placeholder, PlaceholderMedia } from 'rn-placeholder'
+import { Fade, Placeholder, PlaceholderLine } from 'rn-placeholder'
 
-const EventSekeleton = () => {
+const EventSkeleton = () => {
   return (
     <View style={styles.containerContent}>
       <Placeholder Animation={Fade}>
-        <PlaceholderMedia style={styles.media} />
+        <PlaceholderLine />
+        <PlaceholderLine />
+        <PlaceholderLine />
+        <PlaceholderLine />
       </Placeholder>
     </View>
   )
 }
 
-export default EventSekeleton
+export default EventSkeleton
 
 const styles = StyleSheet.create({
   containerContent: {

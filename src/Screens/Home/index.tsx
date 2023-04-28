@@ -1,8 +1,8 @@
 import EventComponent from '@components/EventComponent'
 import NotificatioComponent from '@components/NotificationComponent'
-import MenuRequest from '@components/MenuRequest'
-import EventSekeleton from '@components/Sekeleton/EventSekeleton'
-import NotificationSekeleton from '@components/Sekeleton/NotificationSekeleton'
+import MenuRequest from '@components/Request/MenuRequest'
+import EventSkeleton from '@components/Skeleton/EventSkeleton'
+import NotificationSkeleton from '@components/Skeleton/NotificationSkeleton'
 import { TEventType } from '@model/Event/EventType'
 import { TPostType } from '@model/Post/PostType'
 import { useGetEventQuery } from '@services/modules/event'
@@ -71,7 +71,7 @@ const Home = ({ navigation }: TProps) => {
           <Text style={styles.contentHead}>Thông báo</Text>
           {loadingPost &&
             // eslint-disable-next-line react/no-array-index-key
-            [...Array(3)].map((x, i) => <NotificationSekeleton key={i} />)}
+            [...Array(3)].map((x, i) => <NotificationSkeleton key={i} />)}
           {dataPost?.data?.posts &&
             dataPost?.data?.posts
               .slice(0, 3)
@@ -85,7 +85,7 @@ const Home = ({ navigation }: TProps) => {
           <Text style={styles.contentHead}>Sự kiện</Text>
           {loadingEvent &&
             // eslint-disable-next-line react/no-array-index-key
-            [...Array(3)].map((x, i) => <EventSekeleton key={i} />)}
+            [...Array(3)].map((x, i) => <EventSkeleton key={i} />)}
           {dataEvent?.data?.events &&
             dataEvent?.data?.events
               .slice(0, 3)

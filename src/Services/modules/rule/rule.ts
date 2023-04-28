@@ -2,14 +2,14 @@ import { TRules } from '@model/Rule/RuleType'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
 
 export default (build: EndpointBuilder<any, any, any>) =>
-  build.query<any, void>({
+  build.query<TListRule, void>({
     query: () => ({
-      url: 'events',
+      url: 'regulations',
       method: 'GET',
     }),
   })
 
-export type TListUser = {
+type TListRule = {
   data: {
     regulations: TRules
   }
