@@ -30,7 +30,7 @@ const NotificatioComponent = ({ data, onPress }: TProps) => {
             style={styles.bottomBtn}
             onPress={() => onPress('Details', id, TYPE, name)}
           >
-            Detail
+            Chi tiết
           </Text>
         </View>
       </View>

@@ -32,6 +32,7 @@ type TProps = {
   onPress?: () => void
   disable?: boolean
   selectionColor?: string
+  colorPlaceholder?: string
 }
 
 const InputText = ({
@@ -52,6 +53,7 @@ const InputText = ({
   onPress = () => {},
   disable = false,
   selectionColor = ENUM_COLOR.white,
+  colorPlaceholder,
 }: TProps) => {
   const handleChangeText = (v: string) => {
     return setChangeValue ? setChangeValue(v) : handleChange(v)
@@ -71,13 +73,23 @@ const InputText = ({
           secureTextEntry={secureTextEntry}
           label={label}
           right={right}
-          style={style}
+          style={[style, { backgroundColor: ENUM_COLOR.white }]}
           onFocus={onPress}
           selectionColor={selectionColor}
           showSoftInputOnFocus
           disabled={disable}
+          contentStyle={{
+            paddingHorizontal: 10,
+            paddingTop: 10,
+            paddingBottom: 10,
+          }}
+          placeholderTextColor={colorPlaceholder}
         />
-        <HelperText type="error" visible={!!errors}>
+        <HelperText
+          style={{ paddingVertical: 0 }}
+          type="error"
+          visible={!!errors}
+        >
           {errors}
         </HelperText>
       </View>

@@ -3,7 +3,6 @@ import React from 'react'
 import {
   TouchableOpacity,
   View,
-  StyleSheet,
   NativeSyntheticEvent,
   TextInputFocusEventData,
   Keyboard,
@@ -73,26 +72,23 @@ const InputTime = ({
           Keyboard.dismiss()
         }}
       >
-        <View pointerEvents="none">
-          <InputText
-            mode="outlined"
-            label={label}
-            placeholder={placeholder}
-            value={value}
-            right={
-              <TextInput.Icon
-                color={ENUM_COLOR.white}
-                icon="alarm"
-                onPress={() => setShow(true)}
-                style={{ paddingLeft: 10 }}
-              />
-            }
-            handleBlur={handleBlur}
-            style={styles.dateInput}
-            errors={errors}
-            onPress={openTimePicker}
-          />
-        </View>
+        <InputText
+          mode="outlined"
+          label={label}
+          placeholder={placeholder}
+          value={value}
+          right={
+            <TextInput.Icon
+              color={ENUM_COLOR.white}
+              icon="alarm"
+              onPress={() => setShow(true)}
+              style={{ paddingLeft: 10 }}
+            />
+          }
+          handleBlur={handleBlur}
+          errors={errors}
+          onPress={openTimePicker}
+        />
       </TouchableOpacity>
       <TimePickerModal
         locale="vi"
@@ -111,9 +107,3 @@ const InputTime = ({
 }
 
 export default InputTime
-
-const styles = StyleSheet.create({
-  dateInput: {
-    marginTop: 10,
-  },
-})
